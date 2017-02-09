@@ -28,6 +28,7 @@ VALUES
     ("AA112", 1, "ATL","DFW", 204),
     ("AA115", 2, "JFK","ATL", 106),
     ("AA116", 2, "LAX","ORD", 244);
+    ("AA117", 3, "LAX","ORD", 250);
 
 
 select * from airplane;
