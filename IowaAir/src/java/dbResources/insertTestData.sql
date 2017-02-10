@@ -27,11 +27,10 @@ VALUES
     ("AA111", 1, "ORD","JFK", 196),
     ("AA112", 1, "ATL","DFW", 204),
     ("AA115", 2, "JFK","ATL", 106),
-    ("AA116", 2, "LAX","ORD", 244);
+    ("AA116", 2, "LAX","ORD", 244),
     ("AA117", 3, "LAX","ORD", 250);
 
 
-select * from airplane;
-select * from flight;
 
-    
+
+    select * from airport;
