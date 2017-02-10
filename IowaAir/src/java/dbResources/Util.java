@@ -32,10 +32,10 @@ public class Util {
      * @return 
      */
     public static Connection getConnection( String username, String password) {
-        String CONNECTION_STRING= "jdbc:mysql://localhost:3306/IowaAir";
+        String CONNECTION_STRING= "jdbc:mysql://localhost:3306/FundSoftEng";
         Connection conn;
         
-        //logger.log(Level.INFO, "create connection on {0}", Thread.currentThread());
+        logger.log(Level.INFO, "create connection on {0}", Thread.currentThread());
         
         try{
             Class.forName("com.mysql.jdbc.Driver");

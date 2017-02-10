@@ -13,7 +13,7 @@
     
     Database database = new Database();
     
-    boolean test = database.tableHasRecords("airport");
+    boolean test = database.tableHasRecords("airplane");
     
     String testString;
     
