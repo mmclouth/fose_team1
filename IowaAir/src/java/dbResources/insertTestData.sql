@@ -9,7 +9,7 @@ INSERT INTO
 VALUES
     ("ORD", "Chicago", "IL", "USA", '6'),
     ("JFK", "New York", "NY", "USA", '5'),
-    ("DFW","Dallas / Fort Worth", "TX", "USA", '6'),
+    ("IFC","Iowa City", "IA", "USA", '6'),
     ("ATL","Atlanta","GA","USA", '5'),
     ("SFO","San Francisco","CA","USA", '8');
     
@@ -27,7 +27,7 @@ INSERT INTO
     flight (num, airplane_id, origin_code, destination_code, flight_date, duration, departure_time, arrival_time, price)
 VALUES
     ("AA111", 1, "ORD","JFK", '2017-02-28', 135, '07:00:00', '10:15:00', 300.00),
-    ("AA112", 1, "ATL","DFW", '2017-03-01', 145, '09:00:00', '11:25:00', 350.00),
+    ("AA112", 1, "ATL","IFC", '2017-03-01', 135, '09:00:00', '11:15:00', 250.00),
     ("AA115", 2, "JFK","ATL", '2017-02-28', 160, '12:00:00', '14:40:00', 150.00),
     ("AA116", 3, "SFO","ORD", '2017-02-28', 250, '08:00:00', '14:10:00', 480.00),
     ("AA117", 3, "ORD","SFO", '2017-02-28', 280, '15:15:00', '17:55:00', 480.00);
