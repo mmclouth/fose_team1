@@ -40,4 +40,15 @@ VALUES
     ("Nickolas", "Kutsch", "nickolas-kutsch@uiowa.edu", "password", "admin"),
     ("Kyle", "Anderson", "kyle-l-anderson@uiowa.edu", "password", "admin" ),
     ("John", "Doe", "kmclooooth1320@gmail.com", "password", "employee"),
-    ("Jane", "Doe", "kmclooooth1320@yahoo.com", "password", "customer");
+    ("Jane", "Doe", "kmclooooth1320@yahoo.com", "password", "customer"),
+    ("Joe", "Schmoe", "punkrock_ohno_udidnt@yahoo.com", "password", "customer"),
+    ("Scott", "Endsley", "MacKenzie.McLouth@yahoo.com", "password", "customer");
+
+
+INSERT INTO 
+    boarding_pass (flight_id, userr_id, seat_num)
+VALUES
+    (1, 5, '1A'),
+    (1, 6, '2A'),
+    (1, 7, '3A');
+    
