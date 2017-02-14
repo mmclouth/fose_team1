@@ -13,15 +13,32 @@ and open the template in the editor.
     <body>
         <h1>Home Page</h1>
         
+        <script>
+            var radios = document.getElementsByName('search_type');
+
+for (var i = 0, length = radios.length; i < length; i++) {
+    if (radios[i].checked) {
+        // do whatever you want with the checked radio
+        alert(radios[i].value);
+
+        // only one radio can be logically checked, don't check the rest
+        break;
+    }
+}
+ 
+        </script>
+        
         <form action="searchResults.jsp">
             <input type="radio" name="search_type" value="round_trip" checked> Round Trip<br>
-            <input type="radio" name="search_type" value="one_way"> One Way<br>
+            <input type="radio" name="search_type" value="one_way" > One Way<br>
             <input type="radio" name="search_type" value="multi"> Multi-City <br>
             Origin:
             <input type="text" name ="origin"> <br> 
             Destination: 
             <input type="text" name ="destination"> <br>
-            Date: 
+            Departure Date: 
+            <input type="text" name ="date">
+                Return Date: 
             <input type="text" name ="date"><br>
             <input type="submit" value="Search">
         </form>
