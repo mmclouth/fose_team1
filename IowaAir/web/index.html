@@ -11,6 +11,20 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div>Hello World!</div>
+        <h1>Home Page</h1>
+        
+        <form action="searchResults.jsp">
+            <input type="radio" name="search_type" value="round_trip" checked> Round Trip<br>
+            <input type="radio" name="search_type" value="one_way"> One Way<br>
+            <input type="radio" name="search_type" value="multi"> Multi-City <br>
+            Origin:
+            <input type="text" name ="origin"> <br> 
+            Destination: 
+            <input type="text" name ="destination"> <br>
+            Date: 
+            <input type="text" name ="date"><br>
+            <input type="submit" value="Search">
+        </form>
+
     </body>
 </html>
