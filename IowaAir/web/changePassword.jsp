@@ -23,6 +23,13 @@
             <a class="links" href="signUp.jsp" ><h2>Sign Up</h2></a>
         </div>
 
+        <div class="user-toolbar">
+            <ul>
+                <li><a href="userFlightHistory.jsp">My Flight History</a></li>
+                <li><a class="active" href="changePassword.jsp">Change My Password</a></li>
+            </ul>  
+        </div>
+        
         <div class="middle">
             <h1>Change Password Page</h1>
         </div>

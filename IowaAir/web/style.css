@@ -126,9 +126,59 @@ body {
 /* Change the link color to #111 (black) on hover */
 .admin-toolbar li a:hover {
     background-color: royalblue;
+    color: white;
 }
 
 .active {
-    background-color: royalblue;
+    background-color: silver;
 }
+
+
+
+
+
+/*********************
+    User Profile
+*********************/
+
+.user-toolbar {
+    font-family: 'Catamaran', sans-serif;
+    padding-top: 80px;
+    padding-bottom: 5px;
+    width: 100%;
+    color: midnightblue;
+    text-decoration: bold;
+    font-size: 20px;
+}
+
+.user-toolbar ul {
+    width: 100%;
+    background-color: silver;
+}
+
+.user-toolbar li {
+    font-family: 'Catamaran', sans-serif;
+    padding-top: 1%;
+    float: left;
+    display:inline;
+    text-align: center;
+    color: midnightblue;
+    width: 20%;
+    border-right:3px solid white;
+}
+
+.user-toolbar li a {
+    text-decoration: none;
+    color: midnightblue;
+    display: block;
+    padding: 8px;
+}
+
+/* Change the link color to #111 (black) on hover */
+.user-toolbar li a:hover {
+    background-color: royalblue;
+    color: white;
+}
+
+
 

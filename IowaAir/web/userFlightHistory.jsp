@@ -22,6 +22,13 @@
             <h3>|</h3>
             <a class="links" href="signUp.jsp" ><h2>Sign Up</h2></a>
         </div>
+        
+        <div class="user-toolbar">
+            <ul>
+                <li><a class="active" href="userFlightHistory.jsp">My Flight History</a></li>
+                <li><a href="changePassword.jsp">Change My Password</a></li>
+            </ul>  
+        </div>
 
         <div class="middle">
             <h1>User Flight History Page</h1>
