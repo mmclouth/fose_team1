@@ -9,6 +9,7 @@ DROP TABLE boarding_pass;
 DROP TABLE userr;
 DROP TABLE flight;
 DROP TABLE airplane;
+DROP TABLE aircraft_type;
 DROP TABLE airport;
 
 
@@ -23,14 +24,26 @@ CREATE TABLE airport
         PRIMARY KEY (code)
 );
 
-CREATE TABLE airplane
+CREATE TABLE aircraft_type
 (
     id INT NOT NULL AUTO_INCREMENT,
-    num VARCHAR(255) NOT NULL,
+    plane_name VARCHAR(255) NOT NULL,
     down_time INT NOT NULL,
     capacity INT NOT NULL,
         PRIMARY KEY (id)
 );
+
+CREATE TABLE airplane
+(
+    id INT NOT NULL AUTO_INCREMENT,
+    aircraft_type_id INT NOT NULL,
+    num VARCHAR(255) NOT NULL,
+        PRIMARY KEY (id),
+        FOREIGN KEY (aircraft_type_id) 
+        REFERENCES aircraft_type (id)    
+);
+
+ALTER TABLE `airplane` AUTO_INCREMENT = 10000;
 
 
 
@@ -64,6 +77,8 @@ CREATE TABLE userr
     email VARCHAR(255) NOT NULL,
     password VARCHAR(255),
     user_type ENUM('admin', 'employee', 'customer'),
+    birthday DATE,
+    gender ENUM('female', 'male', 'other'),
         PRIMARY KEY (id)
 
 );
@@ -74,6 +89,7 @@ CREATE TABLE boarding_pass
     flight_id INT NOT NULL,
     userr_id INT NOT NULL,
     seat_num VARCHAR(10),
+    luggage_count INT,
         PRIMARY KEY (id),
         FOREIGN KEY (flight_id)
         REFERENCES flight (id),
