@@ -8,11 +8,24 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Search Results</title>
+        <title>Iowa Air: Search Results</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css?family=Catamaran" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <h1>Search Results</h1>
-        <h2>Testing search results link</h2>
+        
+        <div class="title-top">
+            <a class="title" href="index.html"><h1>Iowa Air</h1></a>
+            <a class="links" href="logIn.jsp" ><h2>Log In</h2></a>
+            <h3>|</h3>
+            <a class="links" href="signUp.jsp" ><h2>Sign Up</h2></a>
+        </div>
+
+        <div class="middle">
+            <h1>Search Results Page</h1>
+        </div>
+
     </body>
 </html>
