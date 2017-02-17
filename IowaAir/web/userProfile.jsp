@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Iowa Air: Admin Home</title>
+        <title>Iowa Air: My Profile</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://fonts.googleapis.com/css?family=Catamaran" rel="stylesheet">
@@ -31,7 +31,7 @@
         </div>
 
         <div class="middle">
-            <h1>Admin Home</h1>
+            <h1>User Profile Page</h1>
         </div>
 
     </body>
