@@ -25,8 +25,13 @@
 
         <div class="middle">
             <h1>Log In Page</h1>
-
-
+            
+            <form action="index.html">             
+                Username:
+                <input type="text" name ="username"> <br> 
+                Password: 
+                <input type="password" name ="password"> <br>
+                <input type="submit" value="Log in">
         </div>
 
     </body>
