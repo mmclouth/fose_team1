@@ -1,0 +1,89 @@
+
+/* 
+    Created on : Feb 16, 2017, 7:51:31 PM
+    Author     : kenziemclouth
+*/
+
+/*
+    This snould go on each page for font:
+            <link href="https://fonts.googleapis.com/css?family=Catamaran" rel="stylesheet">
+*/
+
+* {
+    margin: 0;
+    padding: 0;
+    background-color: white;
+}
+
+
+body {
+    width: 75%;
+    margin-left: 12.5%;
+    margin-right: 12.5%;
+    font-family: 'Catamaran', sans-serif;
+}
+
+
+.title-top {
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    margin-top: 50px;
+    float: left;
+    border-bottom: 3px solid midnightblue;
+}
+
+.title-top h1{
+    float: left;
+    width: 30%;
+    text-align: left;
+    padding-bottom: 5px;
+    font-size: 75px;
+    color: midnightblue;
+    text-decoration: bold;
+}
+
+.title-top h2{
+    float: right;
+    width: 6%;
+    text-align: center;
+    padding-top: 30px;
+    margin-right: -0.5%;
+    font-size: 20px;
+    color: royalblue;
+}
+
+.title-top h3{
+    float: right;
+    width: 4%;
+    text-align: center;
+    padding-top: 30px;
+    font-size: 20px;
+    color: royalblue;
+}
+
+.title-top a.links{
+    text-decoration: none;
+}
+
+.title-top a:hover{
+    color: midnightblue;
+}
+
+.title-top a.title{
+    text-decoration: none;
+    line-height: 80px;
+}
+
+.middle {
+    width: 50%;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    padding-top: 15%;
+}
+
+
+
+
+
+

@@ -9,39 +9,37 @@ and open the template in the editor.
         <title>Iowa Air</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css?family=Catamaran" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <h1>Home Page</h1>
         
-        <script>
-            var radios = document.getElementsByName('search_type');
+        <div class="title-top">
+            <a class="title" href="index.html"><h1>Iowa Air</h1></a>
+            <a class="links" href="logIn.jsp" ><h2>Log In</h2></a>
+            <h3>|</h3>
+            <a class="links" href="signUp.jsp" ><h2>Sign Up</h2></a>
+        </div>
 
-for (var i = 0, length = radios.length; i < length; i++) {
-    if (radios[i].checked) {
-        // do whatever you want with the checked radio
-        alert(radios[i].value);
+        <div class="middle">
+            <h1>Home Page</h1>
 
-        // only one radio can be logically checked, don't check the rest
-        break;
-    }
-}
- 
-        </script>
-        
-        <form action="searchResults.jsp">
-            <input type="radio" name="search_type" value="round_trip" checked> Round Trip<br>
-            <input type="radio" name="search_type" value="one_way" > One Way<br>
-            <input type="radio" name="search_type" value="multi"> Multi-City <br>
-            Origin:
-            <input type="text" name ="origin"> <br> 
-            Destination: 
-            <input type="text" name ="destination"> <br>
-            Departure Date: 
-            <input type="text" name ="date">
+            <form action="searchResults.jsp">
+                <input type="radio" name="search_type" value="round_trip" checked> Round Trip<br>
+                <input type="radio" name="search_type" value="one_way" > One Way<br>
+                <input type="radio" name="search_type" value="multi"> Multi-City <br>
+                Origin:
+                <input type="text" name ="origin"> <br> 
+                Destination: 
+                <input type="text" name ="destination"> <br>
+                Departure Date: 
+                <input type="text" name ="date">
                 Return Date: 
-            <input type="text" name ="date"><br>
-            <input type="submit" value="Search">
-        </form>
+                <input type="text" name ="date"><br>
+                <input type="submit" value="Search">
+            </form>
+
+        </div>
 
     </body>
 </html>
