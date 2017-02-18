@@ -31,7 +31,10 @@
                 <input type="text" name ="username"> <br> 
                 Password: 
                 <input type="password" name ="password"> <br>
-                <input type="submit" value="Log in">
+                <input type="submit" value="Log in"> <br>
+                New User? 
+                <a href="signUp.jsp">Sign Up</a><br>
+                <a href="forgotPassword.jsp">Forgot Password</a>
         </div>
 
     </body>
