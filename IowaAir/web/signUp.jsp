@@ -25,6 +25,21 @@
 
         <div class="middle">
             <h1>Sign Up Page</h1>
+            <form action="index.html">    
+                First name:  
+                <input type="text" name="firstname"><br>
+                Last name:  
+                <input type="text" name="lastname"><br>
+                Gender:
+                <input type="radio" name="gender" value="male" checked> Male<tab>
+                <input type="radio" name="gender" value="female"> Female<br>
+                E-Mail:  
+                <input type="text" name ="username"> <br> 
+                Password: 
+                <input type="password" name ="password"> <br>
+                Confirm Password:  
+                <input type="password" name ="password"> <br>
+                <input type="submit" value="Sign Up">
         </div>
 
     </body>
