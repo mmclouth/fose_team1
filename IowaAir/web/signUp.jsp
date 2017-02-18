@@ -39,7 +39,11 @@
                 <input type="password" name ="password"> <br>
                 Confirm Password:  
                 <input type="password" name ="password"> <br>
-                <input type="submit" value="Sign Up">
+                <input type="submit" value="Sign Up"><br>
+                Already have an account? 
+                <a href="logIn.jsp">Log In</a><br>
+                <a href="forgotPassword.jsp">Forgot Password</a>
+                
         </div>
 
     </body>
