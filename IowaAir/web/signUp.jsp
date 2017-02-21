@@ -31,8 +31,9 @@
                 Last name:  
                 <input type="text" name="lastname"><br>
                 Gender:
-                <input type="radio" name="gender" value="male" checked> Male<tab>
-                <input type="radio" name="gender" value="female"> Female<br>
+                <input type="radio" name="gender" value="male" checked> Male
+                <input type="radio" name="gender" value="female"> Female
+                <input type="radio" name="gender" value="other"> Other <br>
                 E-Mail:  
                 <input type="text" name ="username"> <br> 
                 Password: 
