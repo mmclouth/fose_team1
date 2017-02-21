@@ -141,9 +141,12 @@ and open the template in the editor.
                 <label id = "returnDateLabel" for="r_date">Return Date:</label>
                 <input id="returnDate" type="text" name ="r_date"><br>
                 
-                <input type="submit" value="Search">
+                <div class="search-button">
+                    <button type="submit" value="Submit">Search</button>
+                </div>
             </form>
             
+            <div class="multiflight">
             <form id="form2" action="searchResults.jsp">
                 <div class="flightBox">
                 <p id="flight1">Flight 1</p>
@@ -198,14 +201,16 @@ and open the template in the editor.
                     <input id="multiFlightDepart4" type="text" name ="multiFlightDepart4"><br>
                 </div>
                 
+                <div class="search-button">
+                    <button  id="multiAddFlight" type="button" onClick="addFlight3()">Add Flight </button>
+                </div>
                 
-                <button id="multiAddFlight" type="button" onClick="addFlight3()">Add Flight </button>
-                
-                
-                <input type="submit" value="Search">
-                
+                <div class="search-button">
+                    <button type="submit" value="Submit">Search</button>
+                </div>
                 
             </form>
+            </div>
 
         </div>
         
