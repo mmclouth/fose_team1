@@ -12,12 +12,21 @@ and open the template in the editor.
         
         <script language="Javascript">
             function rTrip(){
-                document.getElementById("form2").style.visibility="hidden"; 
+                
                 document.getElementById("form1").style.visibility="visible"; 
                 
                 document.getElementById("returnDate").style.visibility="visible"; 
                 document.getElementById("returnDateLabel").style.visibility="visible"; 
                 document.getElementById("multiAddFlight").style.visibility="hidden";
+                
+                document.getElementById("flight4div").style.visibility="hidden";
+                document.getElementById("flight3div").style.visibility="hidden";
+                
+                hideFlight3();
+               
+                hideFlight4();
+                
+                document.getElementById("form2").style.visibility="hidden"; 
             }
 
             function oneWay(){
@@ -25,35 +34,25 @@ and open the template in the editor.
                 document.getElementById("form1").style.visibility="visible"; 
                 
                 document.getElementById("returnDate").style.visibility="hidden"; 
-                document.getElementById("returnDateLabel").style.visibility="hidden";
-  
+                document.getElementById("returnDateLabel").style.visibility="hidden";             
+                
+                hideFlight3();
+                hideFlight4();
             }
+            
             function multi(){
                 document.getElementById("form2").style.visibility="visible"; 
                 document.getElementById("form1").style.visibility="hidden"; 
-
-                document.getElementById("flight3").style.visibility="hidden"; 
                 
-                document.getElementById("multiFlightOriginLabel3").style.visibility="hidden"; 
-                document.getElementById("multiFlightDestinationLabel3").style.visibility="hidden"; 
-                document.getElementById("multiFlightDepartLabel3").style.visibility="hidden"; 
+                document.getElementById("returnDate").style.visibility="hidden"; 
+                document.getElementById("returnDateLabel").style.visibility="hidden";
                 
-                document.getElementById("multiFlightOrigin3").style.visibility="hidden"; 
-                document.getElementById("multiFlightDestination3").style.visibility="hidden"; 
-                document.getElementById("multiFlightDepart3").style.visibility="hidden";
+                document.getElementById("multiAddFlight").style.visibility="visible";
+                document.getElementById("multiAddFlight").setAttribute( "onClick", "javascript: addFlight3();" );
+                hideFlight3();
                
-                document.getElementById("flight4").style.visibility="hidden"; 
-                
-                document.getElementById("multiFlightOriginLabel4").style.visibility="hidden"; 
-                document.getElementById("multiFlightDestinationLabel4").style.visibility="hidden"; 
-                document.getElementById("multiFlightDepartLabel4").style.visibility="hidden"; 
-                
-                document.getElementById("multiFlightOrigin4").style.visibility="hidden"; 
-                document.getElementById("multiFlightDestination4").style.visibility="hidden"; 
-                document.getElementById("multiFlightDepart4").style.visibility="hidden";
-                
-                document.getElementById("multiAddFlight4").style.visibility="hidden";
-      
+                hideFlight4();
+
             }      
     
             function addFlight3(){
@@ -94,6 +93,34 @@ and open the template in the editor.
                    
 
                 }
+            }
+            
+            function hideFlight3(){
+                document.getElementById("flight3div").style.visibility="hidden";
+                
+                document.getElementById("flight3").style.visibility="hidden"; 
+                
+                document.getElementById("multiFlightOriginLabel3").style.visibility="hidden"; 
+                document.getElementById("multiFlightDestinationLabel3").style.visibility="hidden"; 
+                document.getElementById("multiFlightDepartLabel3").style.visibility="hidden"; 
+                
+                document.getElementById("multiFlightOrigin3").style.visibility="hidden"; 
+                document.getElementById("multiFlightDestination3").style.visibility="hidden"; 
+                document.getElementById("multiFlightDepart3").style.visibility="hidden";
+            }
+            
+            function hideFlight4(){
+                document.getElementById("flight4div").style.visibility="hidden";
+                
+                document.getElementById("flight4").style.visibility="hidden"; 
+                
+                document.getElementById("multiFlightOriginLabel4").style.visibility="hidden"; 
+                document.getElementById("multiFlightDestinationLabel4").style.visibility="hidden"; 
+                document.getElementById("multiFlightDepartLabel4").style.visibility="hidden"; 
+                
+                document.getElementById("multiFlightOrigin4").style.visibility="hidden"; 
+                document.getElementById("multiFlightDestination4").style.visibility="hidden"; 
+                document.getElementById("multiFlightDepart4").style.visibility="hidden";
             }
             
 
