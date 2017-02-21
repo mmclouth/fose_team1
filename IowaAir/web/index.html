@@ -4,14 +4,36 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
+
 <html>
+    
+    
     <head>
         <title>Iowa Air</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://fonts.googleapis.com/css?family=Catamaran" rel="stylesheet">
         <link rel="stylesheet" href="style.css">
+        
+        <script language="Javascript">
+            function rTrip(){
+                document.getElementById("returnDate").style.visibility="visible"; 
+                document.getElementById("returnDateLabel").style.visibility="visible"; 
+            }
+
+            function oneWay(){
+                document.getElementById("returnDate").style.visibility="hidden"; 
+                document.getElementById("returnDateLabel").style.visibility="hidden";
+            }
+            function multi(){
+                document.getElementById("returnDate").style.visibility="visible";
+                document.getElementById("returnDateLabel").style.visibility="visible"; 
+            }
+</script>
+        
+        
     </head>
+    
     <body>
         
         <div class="title-top">
@@ -25,17 +47,17 @@ and open the template in the editor.
             <h1>Home Page</h1>
 
             <form action="searchResults.jsp">
-                <input type="radio" name="search_type" value="round_trip" checked> Round Trip<br>
-                <input type="radio" name="search_type" value="one_way" > One Way<br>
-                <input type="radio" name="search_type" value="multi"> Multi-City <br>
-                Origin:
+                <input type="radio" name="search_type" value="round_trip" checked onClick="rTrip()"> Round Trip<br>
+                <input type="radio" name="search_type" value="one_way" onClick="oneWay()"> One Way<br>
+                <input type="radio" name="search_type" value="multi" onClick="multi()"> Multi-City <br>
+                <label for="origin">Origin:</label>
                 <input type="text" name ="origin"> <br> 
-                Destination: 
+                <label for="destination">Destination:</label>
                 <input type="text" name ="destination"> <br>
-                Departure Date: 
-                <input type="text" name ="date">
-                Return Date: 
-                <input type="text" name ="date"><br>
+                <label for="d_date">Departure Date:</label>
+                <input type="text" name ="d_date">
+                <label id = "returnDateLabel" for="r_date">Return Date:</label>
+                <input id="returnDate" type="text" name ="r_date"><br>
                 <input type="submit" value="Search">
             </form>
 
