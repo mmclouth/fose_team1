@@ -26,7 +26,7 @@
         <div class="middle">
             <h1>Log In Page</h1>
             
-            <form action="index.html">             
+            <form action="index.html" method="post">             
                 Username:
                 <input type="text" name ="username"> <br> 
                 Password: 
