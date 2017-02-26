@@ -14,7 +14,7 @@ import java.sql.SQLException;
  *
  * @author Nickolas
  */
-public class LoginTest 
+public class LoginTest
 {
     public static void main(String[] args)
     {
@@ -29,6 +29,8 @@ public class LoginTest
             if (correctPassword)
             {
                 System.out.println("Password was correct");
+                String userType = login.getUserType(userID);
+                System.out.println(userType);
             }
             else 
             {

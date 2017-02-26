@@ -79,6 +79,27 @@ public class LoginValidation {
         }
         return correctPassword;
     }
+    // Only call getUserType if both username and password has been validated. 
+    public String getUserType(int userId)
+    {
+        String userType = null;
+        try
+        {
+            PreparedStatement query = conn.prepareStatement("SELECT user_type FROM userr WHERE id = '" + userId + "'");
+            ResultSet results = query.executeQuery();
+            
+            while(results.next())
+            {
+                userType = results.getString("user_type");
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return userType;
+    }
+    
     public String getUsername()
     {
         return username;
