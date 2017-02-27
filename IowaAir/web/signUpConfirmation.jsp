@@ -9,6 +9,7 @@
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
 <%
    String result = "";
+   boolean resultStatus = false;
    String placement = "Never changed";
    // Recipient's email ID needs to be mentioned.
    String to = request.getParameter("username");
@@ -66,6 +67,7 @@
       transport.sendMessage(message, message.getAllRecipients());
       transport.close();
       result = "Sent message successfully....";
+      resultStatus = true;
       } catch (Exception eee) {
           placement = "Transport is the problem";
       }
@@ -97,9 +99,16 @@
         <div class="middle">
             <h1>Confirmation</h1>
             
-            <%
-                out.println("Result: " + result + "\n" + "Placement: " + placement);
+            <% if(resultStatus)
+            {
+                //out.println("Result: " + result + "\n" + "Placement: " + placement);
             %>
+                A confirmation error has been sent to your e-mail. Please use 
+                the link provided to confirm your account.
+            <% } else { %>
+                ERROR! Please click the link below and enter a valid e-mail.
+                <a href="signUp.jsp">Return to Sign Up Page</a><br>
+            <% } %>
         </div>
 
     </body>
