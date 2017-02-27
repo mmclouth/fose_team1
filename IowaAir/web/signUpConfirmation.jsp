@@ -11,7 +11,7 @@
    String result = "";
    String placement = "Never changed";
    // Recipient's email ID needs to be mentioned.
-   String to = "anderslkyle@gmail.com";
+   String to = request.getParameter("username");
 
    // Sender's email ID needs to be mentioned
    String from = "fose.team1@gmail.com";
