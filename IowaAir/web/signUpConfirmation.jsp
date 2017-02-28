@@ -10,7 +10,6 @@
 <%
    String result = "";
    boolean resultStatus = false;
-   String placement = "Never changed";
    // Recipient's email ID needs to be mentioned.
    String to = request.getParameter("username");
 
@@ -42,18 +41,10 @@
       // Create a default MimeMessage object.
       MimeMessage message = new MimeMessage(mailSession);
       // Set From: header field of the header.
-      try{
       message.setFrom(new InternetAddress(from));
-      } catch (MessagingException me) {
-          placement = "Exception thrown from setFrom";
-      }
       // Set To: header field of the header.
-      try {
       message.addRecipient(MimeMessage.RecipientType.TO,
                                new InternetAddress(to));
-      } catch (MessagingException me1) {
-          placement = "Exception thrown from addRecipient";
-      }
       // Set Subject: header field
       message.setSubject("This is the Subject Line!");
       // Now set the actual message
@@ -61,16 +52,12 @@
       //placement = "after setText";
       // Send message
       //Transport.send(message);
-      try {
       Transport transport = mailSession.getTransport("smtp");
       transport.connect(host, from, password);
       transport.sendMessage(message, message.getAllRecipients());
       transport.close();
       result = "Sent message successfully....";
       resultStatus = true;
-      } catch (Exception eee) {
-          placement = "Transport is the problem";
-      }
    }catch (MessagingException mex) {
        result = "Error thrown here";
       mex.printStackTrace();
@@ -101,12 +88,17 @@
             
             <% if(resultStatus)
             {
-                //out.println("Result: " + result + "\n" + "Placement: " + placement);
             %>
-                A confirmation error has been sent to your e-mail. Please use 
-                the link provided to confirm your account.
+            <form action="signUpConfirmation.jsp"> 
+                A confirmation link has been sent to your e-mail. Please enter
+                the confirmation code provided in the e-mail into the field 
+                below.
+                Confirmation code:
+                <input type="text" value="confirm"><br>
             <% } else { %>
-                ERROR! Please click the link below and enter a valid e-mail.
+                ERROR! There was a problem with the e-mail address you provided.
+                Please click the link below to return to the sign up page and 
+                enter a valid e-mail.
                 <a href="signUp.jsp">Return to Sign Up Page</a><br>
             <% } %>
         </div>
