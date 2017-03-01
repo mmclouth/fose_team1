@@ -43,8 +43,7 @@ public class Database {
         return conn;
     }
     
-
-    
+   
 
     /**
      * Generic method to test database connection.  Verifies if data is present in given table.
@@ -110,6 +109,20 @@ public class Database {
      * and encrypt password.  Will then call these methods from addUserToDatabase.  NOTE: This method does not check to see
      * if email already exists in DB.  Should we check that before?  Should I add it to this method?  Or should I do both for
      * safeguard?
+     * @param firstName
+     * @param lastName
+     * @param email
+     * @param user_type 
+     */
+    public String addUserToDatabase(String firstName, String lastName, String email, String user_type){
+        return this.addUserToDatabase(firstName, lastName, email, user_type, null, null);
+    }
+    
+    /**
+     * Adds new user to the database.  Currently sets password to "password".  Need to write method to generate random password
+     * and encrypt password.  Will then call these methods from addUserToDatabase.  NOTE: This method does not check to see
+     * if email already exists in DB.  Should we check that before?  Should I add it to this method?  Or should I do both for
+     * safeguard?
      * 
      * @param firstName
      * @param lastName
@@ -118,11 +131,21 @@ public class Database {
      * @param birthday
      * @param gender 
      */
-    public void addUserToDatabase(String firstName, String lastName, String email, String user_type, Date birthday, String gender){
-        
+    public String addUserToDatabase(String firstName, String lastName, String email, String user_type, Date birthday, String gender) {
+
         StringBuilder query = new StringBuilder();
-        String password = "random";
-        
+        String password = "password";
+
+        if (this.emailAlreadyUsed(email)) {
+            return "Email already assigned to a user.";
+        }
+
+        if (user_type != "customer" && user_type != "admin" && user_type != "employee") {
+            return "Invalid user type.";
+        }
+
+        password = MD5Hashing.encryptString(password);
+
         query.append("INSERT INTO userr (first_name, last_name, email, password, user_type, birthday, gender, validation_status) VALUES ('");
         query.append(firstName);
         query.append("', '");
@@ -133,32 +156,34 @@ public class Database {
         query.append(password);
         query.append("', '");
         query.append(user_type);
-        
-        if(birthday != null){
+
+        if (birthday != null) {
             query.append("', '");
             query.append(birthday);
             query.append("', '");
         } else {
             query.append("', null, ");
         }
-        
-        if(gender == null ){
+
+        if (gender == null) {
             query.append("null, ");
         } else {
             query.append("'");
             query.append(gender);
             query.append("', ");
         }
-        
+
         query.append("FALSE) ;");
-        
-        try{
+
+        try {
             PreparedStatement sql = conn.prepareStatement(query.toString());
             sql.executeUpdate();
 
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        return null;
 
     }
 
