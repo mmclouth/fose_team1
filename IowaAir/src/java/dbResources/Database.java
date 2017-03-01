@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.logging.Logger;
 
 
@@ -41,6 +42,8 @@ public class Database {
         }
         return conn;
     }
+    
+
     
 
     /**
@@ -100,6 +103,63 @@ public class Database {
         
         return false;
         
+    }
+    
+    /**
+     * Adds new user to the database.  Currently sets password to "random".  Need to write method to generate random password
+     * and encrypt password.  Will then call these methods from addUserToDatabase.  NOTE: This method does not check to see
+     * if email already exists in DB.  Should we check that before?  Should I add it to this method?  Or should I do both for
+     * safeguard?
+     * 
+     * @param firstName
+     * @param lastName
+     * @param email
+     * @param user_type
+     * @param birthday
+     * @param gender 
+     */
+    public void addUserToDatabase(String firstName, String lastName, String email, String user_type, Date birthday, String gender){
+        
+        StringBuilder query = new StringBuilder();
+        String password = "random";
+        
+        query.append("INSERT INTO userr (first_name, last_name, email, password, user_type, birthday, gender, validation_status) VALUES ('");
+        query.append(firstName);
+        query.append("', '");
+        query.append(lastName);
+        query.append("', '");
+        query.append(email);
+        query.append("', '");
+        query.append(password);
+        query.append("', '");
+        query.append(user_type);
+        
+        if(birthday != null){
+            query.append("', '");
+            query.append(birthday);
+            query.append("', '");
+        } else {
+            query.append("', null, ");
+        }
+        
+        if(gender == null ){
+            query.append("null, ");
+        } else {
+            query.append("'");
+            query.append(gender);
+            query.append("', ");
+        }
+        
+        query.append("FALSE) ;");
+        
+        try{
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            sql.executeUpdate();
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
     }
 
     
