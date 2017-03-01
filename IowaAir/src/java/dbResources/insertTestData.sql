@@ -50,7 +50,7 @@ VALUES
 INSERT INTO
     userr (first_name, last_name, email, password, user_type, gender)
 VALUES
-    ("MacKenzie", "McLouth", "mackenzie-mlouth@uiowa.edu", "password", "admin", 'female'),
+    ("MacKenzie", "McLouth", "mackenzie-mclouth@uiowa.edu", "password", "admin", 'female'),
     ("Nickolas", "Kutsch", "nickolas-kutsch@uiowa.edu", "password", "admin", 'male'),
     ("Kyle", "Anderson", "kyle-l-anderson@uiowa.edu", "password", "admin", 'male' ),
     ("John", "Doe", "kmclooooth1320@gmail.com", "password", "employee", 'male'),

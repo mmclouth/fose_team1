@@ -33,17 +33,18 @@ CREATE TABLE aircraft_type
         PRIMARY KEY (id)
 );
 
-CREATE TABLE airplane
+CREATE TABLE airplane 
 (
     id INT NOT NULL AUTO_INCREMENT,
     aircraft_type_id INT NOT NULL,
     num VARCHAR(255) NOT NULL,
         PRIMARY KEY (id),
         FOREIGN KEY (aircraft_type_id) 
-        REFERENCES aircraft_type (id)    
+        REFERENCES aircraft_type (id)
+        
 );
 
-ALTER TABLE `airplane` AUTO_INCREMENT = 10000;
+ALTER TABLE airplane  AUTO_INCREMENT = 10000;
 
 
 

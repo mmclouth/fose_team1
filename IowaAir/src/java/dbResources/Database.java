@@ -24,7 +24,7 @@ public class Database {
 
     private static final Logger logger= Util.logger;
     
-    public Database( ) throws SQLException{
+    public Database( ) {
         conn= getConnection();
     }
 
@@ -41,8 +41,13 @@ public class Database {
         }
         return conn;
     }
+    
 
-
+    /**
+     * Generic method to test database connection.  Verifies if data is present in given table.
+     * @param tableName name of table 
+     * @return true if table has records false if table does not have records
+     */
     public boolean tableHasRecords(String tableName) {
 
         int count = 0;
@@ -64,6 +69,37 @@ public class Database {
         }
 
         return false;
+    }
+    
+    
+    /**
+     * Checks to see if email address already exists in the userr table
+     * @param email being searched for
+     * @return true if email exists in userr table, false if email does not exist
+     */
+    public boolean emailAlreadyUsed(String email){
+        
+        StringBuilder query = new StringBuilder();
+        
+        query.append("SELECT id FROM userr WHERE email ='");
+        query.append(email);
+        query.append("';");
+        
+        try{
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            ResultSet results = sql.executeQuery();
+
+            while (results.next()){
+                return true;
+            } 
+
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        
+        return false;
+        
     }
 
     
