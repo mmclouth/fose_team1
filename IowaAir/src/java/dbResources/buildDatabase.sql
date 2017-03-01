@@ -79,6 +79,7 @@ CREATE TABLE userr
     user_type ENUM('admin', 'employee', 'customer'),
     birthday DATE,
     gender ENUM('female', 'male', 'other'),
+    validation_status BOOLEAN,
         PRIMARY KEY (id)
 
 );

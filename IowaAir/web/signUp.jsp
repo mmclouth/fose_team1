@@ -25,7 +25,7 @@
 
         <div class="middle">
             <h1>Sign Up Page</h1>
-            <form action="index.html">    
+            <form action="signUpConfirmation.jsp">    
                 First name:  
                 <input type="text" name="firstname"><br>
                 Last name:  
