@@ -80,7 +80,8 @@ CREATE TABLE userr
     user_type ENUM('admin', 'employee', 'customer'),
     birthday DATE,
     gender ENUM('female', 'male', 'other'),
-    validation_status BOOLEAN,
+    validation_status BOOLEAN DEFAULT false,
+    confirmation_code VARCHAR(255) NOT NULL,
         PRIMARY KEY (id)
 
 );
@@ -101,7 +102,3 @@ CREATE TABLE boarding_pass
 );
 
 
-
-
-select * from userr;
-UPDATE userr SET validation_code = true where id = 1;
