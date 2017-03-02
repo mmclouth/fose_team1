@@ -4,64 +4,15 @@
     Author     : Kyle Anderson
 --%>
 
+<%@page import="dbResources.SendMail"%>
 <%@ page import="java.io.*,java.util.*,javax.mail.*"%>
 <%@ page import="javax.mail.internet.*,javax.activation.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
+
 <%
-   String result = "";
-   boolean resultStatus = false;
-   // Recipient's email ID needs to be mentioned.
-   String to = request.getParameter("username");
-
-   // Sender's email ID needs to be mentioned
-   String from = "fose.team1@gmail.com";
-   String password = "foseteam1";
-
-   // Assuming you are sending email from localhost
-   String host = "smtp.gmail.com";
-
-   // Get system properties object
-   Properties properties = System.getProperties();
-   properties.put("mail.smtp.starttls.enable", "true");
-   properties.put("mail.smtp.host", host);
-   properties.put("mail.smtp.user", from);
-   properties.put("mail.smtp.password", password);
-   properties.put("mail.smtp.port", 587);
-   properties.put("mail.smtp.auth", "true");
-   
-
-   // Setup mail server
-   //properties.setProperty("mail.smtp.host", host);
-
-   // Get the default Session object.
-   Session mailSession = Session.getDefaultInstance(properties, null);
-   
-
-   try{
-      // Create a default MimeMessage object.
-      MimeMessage message = new MimeMessage(mailSession);
-      // Set From: header field of the header.
-      message.setFrom(new InternetAddress(from));
-      // Set To: header field of the header.
-      message.addRecipient(MimeMessage.RecipientType.TO,
-                               new InternetAddress(to));
-      // Set Subject: header field
-      message.setSubject("This is the Subject Line!");
-      // Now set the actual message
-      message.setText("This is actual message");
-      //placement = "after setText";
-      // Send message
-      //Transport.send(message);
-      Transport transport = mailSession.getTransport("smtp");
-      transport.connect(host, from, password);
-      transport.sendMessage(message, message.getAllRecipients());
-      transport.close();
-      result = "Sent message successfully....";
-      resultStatus = true;
-   }catch (MessagingException mex) {
-       result = "Error thrown here";
-      mex.printStackTrace();
-   }
+    String result = "";
+    SendMail mailer = new SendMail(request.getParameter("username"));
+    boolean status = mailer.send();
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -86,7 +37,7 @@
         <div class="middle">
             <h1>Confirmation</h1>
             
-            <% if(resultStatus)
+            <% if(status)
             {
             %>
             <form action="signUpConfirmation.jsp"> 
