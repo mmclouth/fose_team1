@@ -27,19 +27,19 @@
             <h1>Sign Up Page</h1>
             <form action="signUpConfirmation.jsp">    
                 First name:  
-                <input type="text" name="firstname"><br>
+                <input type="text" name="firstname" required><br>
                 Last name:  
-                <input type="text" name="lastname"><br>
+                <input type="text" name="lastname" required><br>
                 Gender:
                 <input type="radio" name="gender" value="male" checked> Male
                 <input type="radio" name="gender" value="female"> Female
                 <input type="radio" name="gender" value="other"> Other <br>
                 E-Mail:  
-                <input type="text" name ="username"> <br> 
+                <input type="text" name ="username" required> <br> 
                 Password: 
-                <input type="password" name ="password"> <br>
+                <input type="password" name ="password" required> <br>
                 Confirm Password:  
-                <input type="password" name ="password"> <br>
+                <input type="password" name ="password" required> <br>
                 <input type="submit" value="Sign Up"><br>
                 Already have an account? 
                 <a href="logIn.jsp">Log In</a><br>
