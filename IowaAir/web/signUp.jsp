@@ -34,7 +34,14 @@
                 <input type="radio" name="gender" value="male" checked> Male
                 <input type="radio" name="gender" value="female"> Female
                 <input type="radio" name="gender" value="other"> Other <br>
+                Birthday: 
+                <!-- 
+                Birthday: 
+                type "data" not being recognized, HTML5 problem??
+                <input type="date" name="bday" required> <br>
+                -->
                 E-Mail:  
+                <!-- the type can be "email here" if JSP supports HTML5 -->
                 <input type="text" name ="username" required> <br> 
                 Password: 
                 <input type="password" name ="password" required> <br>
