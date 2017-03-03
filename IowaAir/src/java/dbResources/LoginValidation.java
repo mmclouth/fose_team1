@@ -6,6 +6,7 @@
 package dbResources;
 
 
+import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -162,6 +163,16 @@ public class LoginValidation {
             e.printStackTrace();
         }
         
+    }
+    
+        public static boolean verifyNewPassword(String password) {
+        //checks password length
+        if(password.length() < 8) { return false; }
+        //checks that password contains an uppercase letter
+        if(password.equals(password.toLowerCase())) { return false; }
+        //checks that password contains a lowercase letter
+        if(password.equals(password.toUpperCase())) { return false; }
+        return true;
     }
     
 }

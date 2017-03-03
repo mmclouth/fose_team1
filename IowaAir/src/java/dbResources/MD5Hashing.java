@@ -39,8 +39,4 @@ public class MD5Hashing
 
         return sb.toString();
     }
-    
-
- 
-    
 }

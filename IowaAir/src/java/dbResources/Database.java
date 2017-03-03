@@ -43,6 +43,13 @@ public class Database {
         return conn;
     }
     
+    /**
+     * Possible types of user accounts.
+     */
+    public enum User_Types {
+        customer, employee, admin
+    }
+    
    
 
     /**
@@ -114,8 +121,8 @@ public class Database {
      * @param email
      * @param user_type 
      */
-    public String addUserToDatabase(String firstName, String lastName, String email, String user_type){
-        return this.addUserToDatabase(firstName, lastName, email, user_type, null, null);
+    public String addUserToDatabase(String firstName, String lastName, String email, User_Types type){
+        return this.addUserToDatabase(firstName, lastName, email, type, null, null, null);
     }
     
     /**
@@ -127,21 +134,19 @@ public class Database {
      * @param firstName
      * @param lastName
      * @param email
+     * @param type
      * @param user_type
      * @param birthday
+     * @param password
      * @param gender 
      */
-    public String addUserToDatabase(String firstName, String lastName, String email, String user_type, Date birthday, String gender) {
+    public String addUserToDatabase(String firstName, String lastName, String email, User_Types type, Date birthday, String gender, String password) {
 
         StringBuilder query = new StringBuilder();
-        String password = "password";
+        //password = "password";
 
         if (this.emailAlreadyUsed(email)) {
             return "Email already assigned to a user.";
-        }
-
-        if (user_type != "customer" && user_type != "admin" && user_type != "employee") {
-            return "Invalid user type.";
         }
 
         password = MD5Hashing.encryptString(password);
@@ -155,7 +160,7 @@ public class Database {
         query.append("', '");
         query.append(password);
         query.append("', '");
-        query.append(user_type);
+        query.append(type.toString());
 
         if (birthday != null) {
             query.append("', '");
