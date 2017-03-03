@@ -14,14 +14,13 @@
 <%
     String result = "failed";
     String password = request.getParameter("password");
-    SendMail mailer = new SendMail(request.getParameter("username"));
-    boolean status = mailer.send();
     if(LoginValidation.verifyNewPassword(password)) {
         if(password.equals(request.getParameter("confPassword"))) {
             result = MD5Hashing.encryptString(password);
         }
     }
-    
+    SendMail mailer = new SendMail(request.getParameter("username"));
+    String confirmation = mailer.send();
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -46,7 +45,7 @@
         <div class="middle">
             <h1>Confirmation</h1>
             
-            <% if(status)
+            <% if(success)
             {
             %>
             <%

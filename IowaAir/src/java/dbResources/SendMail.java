@@ -5,6 +5,7 @@
  */
 package dbResources;
 
+import java.security.SecureRandom;
 import java.util.Properties;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -28,7 +29,7 @@ public class SendMail {
         this.to = to;
     }
     
-    public boolean send() {
+    public String send() {
 
         // Get system properties object
         Properties properties = System.getProperties();
@@ -46,6 +47,7 @@ public class SendMail {
         // Get the default Session object.
         Session mailSession = Session.getDefaultInstance(properties, null);
 
+        String code = SendMail.generateVerificationCode();
 
         try{
            // Create a default MimeMessage object.
@@ -56,9 +58,9 @@ public class SendMail {
            message.addRecipient(MimeMessage.RecipientType.TO,
                                     new InternetAddress(to));
            // Set Subject: header field
-           message.setSubject("This is the Subject Line!");
-           // Now set the actual message
-           message.setText("This is actual message");
+           message.setSubject("Iowa Air Verification Code");
+           // Send the verification code
+           message.setText("Your verification code is: " + code);
            //placement = "after setText";
            // Send message
            //Transport.send(message);
@@ -66,11 +68,21 @@ public class SendMail {
            transport.connect(host, from, password);
            transport.sendMessage(message, message.getAllRecipients());
            transport.close();
-           result = "Sent message successfully....";
-           return true;
         }catch (MessagingException mex) {
-            result = "Error thrown here";
+            code = "Error thrown here";
         }
-        return false;
+        return code;
+    }
+    
+    //random string generation found at 
+    //http://stackoverflow.com/questions/41107/how-to-generate-a-random-alpha-numeric-string
+    public static String generateVerificationCode() {
+        String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        final int LENGTH = 8;
+        SecureRandom rnd = new SecureRandom();
+        StringBuilder sb = new StringBuilder(LENGTH);
+        for(int i = 0; i < LENGTH; i++) 
+           sb.append( AB.charAt( rnd.nextInt(AB.length()) ) );
+        return sb.toString();
     }
 }
