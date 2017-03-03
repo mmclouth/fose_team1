@@ -4,15 +4,24 @@
     Author     : Kyle Anderson
 --%>
 
+<%@page import="dbResources.LoginValidation"%>
+<%@page import="dbResources.MD5Hashing"%>
 <%@page import="dbResources.SendMail"%>
 <%@ page import="java.io.*,java.util.*,javax.mail.*"%>
 <%@ page import="javax.mail.internet.*,javax.activation.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
 
 <%
-    String result = "";
+    String result = "failed";
+    String password = request.getParameter("password");
     SendMail mailer = new SendMail(request.getParameter("username"));
     boolean status = mailer.send();
+    if(LoginValidation.verifyNewPassword(password)) {
+        if(password.equals(request.getParameter("confPassword"))) {
+            result = MD5Hashing.encryptString(password);
+        }
+    }
+    
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -40,12 +49,16 @@
             <% if(status)
             {
             %>
+            <%
+                out.println("Result: " + result + "\n");
+            %>
             <form action="signUpConfirmation.jsp"> 
                 A confirmation link has been sent to your e-mail. Please enter
                 the confirmation code provided in the e-mail into the field 
                 below.
                 Confirmation code:
                 <input type="text" value="confirm"><br>
+                
             <% } else { %>
                 ERROR! There was a problem with the e-mail address you provided.
                 Please click the link below to return to the sign up page and 

@@ -164,4 +164,14 @@ public class LoginValidation {
         
     }
     
+        public static boolean verifyNewPassword(String password) {
+        //checks password length
+        if(password.length() < 8) { return false; }
+        //checks that password contains an uppercase letter
+        if(password.equals(password.toLowerCase())) { return false; }
+        //checks that password contains a lowercase letter
+        if(password.equals(password.toUpperCase())) { return false; }
+        return true;
+    }
+    
 }
