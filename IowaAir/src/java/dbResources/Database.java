@@ -221,6 +221,15 @@ public class Database {
                 
                 for(String field : fields){
                     employeeData.put(field, results.getString(field));
+                    
+                    if(field == "validation_status"){
+                        if(results.getString(field).equals("0")){
+                            employeeData.put(field, "false");
+                        } else {
+                            employeeData.put(field, "true");
+                        } 
+                    }
+                    
                 }
 
                 allEmployeeData.add(employeeData);
