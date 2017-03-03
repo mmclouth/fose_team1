@@ -80,7 +80,7 @@ body {
     margin-left: 2.5%;
     margin-right: 2.5%;
     padding-top: 15%;
-    
+
 }
 
 
@@ -136,7 +136,7 @@ body {
     margin-top: 2%;
     height: 45px;
     font-family: 'Catamaran', sans-serif;
-    
+
 }
 
 .search-button button{
@@ -212,7 +212,63 @@ body {
 }
 
 
+/*-----------------------------------------------------------
+        Employees Table
+/*-----------------------------------------------------------*/
 
+.employee-table{
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    float: left;
+}
+
+.employee-table-headers{
+    width: 90%;
+    margin-left: 5%;
+    float: left;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-family: 'Catamaran', sans-serif;
+
+}
+.employee-table-headers h4{
+    float: left;
+    width: 15%;
+    color: royalblue;
+    text-align: left;
+    font-size: 26px;
+    font-weight: 200;
+}
+.employee-table-record{
+    width: 90%;
+    margin-left:5%;
+    float: left;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-family: 'Catamaran', sans-serif;
+    border-bottom: 1px solid lightgrey;
+}
+.employee-table-record a{
+    opacity:0.8;
+    text-decoration: none;
+}
+
+.employee-table-record a:hover h5{
+    background-color: #202020;
+    color: white;
+}
+
+.employee-table-record h5{
+    float: left;
+    width: 15%;
+    color: midnightblue;
+    text-align: left;
+    font-size: 18px;
+    font-weight: 100;
+}
 
 
 /*********************
