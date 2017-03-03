@@ -10,43 +10,41 @@
 <%@page import="dbResources.Database.User_Types"%>
 <%@page import="dbResources.Database"%>
 <%
-    
+
     Database db = new Database();
-    
+
     boolean successfullyAdded = false;
-    
-    String firstName = null, lastName = null, email = null, gender = null, birthday = null, error=null;
-    
-    if(request.getParameter("firstName") != null){
+
+    String firstName = null, lastName = null, email = null, gender = null, birthday = null, error = null;
+
+    if (request.getParameter("firstName") != null) {
         firstName = request.getParameter("firstName");
     }
-    if(request.getParameter("lastName") != null){
+    if (request.getParameter("lastName") != null) {
         lastName = request.getParameter("lastName");
     }
-    if(request.getParameter("email") != null){
+    if (request.getParameter("email") != null) {
         email = request.getParameter("email");
     }
-    if(request.getParameter("gender") != null){
+    if (request.getParameter("gender") != null) {
         gender = request.getParameter("gender");
     }
-    if(request.getParameter("birthday") != null){
+    if (request.getParameter("birthday") != null) {
         birthday = request.getParameter("birthday");
     }
-    
-    
-    //TODO: CALL TO METHOD THAT GENERATES RANDOM PASSWORD
-    if(firstName != null && lastName != null && email != null){
-        
-        
-        error = db.addUserToDatabase(firstName, lastName, email, User_Types.employee, birthday, gender, "password" );
 
-        if(error == null){
+    //TODO: CALL TO METHOD THAT GENERATES RANDOM PASSWORD
+    if (firstName != null && lastName != null && email != null) {
+
+        error = db.addUserToDatabase(firstName, lastName, email, User_Types.employee, birthday, gender, "password");
+
+        if (error == null) {
             successfullyAdded = true;
         }
     }
-   
-    ArrayList<HashMap<String,String>> employeeData = db.getAllEmployeeData();
-    
+
+    ArrayList<HashMap<String, String>> employeeData = db.getAllEmployeeData();
+
 %>    
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -60,14 +58,14 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        
+
         <div class="title-top">
             <a class="title" href="index.html"><h1>Iowa Air</h1></a>
             <a class="links" href="logIn.jsp" ><h2>Log In</h2></a>
             <h3>|</h3>
             <a class="links" href="signUp.jsp" ><h2>Sign Up</h2></a>
         </div>
-        
+
         <div class="admin-toolbar">
             <ul>
                 <li><a href="adminLanding.jsp">Home</a></li>
@@ -81,23 +79,24 @@
         <div class="middle">
             <h1>Admin Employees Page</h1>
 
-            <br>
-
-
-
-
             <% if (error == null) {
 
                     if (successfullyAdded) { %>
 
-            <h2>Employee successfully added.</h2>
+            <h2 class="success">Employee successfully added.</h2>
+
+                    <% } %> 
+                <% } else {%>
+
+            <h2 class="failure">Error code: <%= error%></h2>
 
             <% } %>
+            
 
             <div class="form-block">
 
                 <h2>Add New Employee: </h2>
-                
+
                 <form action="adminEmployees.jsp" method="post">             
                     <label for="firstName">First Name:</label>
                     <input type="text" name ="firstName"> <br> 
@@ -120,16 +119,12 @@
                 </form> 
             </div>
 
-        <% } else { %>
-        
-        <h2>Error code: <%= error %></h2>
-        
-        <% } %>
-        
-        <br>
-       
-                    <div class="employee-table">
+            
 
+            <div class="employee-table">
+
+                <h2>Current Employees</h2>
+                
                 <table>
                     <tr>
                         <th>First Name</th>
@@ -140,7 +135,6 @@
                         <th>Validated</th>
                     </tr>
 
-
                     <% for (HashMap<String, String> record : employeeData) {%>
                     <tr>
                         <td><%= record.get("first_name")%></td>
@@ -150,18 +144,15 @@
                         <td><%= record.get("birthday")%></td>
                         <td><%= record.get("validation_status")%></td>
                     </tr>
-
-
-                    <% } %>
-
+                    
+                    <% }%>
 
                 </table>
 
             </div>
-             
-            
+                    
         </div>    
-        
+
 
     </body>
 </html>
