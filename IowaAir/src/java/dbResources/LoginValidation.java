@@ -6,7 +6,6 @@
 package dbResources;
 
 
-import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,6 +24,7 @@ public class LoginValidation {
     {
         this.username = username;
         this.password = password;
+        this.password = MD5Hashing.encryptString(this.password);
         conn = getConnection();
     }
     public Connection conn = null;
@@ -34,6 +34,21 @@ public class LoginValidation {
             conn = Util.getConnection( "root", "" );
         }
         return conn;
+    }
+    public void closeConnection()
+    {
+        try 
+        {
+            conn.close();
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        } 
+        catch(Exception e){
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        } 
     }
     
     public int findUserId()
@@ -68,7 +83,7 @@ public class LoginValidation {
             
             while(results.next())
             {
-                if (results.getString("password").equals(password))
+                if (MD5Hashing.encryptString(results.getString("password")).equals(password))
             {
                 correctPassword = true;
             }

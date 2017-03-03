@@ -73,7 +73,7 @@
             <%
                 out.println("Result: " + result + "\n");
             %>
-            <form action="signUpConfirmation.jsp"> 
+            <form action="signUpConfirmation.jsp" method="post"> 
                 A confirmation link has been sent to your e-mail. Please enter
                 the confirmation code provided in the e-mail into the field 
                 below.

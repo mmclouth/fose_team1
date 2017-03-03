@@ -4,6 +4,67 @@
     Author     : kenziemclouth
 --%>
 
+<%@page import="dbResources.LoginValidation"%>
+<%@page import="java.sql.SQLException"%>
+<%
+    String username = null;
+    String password = null;
+    boolean error = false;
+    boolean correctPassword = false;
+    if (request.getParameter("username") != null)
+    {
+        username = request.getParameter("username");
+    }
+    if (request.getParameter("password") != null)
+    {
+        password = request.getParameter("password");
+    }
+    if (username != null && password != null)
+    {
+        try 
+        {
+            LoginValidation login = new LoginValidation(username,password);
+            
+            int userId = login.findUserId();
+            correctPassword = login.isPasswordCorrect(userId);
+            if(correctPassword)
+            {
+                
+                String userType = login.getUserType(userId);
+                if (userType.equals("admin"))
+                {
+                    response.sendRedirect("/IowaAir/adminLanding.jsp");
+                }
+                else if(userType.equals("customer"))
+                {
+                    response.sendRedirect("/IowaAir/index.html");
+                }
+                else if(userType.equals("employee"))
+                {
+                    response.sendRedirect("/IowaAir/employeeLanding.jsp");
+                }    
+            }
+            else
+            {
+                error = true;
+            }
+            login.closeConnection();
+            
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+
+%>
+
+
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -26,11 +87,20 @@
         <div class="middle">
             <h1>Log In Page</h1>
             
-            <form action="loginServlet" method="post">             
+            <form action="logIn.jsp" method="post">             
                 Username:
                 <input type="text" name ="username"> <br> 
                 Password: 
                 <input type="password" name ="password"> <br>
+                <% if(error)
+                {
+                    if(!correctPassword)
+                    {%>
+                    <div style="color:red">
+                        Invalid username or password entered.
+                    </div>
+                    <%}
+                }%>
                 <input type="submit" value="Log in"> <br>
                 New User? 
                 <a href="signUp.jsp">Sign Up</a><br>
