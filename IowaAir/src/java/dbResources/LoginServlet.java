@@ -34,6 +34,7 @@ public class LoginServlet extends HttpServlet
             boolean correctPassword = login.isPasswordCorrect(userId);
             if(correctPassword)
             {
+                
                 String userType = login.getUserType(userId);
                 if (userType.equals("admin"))
                 {

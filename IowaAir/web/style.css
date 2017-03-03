@@ -80,7 +80,7 @@ body {
     margin-left: 2.5%;
     margin-right: 2.5%;
     padding-top: 15%;
-    
+
 }
 
 
@@ -136,7 +136,7 @@ body {
     margin-top: 2%;
     height: 45px;
     font-family: 'Catamaran', sans-serif;
-    
+
 }
 
 .search-button button{
@@ -212,7 +212,74 @@ body {
 }
 
 
+.employee-table {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    
+    float: left;
+    padding:1%;
+}
 
+.employee-table h2 {
+    width: 100%;
+    float: left;
+    font-size: 30px;
+    color: midnightblue;
+    border-bottom: 1px solid midnightblue;
+}
+
+.employee-table table {
+    width: 100%;
+    float: left;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-family: 'Catamaran', sans-serif;
+}
+
+.employee-table th {
+    width: 20%;
+    color: royalblue;
+    text-align: center;
+    font-size: 26px;
+    font-weight: 200;
+}
+
+.employee-table td {
+    color: midnightblue;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 100;
+}
+
+.form-block{
+    
+    width: 90%;
+    float: left;
+    padding: 3%;
+    
+}
+
+.form-block h2 {
+    width: 100%;
+    float: left;
+    font-size: 26px;
+    color: midnightblue;
+}
+
+.success {
+    font-size: 20px;
+    color: royalblue;
+    float: left;
+    margin-left: 35%;
+}
+
+.failure {
+    font-size: 20px;
+    color: red;
+    float: left;
+    margin-left: 35%;
+}
 
 
 /*********************

@@ -27,30 +27,31 @@ CREATE TABLE airport
 CREATE TABLE aircraft_type
 (
     id INT NOT NULL AUTO_INCREMENT,
-    plane_name VARCHAR(255) NOT NULL,
+    plane_name VARCHAR(191) UNIQUE NOT NULL,
     down_time INT NOT NULL,
     capacity INT NOT NULL,
         PRIMARY KEY (id)
 );
 
-CREATE TABLE airplane
+CREATE TABLE airplane 
 (
     id INT NOT NULL AUTO_INCREMENT,
     aircraft_type_id INT NOT NULL,
-    num VARCHAR(255) NOT NULL,
+    num VARCHAR(191) NOT NULL UNIQUE,
         PRIMARY KEY (id),
         FOREIGN KEY (aircraft_type_id) 
-        REFERENCES aircraft_type (id)    
+        REFERENCES aircraft_type (id)
+        
 );
 
-ALTER TABLE `airplane` AUTO_INCREMENT = 10000;
+ALTER TABLE airplane  AUTO_INCREMENT = 10000;
 
 
 
 CREATE TABLE flight
 (
     id INT NOT NULL AUTO_INCREMENT,
-    num VARCHAR(255) NOT NULL,
+    num VARCHAR(191) UNIQUE NOT NULL,
     airplane_id INT NOT NULL,
     origin_code VARCHAR(10) NOT NULL,
     destination_code VARCHAR(10) NOT NULL,
@@ -74,11 +75,13 @@ CREATE TABLE userr
     id INT NOT NULL AUTO_INCREMENT,
     first_name VARCHAR(255) NOT NULL,
     last_name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
+    email VARCHAR(191) NOT NULL UNIQUE,
     password VARCHAR(255),
     user_type ENUM('admin', 'employee', 'customer'),
     birthday DATE,
     gender ENUM('female', 'male', 'other'),
+    validation_status BOOLEAN DEFAULT false,
+    confirmation_code VARCHAR(255) NOT NULL,
         PRIMARY KEY (id)
 
 );
@@ -97,8 +100,5 @@ CREATE TABLE boarding_pass
         REFERENCES userr (id)
 
 );
-
-
-
 
 

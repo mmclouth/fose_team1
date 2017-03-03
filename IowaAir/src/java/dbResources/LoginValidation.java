@@ -6,6 +6,7 @@
 package dbResources;
 
 
+import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -107,6 +108,71 @@ public class LoginValidation {
     public String getPassword()
     {
         return password;
+    }
+    
+    /**
+     * Checks validation status of specified user in database
+     * @param userID
+     * @return true if validated, false if not validated
+     */
+    public boolean isValidated(){
+        
+        int userID = this.findUserId();
+        
+        boolean validated = false;
+        
+        try {
+            PreparedStatement query = conn.prepareStatement("SELECT validation_status FROM userr WHERE id = '" + userID + "'");
+            ResultSet results = query.executeQuery();
+            
+            while(results.next())
+            {
+                validated = results.getBoolean("validation_status");
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return validated;
+    }
+    
+    
+    /**
+     * Sets validation status of specified user
+     * @param userID
+     * @param validated 
+     */
+    public void setValidationStatus(boolean validated){
+        
+        int userID = this.findUserId();
+        
+        StringBuilder sql = new StringBuilder();
+        
+        sql.append("UPDATE userr SET validation_status =");
+        sql.append(validated);
+        sql.append(" WHERE id =");
+        sql.append(userID);
+        sql.append(";");
+        
+        try
+        {
+            PreparedStatement query = conn.prepareStatement(sql.toString());
+            query.executeUpdate();
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        
+    }
+    
+        public static boolean verifyNewPassword(String password) {
+        //checks password length
+        if(password.length() < 8) { return false; }
+        //checks that password contains an uppercase letter
+        if(password.equals(password.toLowerCase())) { return false; }
+        //checks that password contains a lowercase letter
+        if(password.equals(password.toUpperCase())) { return false; }
+        return true;
     }
     
 }

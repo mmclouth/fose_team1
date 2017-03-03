@@ -4,75 +4,45 @@
     Author     : Kyle Anderson
 --%>
 
+<%@page import="dbResources.Database.User_Types"%>
+<%@page import="dbResources.Database"%>
+<%@page import="dbResources.LoginValidation"%>
+<%@page import="dbResources.MD5Hashing"%>
+<%@page import="dbResources.SendMail"%>
 <%@ page import="java.io.*,java.util.*,javax.mail.*"%>
 <%@ page import="javax.mail.internet.*,javax.activation.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
+
 <%
-   String result = "";
-   String placement = "Never changed";
-   // Recipient's email ID needs to be mentioned.
-   String to = "anderslkyle@gmail.com";
-
-   // Sender's email ID needs to be mentioned
-   String from = "fose.team1@gmail.com";
-   String password = "foseteam1";
-
-   // Assuming you are sending email from localhost
-   String host = "smtp.gmail.com";
-
-   // Get system properties object
-   Properties properties = System.getProperties();
-   properties.put("mail.smtp.starttls.enable", "true");
-   properties.put("mail.smtp.host", host);
-   properties.put("mail.smtp.user", from);
-   properties.put("mail.smtp.password", password);
-   properties.put("mail.smtp.port", 587);
-   properties.put("mail.smtp.auth", "true");
-   
-
-   // Setup mail server
-   //properties.setProperty("mail.smtp.host", host);
-
-   // Get the default Session object.
-   Session mailSession = Session.getDefaultInstance(properties, null);
-   
-
-   try{
-      // Create a default MimeMessage object.
-      MimeMessage message = new MimeMessage(mailSession);
-      // Set From: header field of the header.
-      try{
-      message.setFrom(new InternetAddress(from));
-      } catch (MessagingException me) {
-          placement = "Exception thrown from setFrom";
-      }
-      // Set To: header field of the header.
-      try {
-      message.addRecipient(MimeMessage.RecipientType.TO,
-                               new InternetAddress(to));
-      } catch (MessagingException me1) {
-          placement = "Exception thrown from addRecipient";
-      }
-      // Set Subject: header field
-      message.setSubject("This is the Subject Line!");
-      // Now set the actual message
-      message.setText("This is actual message");
-      //placement = "after setText";
-      // Send message
-      //Transport.send(message);
-      try {
-      Transport transport = mailSession.getTransport("smtp");
-      transport.connect(host, from, password);
-      transport.sendMessage(message, message.getAllRecipients());
-      transport.close();
-      result = "Sent message successfully....";
-      } catch (Exception eee) {
-          placement = "Transport is the problem";
-      }
-   }catch (MessagingException mex) {
-       result = "Error thrown here";
-      mex.printStackTrace();
-   }
+    String result = "failed";
+    boolean success = false;
+    String first = request.getParameter("firstname");
+    String last = request.getParameter("lastname");
+    String email = request.getParameter("username");
+    String password = request.getParameter("password");
+    String gender = request.getParameter("gender");
+    
+    //ensure that valid password was entered
+    if(LoginValidation.verifyNewPassword(password)) {
+        if(password.equals(request.getParameter("confPassword"))) {
+            result = MD5Hashing.encryptString(password);
+            success = true;
+        }
+    }
+    SendMail mailer = new SendMail(email);
+    if(success) {
+        try {
+            //send e-mail
+            mailer.send();
+        } catch (MessagingException mex) {
+            success = false;
+        }
+    }
+    /*if(success) {
+        Database db = new Database();
+        db.addUserToDatabase(first, last,
+                email, User_Types.customer, null, gender, password);
+    } */
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -97,9 +67,25 @@
         <div class="middle">
             <h1>Confirmation</h1>
             
-            <%
-                out.println("Result: " + result + "\n" + "Placement: " + placement);
+            <% if(true)
+            {
             %>
+            <%
+                out.println("Result: " + result + "\n");
+            %>
+            <form action="signUpConfirmation.jsp"> 
+                A confirmation link has been sent to your e-mail. Please enter
+                the confirmation code provided in the e-mail into the field 
+                below.
+                Confirmation code:
+                <input type="text" value="confirm"><br>
+                
+            <% } else { %>
+                ERROR! There was a problem with the e-mail address you provided.
+                Please click the link below to return to the sign up page and 
+                enter a valid e-mail.
+                <a href="signUp.jsp">Return to Sign Up Page</a><br>
+            <% } %>
         </div>
 
     </body>

@@ -20,8 +20,8 @@ public class LoginTest
     {
         try
         {
-            LoginValidation login = new LoginValidation("nickolas-kutsch@uiowa.edu","password");
-
+            LoginValidation login = new LoginValidation("nickolas-kutsch@uiowa.edu","5f4dcc3b5aa765d61d8327deb882cf99");
+          
             int userID = login.findUserId();
             boolean correctPassword = login.isPasswordCorrect(userID);
             System.out.println(login.getUsername());
@@ -31,6 +31,11 @@ public class LoginTest
                 System.out.println("Password was correct");
                 String userType = login.getUserType(userID);
                 System.out.println(userType);
+                
+                if(!login.isValidated()){
+                    login.setValidationStatus(true);
+                    System.out.println("Setting validation_status to true for userID:" + userID);
+                }
             }
             else 
             {
