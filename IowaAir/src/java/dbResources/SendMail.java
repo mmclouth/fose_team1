@@ -29,7 +29,7 @@ public class SendMail {
         this.to = to;
     }
     
-    public String send() {
+    public void send() throws MessagingException {
 
         // Get system properties object
         Properties properties = System.getProperties();
@@ -49,29 +49,23 @@ public class SendMail {
 
         String code = SendMail.generateVerificationCode();
 
-        try{
-           // Create a default MimeMessage object.
-           MimeMessage message = new MimeMessage(mailSession);
-           // Set From: header field of the header.
-           message.setFrom(new InternetAddress(from));
-           // Set To: header field of the header.
-           message.addRecipient(MimeMessage.RecipientType.TO,
-                                    new InternetAddress(to));
-           // Set Subject: header field
-           message.setSubject("Iowa Air Verification Code");
-           // Send the verification code
-           message.setText("Your verification code is: " + code);
-           //placement = "after setText";
-           // Send message
-           //Transport.send(message);
-           Transport transport = mailSession.getTransport("smtp");
-           transport.connect(host, from, password);
-           transport.sendMessage(message, message.getAllRecipients());
-           transport.close();
-        }catch (MessagingException mex) {
-            code = "Error thrown here";
-        }
-        return code;
+        // Create a default MimeMessage object.
+        MimeMessage message = new MimeMessage(mailSession);
+        // Set From: header field of the header.
+        message.setFrom(new InternetAddress(from));
+        // Set To: header field of the header.
+        message.addRecipient(MimeMessage.RecipientType.TO,
+                                 new InternetAddress(to));
+        // Set Subject: header field
+        message.setSubject("Iowa Air Verification Code");
+        // Send the verification code
+        message.setText("Your verification code is: " + code);
+        //placement = "after setText";
+        // Send message
+        Transport transport = mailSession.getTransport("smtp");
+        transport.connect(host, from, password);
+        transport.sendMessage(message, message.getAllRecipients());
+        transport.close();
     }
     
     //random string generation found at 

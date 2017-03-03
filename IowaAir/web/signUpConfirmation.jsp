@@ -4,6 +4,8 @@
     Author     : Kyle Anderson
 --%>
 
+<%@page import="dbResources.Database.User_Types"%>
+<%@page import="dbResources.Database"%>
 <%@page import="dbResources.LoginValidation"%>
 <%@page import="dbResources.MD5Hashing"%>
 <%@page import="dbResources.SendMail"%>
@@ -13,14 +15,34 @@
 
 <%
     String result = "failed";
+    boolean success = false;
+    String first = request.getParameter("firstname");
+    String last = request.getParameter("lastname");
+    String email = request.getParameter("username");
     String password = request.getParameter("password");
+    String gender = request.getParameter("gender");
+    
+    //ensure that valid password was entered
     if(LoginValidation.verifyNewPassword(password)) {
         if(password.equals(request.getParameter("confPassword"))) {
             result = MD5Hashing.encryptString(password);
+            success = true;
         }
     }
-    SendMail mailer = new SendMail(request.getParameter("username"));
-    String confirmation = mailer.send();
+    SendMail mailer = new SendMail(email);
+    if(success) {
+        try {
+            //send e-mail
+            mailer.send();
+        } catch (MessagingException mex) {
+            success = false;
+        }
+    }
+    /*if(success) {
+        Database db = new Database();
+        db.addUserToDatabase(first, last,
+                email, User_Types.customer, null, gender, password);
+    } */
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -45,7 +67,7 @@
         <div class="middle">
             <h1>Confirmation</h1>
             
-            <% if(success)
+            <% if(true)
             {
             %>
             <%
