@@ -13,7 +13,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.logging.Logger;
 
 
@@ -121,8 +123,8 @@ public class Database {
      * @param email
      * @param user_type 
      */
-    public String addUserToDatabase(String firstName, String lastName, String email, User_Types type){
-        return this.addUserToDatabase(firstName, lastName, email, type, null, null, null);
+    public String addUserToDatabase(String firstName, String lastName, String email, String password, User_Types type){
+        return this.addUserToDatabase(firstName, lastName, email, type, null, null, password);
     }
     
     /**
@@ -140,10 +142,11 @@ public class Database {
      * @param password
      * @param gender 
      */
-    public String addUserToDatabase(String firstName, String lastName, String email, User_Types type, Date birthday, String gender, String password) {
+    public String addUserToDatabase(String firstName, String lastName, String email, User_Types type, String birthday, String gender, String password) {
 
         StringBuilder query = new StringBuilder();
         //password = "password";
+        String confirmationCode = "confirm";  //will change this later
 
         if (this.emailAlreadyUsed(email)) {
             return "Email already assigned to a user.";
@@ -151,7 +154,7 @@ public class Database {
 
         password = MD5Hashing.encryptString(password);
 
-        query.append("INSERT INTO userr (first_name, last_name, email, password, user_type, birthday, gender, validation_status) VALUES ('");
+        query.append("INSERT INTO userr (first_name, last_name, email, password, user_type, birthday, gender, confirmation_code, validation_status) VALUES ('");
         query.append(firstName);
         query.append("', '");
         query.append(lastName);
@@ -165,7 +168,7 @@ public class Database {
         if (birthday != null) {
             query.append("', '");
             query.append(birthday);
-            query.append("', '");
+            query.append("', ");
         } else {
             query.append("', null, ");
         }
@@ -177,8 +180,11 @@ public class Database {
             query.append(gender);
             query.append("', ");
         }
+        
+        query.append("'");
+        query.append(confirmationCode);
 
-        query.append("FALSE) ;");
+        query.append("', FALSE) ;");
 
         try {
             PreparedStatement sql = conn.prepareStatement(query.toString());
@@ -186,10 +192,49 @@ public class Database {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return e.toString();
         }
 
         return null;
 
+    }
+    
+    
+    public ArrayList<HashMap<String, String>> getAllEmployeeData(){
+        
+        ArrayList<HashMap<String,String>> allEmployeeData = new ArrayList<>();
+        HashMap<String, String> employeeData;
+        
+        String query = "SELECT * FROM userr WHERE user_type = 'employee';";
+        
+        String[] fields = {"first_name", "last_name", "email", "password", "user_type", "birthday", "gender", "confirmation_code", "validation_status"};
+        
+        try {
+            PreparedStatement sql = conn.prepareStatement(query);
+            ResultSet results = sql.executeQuery();
+            
+            while(results.next()){
+                
+                employeeData = new HashMap<String, String>();
+                
+                employeeData.put("id", Integer.toString(results.getInt("id")));
+                
+                for(String field : fields){
+                    employeeData.put(field, results.getString(field));
+                }
+
+                allEmployeeData.add(employeeData);
+                
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        
+        
+        
+        return allEmployeeData;
     }
 
     

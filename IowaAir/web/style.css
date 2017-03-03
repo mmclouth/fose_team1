@@ -216,59 +216,54 @@ body {
         Employees Table
 /*-----------------------------------------------------------*/
 
-.employee-table{
+.employee-table {
     width: 90%;
-    margin-left: 5%;
-    margin-right: 5%;
-    margin-top: 20px;
+    margin-top: 10px;
     margin-bottom: 10px;
+    
     float: left;
+    padding:1%;
 }
 
-.employee-table-headers{
-    width: 90%;
+.employee-table table {
+    width: 100%;
     margin-left: 5%;
     float: left;
     margin-top: 10px;
     margin-bottom: 10px;
     font-family: 'Catamaran', sans-serif;
-
 }
-.employee-table-headers h4{
-    float: left;
-    width: 15%;
+
+.employee-table th {
+    width: 20%;
     color: royalblue;
-    text-align: left;
+    text-align: center;
     font-size: 26px;
     font-weight: 200;
 }
-.employee-table-record{
-    width: 90%;
-    margin-left:5%;
-    float: left;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    font-family: 'Catamaran', sans-serif;
-    border-bottom: 1px solid lightgrey;
-}
-.employee-table-record a{
-    opacity:0.8;
-    text-decoration: none;
-}
 
-.employee-table-record a:hover h5{
-    background-color: #202020;
-    color: white;
-}
-
-.employee-table-record h5{
-    float: left;
-    width: 15%;
+.employee-table td {
     color: midnightblue;
-    text-align: left;
+    text-align: center;
     font-size: 18px;
     font-weight: 100;
 }
+
+.form-block{
+    
+    width: 90%;
+    float: left;
+    padding: 3%;
+    
+}
+
+.form-block h2 {
+    width: 100%;
+    float: left;
+    font-size: 26px;
+    color: midnightblue;
+}
+
 
 
 /*********************

@@ -4,6 +4,51 @@
     Author     : kenziemclouth
 --%>
 
+<%@page import="java.sql.Date"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="dbResources.Database.User_Types"%>
+<%@page import="dbResources.Database"%>
+<%
+    
+    Database db = new Database();
+    
+    boolean successfullyAdded = false;
+    
+    String firstName = null, lastName = null, email = null, gender = null, birthday = null, error=null;
+    
+    if(request.getParameter("firstName") != null){
+        firstName = request.getParameter("firstName");
+    }
+    if(request.getParameter("lastName") != null){
+        lastName = request.getParameter("lastName");
+    }
+    if(request.getParameter("email") != null){
+        email = request.getParameter("email");
+    }
+    if(request.getParameter("gender") != null){
+        gender = request.getParameter("gender");
+    }
+    if(request.getParameter("birthday") != null){
+        birthday = request.getParameter("birthday");
+    }
+    
+    
+    //TODO: CALL TO METHOD THAT GENERATES RANDOM PASSWORD
+    if(firstName != null && lastName != null && email != null){
+        
+        
+        error = db.addUserToDatabase(firstName, lastName, email, User_Types.employee, birthday, gender, "password" );
+
+        if(error == null){
+            successfullyAdded = true;
+        }
+    }
+   
+    ArrayList<HashMap<String,String>> employeeData = db.getAllEmployeeData();
+    
+%>    
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -35,7 +80,88 @@
 
         <div class="middle">
             <h1>Admin Employees Page</h1>
-        </div>
+
+            <br>
+
+
+
+
+            <% if (error == null) {
+
+                    if (successfullyAdded) { %>
+
+            <h2>Employee successfully added.</h2>
+
+            <% } %>
+
+            <div class="form-block">
+
+                <h2>Add New Employee: </h2>
+                
+                <form action="adminEmployees.jsp" method="post">             
+                    <label for="firstName">First Name:</label>
+                    <input type="text" name ="firstName"> <br> 
+
+                    <label for="lastName">Last Name:</label>
+                    <input type="text" name ="lastName"> <br>
+
+                    <label for="email">Email: </label>
+                    <input type="text" name ="email"> <br> 
+
+                    <label for="gender">Gender:</label>
+                    <input type="radio" name="gender" value="male" checked> Male
+                    <input type="radio" name="gender" value="female"> Female
+                    <input type="radio" name="gender" value="other"> Other <br>
+
+                    <label for="birthday">Birthday:</label>
+                    <input type="date" name ="birthday"> <br> 
+
+                    <input type="submit" value="Add Employee"> <br>
+                </form> 
+            </div>
+
+        <% } else { %>
+        
+        <h2>Error code: <%= error %></h2>
+        
+        <% } %>
+        
+        <br>
+       
+                    <div class="employee-table">
+
+                <table>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Gender</th>
+                        <th>Birthday</th>
+                        <th>Validated</th>
+                    </tr>
+
+
+                    <% for (HashMap<String, String> record : employeeData) {%>
+                    <tr>
+                        <td><%= record.get("first_name")%></td>
+                        <td><%= record.get("last_name")%></td>
+                        <td><%= record.get("email")%></td>
+                        <td><%= record.get("gender")%></td>
+                        <td><%= record.get("birthday")%></td>
+                        <td><%= record.get("validation_status")%></td>
+                    </tr>
+
+
+                    <% } %>
+
+
+                </table>
+
+            </div>
+             
+            
+        </div>    
+        
 
     </body>
 </html>
