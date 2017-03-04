@@ -48,8 +48,8 @@
                 }
                 else if(userType.equals("customer"))
                 {
-                    session.setAttribute("homePage", "homePage.jsp");
-                    response.sendRedirect("/IowaAir/homePage.jsp");
+                    session.setAttribute("homePage", "home.jsp");
+                    response.sendRedirect("/IowaAir/home.jsp");
                 }
                 else if(userType.equals("employee"))
                 {
