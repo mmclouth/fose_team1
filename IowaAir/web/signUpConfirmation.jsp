@@ -21,47 +21,18 @@
 
     boolean successfullyValidated = false;
 
-    String firstName = null, lastName = null, email = null, gender = null, birthday = null, error = null, password = null, confPassword = null;
-    String confirm = null;
+    String confirm = null, email = null, password=null;
 
     //Retrieve parameters from request if they have been sent from previous page
     if (request.getParameter("confirm") != null) {
         confirm = request.getParameter("confirm");
     }
-    if (request.getParameter("firstName") != null) {
-        firstName = request.getParameter("firstName");
-    }
-    if (request.getParameter("lastName") != null) {
-        lastName = request.getParameter("lastName");
-    }
-    if (request.getParameter("email") != null) {
-        email = request.getParameter("email");
-    }
-    if (request.getParameter("password") != null) {
-        password = request.getParameter("password");
-    }
-    if (request.getParameter("confPassword") != null) {
-        confPassword = request.getParameter("confPassword");
-    }
-    if (request.getParameter("gender") != null) {
-        gender = request.getParameter("gender");
-    }
-    if (request.getParameter("birthday") != null) {
-        birthday = request.getParameter("birthday");
-
-        //If browser does not support HTML's date type, format the date string correctly
-        if (!birthday.matches("^(19|20)\\d\\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$")) {
-
-            String[] bdaySplit = birthday.split("/");
-            String month = bdaySplit[0];
-            String day = bdaySplit[1];
-            String year = bdaySplit[2];
-
-            birthday = year + "-" + month + "-" + day;
-
-        }
-    }
-
+    
+    //retrieve email and password from session to use for LoginValidation object
+    email = session.getAttribute("emailForConfCode").toString();
+    password = session.getAttribute("passwordForConfCode").toString();
+    
+    
     //if confirm is not null, this means the user just tried to enter a confirmation code
     if (confirm != null) {
         LoginValidation user = new LoginValidation(email, password);
@@ -71,28 +42,7 @@
             user.setValidationStatus(true);
             successfullyValidated = true;
         }
-    } else {
-
-        //ensure that valid password was entered
-        if (LoginValidation.verifyNewPassword(password)) {
-            if (password.equals(confPassword)) {
-                result = MD5Hashing.encryptString(password);
-                success = true;
-            }
-        }
-        SendMail mailer = new SendMail(email);
-        if (success) {
-            try {
-                //send e-mail
-                mailer.send();
-
-                db.addUserToDatabase(firstName, lastName,
-                        email, User_Types.customer, null, gender, password);
-            } catch (MessagingException mex) {
-                success = false;
-            }
-        }
-    }
+    } 
     
     db.closeConnection();
 %>
