@@ -45,6 +45,14 @@ public class Database {
         return conn;
     }
     
+    public void closeConnection(){
+        try{
+            conn.close();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+    
     /**
      * Possible types of user accounts.
      */
