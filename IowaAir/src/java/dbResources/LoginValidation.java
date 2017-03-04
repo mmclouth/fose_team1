@@ -206,6 +206,11 @@ public class LoginValidation {
     }
         
       
+    /**
+     * Checks if given code matches the confirmation_code assigned to user in database.
+     * @param code
+     * @return true if codes match, false if they don't
+     */
     public boolean isConfirmationCodeCorrect(String code){
         StringBuilder query = new StringBuilder();
         String codeFromDatabase = null;
