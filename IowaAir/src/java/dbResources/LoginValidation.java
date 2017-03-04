@@ -95,6 +95,7 @@ public class LoginValidation {
         }
         return correctPassword;
     }
+    
     // Only call getUserType if both username and password has been validated. 
     public String getUserType(int userId)
     {
@@ -203,5 +204,33 @@ public class LoginValidation {
         }
         return true;
     }
+        
+      
+    public boolean isConfirmationCodeCorrect(String code){
+        StringBuilder query = new StringBuilder();
+        String codeFromDatabase = null;
+        
+        query.append("SELECT confirmation_code FROM userr WHERE id=");
+        query.append(this.findUserId());
+        query.append(";");
+        
+        try{
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            ResultSet results = sql.executeQuery();
+            
+            while(results.next()){
+                codeFromDatabase = results.getString("confirmation_code");
+            }
+            
+            if( codeFromDatabase.equals(code)){
+                return true;
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return false;
+    }    
     
 }
