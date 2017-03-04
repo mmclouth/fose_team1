@@ -52,7 +52,44 @@ public class Database {
         customer, employee, admin
     }
     
-   
+    /**
+     * Query that returns any string from database given certain table constraints
+     * @param field
+     * @param table
+     * @param constraintField
+     * @param constraintValue
+     * @return results of SELECT query
+     */
+    public String selectString(String field, String table, String constraintField, String constraintValue){
+        
+        StringBuilder query = new StringBuilder();
+        
+        query.append("SELECT ");
+        query.append(field);
+        query.append(" FROM ");
+        query.append(table);
+        query.append(" WHERE ");
+        query.append(constraintField);
+        query.append("='");
+        query.append(constraintValue);
+        query.append("';");
+        
+        try{
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            ResultSet results = sql.executeQuery();
+            
+            while(results.next()){
+                return results.getString(field);
+            }
+            
+            
+        } catch (SQLException e){
+            e.printStackTrace();
+        }    
+
+        return null;
+    }
+    
 
     /**
      * Generic method to test database connection.  Verifies if data is present in given table.
