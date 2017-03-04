@@ -30,27 +30,30 @@
             correctPassword = login.isPasswordCorrect(userId);
             if(correctPassword)
             {
+                String userType = login.getUserType(userId);
                 
                 Database db = new Database();
                 
                 session.setAttribute("userID", userId);
                 session.setAttribute("userFirstName", db.selectString("first_name", "userr", "id", Integer.toString(userId)));
                 session.setAttribute("userLastName", db.selectString("last_name", "userr", "id", Integer.toString(userId)));
-                session.setAttribute("user_type", login.getUserType(userId));
+                session.setAttribute("user_type", userType);
                 
                 db.closeConnection();
 
-                String userType = login.getUserType(userId);
                 if (userType.equals("admin"))
                 {
+                    session.setAttribute("homePage", "adminLanding.jsp");
                     response.sendRedirect("/IowaAir/adminLanding.jsp");
                 }
                 else if(userType.equals("customer"))
                 {
-                    response.sendRedirect("/IowaAir/index.html");
+                    session.setAttribute("homePage", "homePage.jsp");
+                    response.sendRedirect("/IowaAir/homePage.jsp");
                 }
                 else if(userType.equals("employee"))
                 {
+                    session.setAttribute("homePage", "employeeLanding.jsp");
                     response.sendRedirect("/IowaAir/employeeLanding.jsp");
                 }    
             }
