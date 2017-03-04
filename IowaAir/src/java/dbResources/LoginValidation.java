@@ -187,7 +187,20 @@ public class LoginValidation {
         if(password.equals(password.toLowerCase())) { return false; }
         //checks that password contains a lowercase letter
         if(password.equals(password.toUpperCase())) { return false; }
+        //checks that password contains a number
+        char[] array = password.toCharArray();
+        boolean containsDigit = false;
+        for(int i = 0; i < array.length;i++)
+        {
+            if (Character.isDigit(array[i]))
+            {
+                containsDigit = true;
+            }
+        }
+        if (!containsDigit)
+        {
+            return false;
+        }
         return true;
     }
-    
 }

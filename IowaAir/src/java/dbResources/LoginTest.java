@@ -20,12 +20,14 @@ public class LoginTest
     {
         try
         {
-            LoginValidation login = new LoginValidation("nickolas-kutsch@uiowa.edu","5f4dcc3b5aa765d61d8327deb882cf99");
+            LoginValidation login = new LoginValidation("nickolas-kutsch@uiowa.edu","Password3");
           
             int userID = login.findUserId();
             boolean correctPassword = login.isPasswordCorrect(userID);
+            //boolean validPassword = login.verifyNewPassword("Pa3");
             System.out.println(login.getUsername());
             System.out.println(login.getPassword());
+            System.out.println(validPassword);
             if (correctPassword)
             {
                 System.out.println("Password was correct");
