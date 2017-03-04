@@ -27,7 +27,7 @@ public class LoginTest
             //boolean validPassword = login.verifyNewPassword("Pa3");
             System.out.println(login.getUsername());
             System.out.println(login.getPassword());
-            System.out.println(validPassword);
+            //System.out.println(validPassword);
             if (correctPassword)
             {
                 System.out.println("Password was correct");
