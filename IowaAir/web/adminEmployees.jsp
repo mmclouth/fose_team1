@@ -31,6 +31,18 @@
     }
     if (request.getParameter("birthday") != null) {
         birthday = request.getParameter("birthday");
+        
+        //If browser does not support HTML's date type, format the date string correctly
+        if( !birthday.matches("^(19|20)\\d\\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$")){
+            
+            String[] bdaySplit = birthday.split("/");
+            String month = bdaySplit[0];
+            String day = bdaySplit[1];
+            String year = bdaySplit[2];
+            
+            birthday = year + "-" + month + "-" + day;
+
+        }
     }
 
     //TODO: CALL TO METHOD THAT GENERATES RANDOM PASSWORD
@@ -112,7 +124,7 @@
                     <input type="radio" name="gender" value="female"> Female
                     <input type="radio" name="gender" value="other"> Other <br>
 
-                    <label for="birthday">Birthday:</label>
+                    <label for="birthday">Birthday (mm/dd/yyyy):</label>
                     <input type="date" name ="birthday"> <br> 
 
                     <input type="submit" value="Add Employee"> <br>
