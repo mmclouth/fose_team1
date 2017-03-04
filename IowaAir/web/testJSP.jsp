@@ -23,7 +23,7 @@
         testString = "false";
     }
     
-    
+    database.closeConnection();
     
 %>
 

@@ -91,7 +91,7 @@
         }
     }
     
-//TODO: CLOSE DB CONNECTION
+    db.closeConnection();
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
