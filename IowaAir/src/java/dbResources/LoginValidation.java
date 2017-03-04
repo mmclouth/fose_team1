@@ -83,10 +83,10 @@ public class LoginValidation {
             
             while(results.next())
             {
-                if (MD5Hashing.encryptString(results.getString("password")).equals(password))
-            {
-                correctPassword = true;
-            }
+                if (results.getString("password").equals(password))
+                {
+                    correctPassword = true;
+                }
             }
         }
         catch (SQLException e)
