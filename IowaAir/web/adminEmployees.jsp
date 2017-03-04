@@ -56,6 +56,8 @@
     }
 
     ArrayList<HashMap<String, String>> employeeData = db.getAllEmployeeData();
+    
+    db.closeConnection();
 
 %>    
 

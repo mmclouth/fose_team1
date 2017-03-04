@@ -37,6 +37,8 @@
                 session.setAttribute("userFirstName", db.selectString("first_name", "userr", "id", Integer.toString(userId)));
                 session.setAttribute("userLastName", db.selectString("last_name", "userr", "id", Integer.toString(userId)));
                 session.setAttribute("user_type", login.getUserType(userId));
+                
+                db.closeConnection();
 
                 String userType = login.getUserType(userId);
                 if (userType.equals("admin"))
