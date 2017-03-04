@@ -24,6 +24,7 @@
     String firstName = null, lastName = null, email = null, gender = null, birthday = null, error = null, password = null, confPassword = null;
     String confirm = null;
 
+    //Retrieve parameters from request if they have been sent from previous page
     if (request.getParameter("confirm") != null) {
         confirm = request.getParameter("confirm");
     }
@@ -61,9 +62,11 @@
         }
     }
 
+    //if confirm is not null, this means the user just tried to enter a confirmation code
     if (confirm != null) {
         LoginValidation user = new LoginValidation(email, password);
 
+        //if the code matches the user's assigned confirmation_code, set user's validation_status to true
         if (user.isConfirmationCodeCorrect(confirm)) {
             user.setValidationStatus(true);
             successfullyValidated = true;

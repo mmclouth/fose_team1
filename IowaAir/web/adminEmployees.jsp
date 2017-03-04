@@ -17,6 +17,8 @@
 
     String firstName = null, lastName = null, email = null, gender = null, birthday = null, error = null;
 
+    
+    //Retrieve parameters from request if they have been sent from previous page
     if (request.getParameter("firstName") != null) {
         firstName = request.getParameter("firstName");
     }
@@ -48,15 +50,18 @@
     //TODO: CALL TO METHOD THAT GENERATES RANDOM PASSWORD
     if (firstName != null && lastName != null && email != null) {
 
-        error = db.addUserToDatabase(firstName, lastName, email, User_Types.employee, birthday, gender, "password");
+        error = db.addUserToDatabase(firstName, lastName, email, User_Types.employee, birthday, gender, "Password1");
 
         if (error == null) {
             successfullyAdded = true;
         }
     }
 
+    //Retrieve all employee data from the database in order to display in the employee table on this apge
     ArrayList<HashMap<String, String>> employeeData = db.getAllEmployeeData();
     
+    
+    //close database connection
     db.closeConnection();
 
 %>    
@@ -108,6 +113,7 @@
 
             <% if (error == null) {
 
+                    //if employee was successfully added to DB, display good message.  If not, display the error code in red
                     if (successfullyAdded) { %>
 
             <h2 class="success">Employee successfully added.</h2>
@@ -162,6 +168,7 @@
                         <th>Validated</th>
                     </tr>
 
+                    <!- Loop through each employee record and output each field in correct able column ->
                     <% for (HashMap<String, String> record : employeeData) {%>
                     <tr>
                         <td><%= record.get("first_name")%></td>
