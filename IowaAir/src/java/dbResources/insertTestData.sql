@@ -48,15 +48,15 @@ VALUES
 
 
 INSERT INTO
-    userr (first_name, last_name, email, password, user_type, gender)
+    userr (first_name, last_name, email, password, user_type, gender,validation_status)
 VALUES
-    ("MacKenzie", "McLouth", "mackenzie-mclouth@uiowa.edu", "5f4dcc3b5aa765d61d8327deb882cf99", "admin", 'female'),
-    ("Nickolas", "Kutsch", "nickolas-kutsch@uiowa.edu", "5f4dcc3b5aa765d61d8327deb882cf99", "admin", 'male'),
-    ("Kyle", "Anderson", "kyle-l-anderson@uiowa.edu", "5f4dcc3b5aa765d61d8327deb882cf99", "admin", 'male' ),
-    ("John", "Doe", "kmclooooth1320@gmail.com", "5f4dcc3b5aa765d61d8327deb882cf99", "employee", 'male'),
-    ("Jane", "Doe", "kmclooooth1320@yahoo.com", "5f4dcc3b5aa765d61d8327deb882cf99", "customer", 'female'),
-    ("Joe", "Schmoe", "punkrock_ohno_udidnt@yahoo.com", "5f4dcc3b5aa765d61d8327deb882cf99", "customer", 'male'),
-    ("Scott", "Endsley", "scoot@iowaair.net", "5f4dcc3b5aa765d61d8327deb882cf99", "customer", 'male');
+    ("MacKenzie", "McLouth", "mackenzie-mclouth@uiowa.edu", "5f4dcc3b5aa765d61d8327deb882cf99", "admin", 'female',1),
+    ("Nickolas", "Kutsch", "nickolas-kutsch@uiowa.edu", "5f4dcc3b5aa765d61d8327deb882cf99", "admin", 'male',1),
+    ("Kyle", "Anderson", "kyle-l-anderson@uiowa.edu", "5f4dcc3b5aa765d61d8327deb882cf99", "admin", 'male',1),
+    ("John", "Doe", "kmclooooth1320@gmail.com", "5f4dcc3b5aa765d61d8327deb882cf99", "employee", 'male',1),
+    ("Jane", "Doe", "kmclooooth1320@yahoo.com", "5f4dcc3b5aa765d61d8327deb882cf99", "customer", 'female',1),
+    ("Joe", "Schmoe", "punkrock_ohno_udidnt@yahoo.com", "5f4dcc3b5aa765d61d8327deb882cf99", "customer", 'male',1),
+    ("Scott", "Endsley", "scoot@iowaair.net", "5f4dcc3b5aa765d61d8327deb882cf99", "customer", 'male',1);
 
 
 INSERT INTO 
