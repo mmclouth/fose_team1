@@ -28,7 +28,7 @@ public class LoginServlet extends HttpServlet
         String password = request.getParameter("password");
         try 
         {
-            LoginValidation login = new LoginValidation(username,password);
+            LoginAndSignUp login = new LoginAndSignUp(username,password);
             
             int userId = login.findUserId();
             boolean correctPassword = login.isPasswordCorrect(userId);

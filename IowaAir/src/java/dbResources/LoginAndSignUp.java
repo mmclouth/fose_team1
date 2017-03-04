@@ -6,6 +6,7 @@
 package dbResources;
 
 
+import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,12 +16,12 @@ import java.util.logging.Logger;
  *
  * @author Nickolas
  */
-public class LoginValidation {
+public class LoginAndSignUp {
     
     private static final Logger logger= Util.logger;
     private String username;
     private String password;
-    public LoginValidation(String username, String password) throws SQLException
+    public LoginAndSignUp(String username, String password) throws SQLException
     {
         this.username = username;
         this.password = password;
@@ -203,5 +204,59 @@ public class LoginValidation {
         }
         return true;
     }
+        
+        public static String generateRandomPassword()
+        {
+            String numbers = "0123456789";
+            String capitalLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            String lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz";
+            final int LENGTH = 8;
+            SecureRandom rnd = new SecureRandom();
+            StringBuilder sb = new StringBuilder(LENGTH);
+            boolean number = false;
+            boolean capital = false;
+            boolean lowerCase = false;
+            for(int i = 0; i < LENGTH; i++)
+            {
+                if (i < LENGTH - 3)
+                {
+                    int randomNumber = rnd.nextInt(3);
+                    if (randomNumber == 0)
+                    {
+                        number = true;
+                        sb.append(numbers.charAt(rnd.nextInt(numbers.length())));
+                    }
+                    else if(randomNumber == 1)
+                    {
+                        capital = true;
+                        sb.append(capitalLetters.charAt(rnd.nextInt(capitalLetters.length())));
+                    }
+                    else
+                    {
+                        lowerCase = true;
+                        sb.append(lowerCaseLetters.charAt(rnd.nextInt(lowerCaseLetters.length())));
+                    }
+                }
+                else
+                {
+                    if (!number)
+                    {
+                        number = true;
+                        sb.append(numbers.charAt(rnd.nextInt(numbers.length())));
+                    }
+                    else if (!capital)
+                    {
+                        capital = true;
+                        sb.append(capitalLetters.charAt(rnd.nextInt(capitalLetters.length())));
+                    }
+                    else
+                    {
+                        lowerCase = true;
+                        sb.append(lowerCaseLetters.charAt(rnd.nextInt(lowerCaseLetters.length())));
+                    }
+                }
+            }
+            return sb.toString();
+        }
     
 }
