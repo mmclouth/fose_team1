@@ -16,25 +16,12 @@
     </head>
     <body>
         
-        <% if(session.getAttribute("userID") == null){ %>
-        
         <div class="title-top">
             <a class="title" href="index.html"><h1>Iowa Air</h1></a>
             <a class="links" href="logIn.jsp" ><h2>Log In</h2></a>
             <h3>|</h3>
             <a class="links" href="signUp.jsp" ><h2>Sign Up</h2></a>
         </div>
-        
-        <% } else { %>
-        
-        <div class="title-top">
-            <a class="title" href="index.html"><h1>Iowa Air</h1></a>
-            <a class="links" href="<%=request.getContextPath()%>/LogoutServlet"> ><h2>Log Out</h2></a>
-            <h3>|</h3>
-            <a class="links" href="userProfile.jsp" ><h4><%= session.getAttribute("userFirstName") %>'s Profile</h4></a>
-        </div>
-        
-        <% } %>
 
         <div class="middle">
             <h1>Employee Home</h1>

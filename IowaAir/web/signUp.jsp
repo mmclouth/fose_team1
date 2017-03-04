@@ -25,11 +25,11 @@
 
         <div class="middle">
             <h1>Sign Up Page</h1>
-            <form action="signUpConfirmation.jsp" method="post">    
+            <form action="signUpConfirmation.jsp">    
                 First name:  
-                <input type="text" name="firstName" required><br>
+                <input type="text" name="firstname" required><br>
                 Last name:  
-                <input type="text" name="lastName" required><br>
+                <input type="text" name="lastname" required><br>
                 Gender:
                 <input type="radio" name="gender" value="male" checked> Male
                 <input type="radio" name="gender" value="female"> Female
@@ -42,7 +42,7 @@
                 -->
                 E-Mail:  
                 <!-- the type can be "email here" if JSP supports HTML5 -->
-                <input type="text" name ="email" required> <br> 
+                <input type="text" name ="username" required> <br> 
                 Password: 
                 <input type="password" name ="password" required> <br>
                 Confirm Password:  

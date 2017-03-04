@@ -16,82 +16,33 @@
 <%
     String result = "failed";
     boolean success = false;
+    String first = request.getParameter("firstname");
+    String last = request.getParameter("lastname");
+    String email = request.getParameter("username");
+    String password = request.getParameter("password");
+    String gender = request.getParameter("gender");
     
-    Database db = new Database();
-
-    boolean successfullyValidated = false;
-
-    String firstName = null, lastName = null, email = null, gender = null, birthday = null, error = null, password = null, confPassword = null;
-    String confirm = null;
-
-    if (request.getParameter("confirm") != null) {
-        confirm = request.getParameter("confirm");
-    }
-    if (request.getParameter("firstName") != null) {
-        firstName = request.getParameter("firstName");
-    }
-    if (request.getParameter("lastName") != null) {
-        lastName = request.getParameter("lastName");
-    }
-    if (request.getParameter("email") != null) {
-        email = request.getParameter("email");
-    }
-    if (request.getParameter("password") != null) {
-        password = request.getParameter("password");
-    }
-    if (request.getParameter("confPassword") != null) {
-        confPassword = request.getParameter("confPassword");
-    }
-    if (request.getParameter("gender") != null) {
-        gender = request.getParameter("gender");
-    }
-    if (request.getParameter("birthday") != null) {
-        birthday = request.getParameter("birthday");
-
-        //If browser does not support HTML's date type, format the date string correctly
-        if (!birthday.matches("^(19|20)\\d\\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$")) {
-
-            String[] bdaySplit = birthday.split("/");
-            String month = bdaySplit[0];
-            String day = bdaySplit[1];
-            String year = bdaySplit[2];
-
-            birthday = year + "-" + month + "-" + day;
-
+    //ensure that valid password was entered
+    if(LoginValidation.verifyNewPassword(password)) {
+        if(password.equals(request.getParameter("confPassword"))) {
+            result = MD5Hashing.encryptString(password);
+            success = true;
         }
     }
-
-    if (confirm != null) {
-        LoginValidation user = new LoginValidation(email, password);
-
-        if (user.isConfirmationCodeCorrect(confirm)) {
-            user.setValidationStatus(true);
-            successfullyValidated = true;
-        }
-    } else {
-
-        //ensure that valid password was entered
-        if (LoginValidation.verifyNewPassword(password)) {
-            if (password.equals(confPassword)) {
-                result = MD5Hashing.encryptString(password);
-                success = true;
-            }
-        }
-        SendMail mailer = new SendMail(email);
-        if (success) {
-            try {
-                //send e-mail
-                mailer.send();
-
-                db.addUserToDatabase(firstName, lastName,
-                        email, User_Types.customer, null, gender, password);
-            } catch (MessagingException mex) {
-                success = false;
-            }
+    SendMail mailer = new SendMail(email);
+    if(success) {
+        try {
+            //send e-mail
+            mailer.send();
+        } catch (MessagingException mex) {
+            success = false;
         }
     }
-    
-//TODO: CLOSE DB CONNECTION
+    /*if(success) {
+        Database db = new Database();
+        db.addUserToDatabase(first, last,
+                email, User_Types.customer, null, gender, password);
+    } */
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -116,13 +67,6 @@
         <div class="middle">
             <h1>Confirmation</h1>
             
-            <% if(successfullyValidated){ %>
-            
-            <h2> You have successfully validated your account.  Proceed to <a href=logIn.jsp >Log In</a>.</h2>
-            
-                
-            <% } else {  %>
-            
             <% if(true)
             {
             %>
@@ -134,19 +78,14 @@
                 the confirmation code provided in the e-mail into the field 
                 below.
                 Confirmation code:
-                <input type="text" value="confirm" name="confirm"><br>
-                <input type="hidden" value="<%= email %>" name="email">
-                <input type="hidden" value="<%= password %>" name="password">
-                <input type="submit" value="Confirm"> <br>
+                <input type="text" value="confirm"><br>
                 
             <% } else { %>
                 ERROR! There was a problem with the e-mail address you provided.
                 Please click the link below to return to the sign up page and 
                 enter a valid e-mail.
                 <a href="signUp.jsp">Return to Sign Up Page</a><br>
-            <% } 
-            
-            }%>
+            <% } %>
         </div>
 
     </body>
