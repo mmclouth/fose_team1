@@ -81,7 +81,7 @@ CREATE TABLE userr
     birthday DATE,
     gender ENUM('female', 'male', 'other'),
     validation_status BOOLEAN DEFAULT false,
-    confirmation_code VARCHAR(255) NOT NULL,
+    confirmation_code VARCHAR(255),
         PRIMARY KEY (id)
 
 );
