@@ -5,7 +5,7 @@
 --%>
 
 <%@page import="dbResources.Database"%>
-<%@page import="dbResources.LoginAndSignUp"%>
+<%@page import="dbResources.LoginValidation"%>
 <%@page import="java.sql.SQLException"%>
 <%
     String username = null;
@@ -24,7 +24,7 @@
     {
         try 
         {
-            LoginAndSignUp login = new LoginAndSignUp(username,password);
+            LoginValidation login = new LoginValidation(username,password);
             
             int userId = login.findUserId();
             correctPassword = login.isPasswordCorrect(userId);
