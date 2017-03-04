@@ -25,7 +25,8 @@ public class LoginTest
             int userID = login.findUserId();
             boolean correctPassword = login.isPasswordCorrect(userID);
             System.out.println(login.getUsername());
-            System.out.println(login.getPassword());
+            System.out.println(login.getPassword());            
+            
             if (correctPassword)
             {
                 System.out.println("Password was correct");

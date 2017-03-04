@@ -6,6 +6,7 @@
 package dbResources;
 
 
+import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -236,6 +237,61 @@ public class LoginValidation {
         }
         
         return false;
-    }    
+    }   
+    
+    
+     public static String generateRandomPassword()
+        {
+            String numbers = "0123456789";
+            String capitalLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            String lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz";
+            final int LENGTH = 8;
+            SecureRandom rnd = new SecureRandom();
+            StringBuilder sb = new StringBuilder(LENGTH);
+            boolean number = false;
+            boolean capital = false;
+            boolean lowerCase = false;
+            for(int i = 0; i < LENGTH; i++)
+            {
+                if (i < LENGTH - 3)
+                {
+                    int randomNumber = rnd.nextInt(3);
+                    if (randomNumber == 0)
+                    {
+                        number = true;
+                        sb.append(numbers.charAt(rnd.nextInt(numbers.length())));
+                    }
+                    else if(randomNumber == 1)
+                    {
+                        capital = true;
+                        sb.append(capitalLetters.charAt(rnd.nextInt(capitalLetters.length())));
+                    }
+                    else
+                    {
+                        lowerCase = true;
+                        sb.append(lowerCaseLetters.charAt(rnd.nextInt(lowerCaseLetters.length())));
+                    }
+                }
+                else
+                {
+                    if (!number)
+                    {
+                        number = true;
+                        sb.append(numbers.charAt(rnd.nextInt(numbers.length())));
+                    }
+                    else if (!capital)
+                    {
+                        capital = true;
+                        sb.append(capitalLetters.charAt(rnd.nextInt(capitalLetters.length())));
+                    }
+                    else
+                    {
+                        lowerCase = true;
+                        sb.append(lowerCaseLetters.charAt(rnd.nextInt(lowerCaseLetters.length())));
+                    }
+                }
+            }
+            return sb.toString();
+        }
     
 }
