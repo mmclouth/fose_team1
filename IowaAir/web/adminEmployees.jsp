@@ -4,6 +4,7 @@
     Author     : kenziemclouth
 --%>
 
+<%@page import="dbResources.SendMail"%>
 <%@page import="java.sql.Date"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.ArrayList"%>
@@ -46,11 +47,14 @@
 
         }
     }
+    SendMail mailer = new SendMail(email);
+    //This will generate and return a random password;
+    String randomPassword = mailer.send(false);
 
     //TODO: CALL TO METHOD THAT GENERATES RANDOM PASSWORD
     if (firstName != null && lastName != null && email != null) {
 
-        error = db.addUserToDatabase(firstName, lastName, email, User_Types.employee, birthday, gender, "Password1");
+        error = db.addUserToDatabase(firstName, lastName, email, User_Types.employee, birthday, gender, randomPassword, null);
 
         if (error == null) {
             successfullyAdded = true;
