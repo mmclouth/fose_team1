@@ -89,11 +89,11 @@
             
             try {
                 //send e-mail
-                mailer.send();
+                String validationCode = mailer.send();
 
                 //add user to database
                 db.addUserToDatabase(firstName, lastName,
-                        email, User_Types.customer, null, gender, password);
+                        email, User_Types.customer, null, gender, password, validationCode);
 
                 //TODO: generate random confirmation code and assign it to current user in db.  Send this code in email.
                 // not sure if someone else has already done this.  -Kenzie
