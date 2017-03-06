@@ -169,7 +169,7 @@ public class Database {
      * @param user_type 
      */
     public String addUserToDatabase(String firstName, String lastName, String email, String password, User_Types type){
-        return this.addUserToDatabase(firstName, lastName, email, type, null, null, password);
+        return this.addUserToDatabase(firstName, lastName, email, type, null, null, password, null);
     }
     
     /**
@@ -182,16 +182,15 @@ public class Database {
      * @param lastName
      * @param email
      * @param type
-     * @param user_type
      * @param birthday
      * @param password
+     * @param confirmationCode
      * @param gender 
      */
-    public String addUserToDatabase(String firstName, String lastName, String email, User_Types type, String birthday, String gender, String password) {
+    public String addUserToDatabase(String firstName, String lastName, String email, User_Types type, String birthday, String gender, String password,
+                                    String confirmationCode) {
 
         StringBuilder query = new StringBuilder();
-        //password = "password";
-        String confirmationCode = "confirm";  //will change this later
 
         if (this.emailAlreadyUsed(email)) {
             return "Email already assigned to a user.";

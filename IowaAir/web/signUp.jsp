@@ -89,7 +89,7 @@
             
             try {
                 //send e-mail
-                String validationCode = mailer.send();
+                String validationCode = mailer.send(true);
 
                 //add user to database
                 db.addUserToDatabase(firstName, lastName,

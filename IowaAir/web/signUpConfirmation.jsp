@@ -14,9 +14,6 @@
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
 
 <%
-    String result = "failed";
-    boolean success = false;
-    
     Database db = new Database();
 
     boolean successfullyValidated = false;
@@ -78,9 +75,6 @@
             
             <% if(true)
             {
-            %>
-            <%
-                out.println("Result: " + result + "\n");
             %>
             <form action="signUpConfirmation.jsp" method="post"> 
                 A confirmation link has been sent to your e-mail. Please enter
