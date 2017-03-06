@@ -29,7 +29,7 @@ public class SendMail {
         this.to = to;
     }
     
-    public void send() throws MessagingException {
+    public String send(boolean isCustomer) throws MessagingException {
 
         // Get system properties object
         Properties properties = System.getProperties();
@@ -40,14 +40,9 @@ public class SendMail {
         properties.put("mail.smtp.port", 587);
         properties.put("mail.smtp.auth", "true");
 
-
-        // Setup mail server
-        //properties.setProperty("mail.smtp.host", host);
-
         // Get the default Session object.
         Session mailSession = Session.getDefaultInstance(properties, null);
-
-        String code = SendMail.generateVerificationCode();
+        String code;
 
         // Create a default MimeMessage object.
         MimeMessage message = new MimeMessage(mailSession);
@@ -58,14 +53,21 @@ public class SendMail {
                                  new InternetAddress(to));
         // Set Subject: header field
         message.setSubject("Iowa Air Verification Code");
-        // Send the verification code
-        message.setText("Your verification code is: " + code);
+        
+        if(isCustomer) {
+            code = SendMail.generateVerificationCode();
+            message.setText("Your verification code is: " + code);
+        } else {
+            code = SendMail.generateRandomPassword();
+            message.setText("Your initial password is: " + code);
+        }
         //placement = "after setText";
         // Send message
         Transport transport = mailSession.getTransport("smtp");
         transport.connect(host, from, password);
         transport.sendMessage(message, message.getAllRecipients());
         transport.close();
+        return code;
     }
     
     //random string generation found at 
@@ -77,6 +79,22 @@ public class SendMail {
         StringBuilder sb = new StringBuilder(LENGTH);
         for(int i = 0; i < LENGTH; i++) 
            sb.append( AB.charAt( rnd.nextInt(AB.length()) ) );
+        return sb.toString();
+    }
+    
+    public static String generateRandomPassword() {
+        String num = "0123456789";
+        String caps = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String lower = "abcdefghijklmnopqrstuvwxyz";
+        final int FIELDS = 3;
+        final int LENGTH = 3;
+        SecureRandom rnd = new SecureRandom();
+        StringBuilder sb = new StringBuilder(LENGTH*FIELDS);
+        for(int i = 0; i < LENGTH; i++) {
+            sb.append( caps.charAt( rnd.nextInt(caps.length()) ) );
+            sb.append( lower.charAt( rnd.nextInt(lower.length()) ) );
+            sb.append( num.charAt( rnd.nextInt(num.length()) ) );
+        }
         return sb.toString();
     }
 }
