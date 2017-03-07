@@ -50,14 +50,16 @@
     }
     
 
-    //TODO: CALL TO METHOD THAT GENERATES RANDOM PASSWORD
     if (firstName != null && lastName != null && email != null) {
         
         SendMail mailer = new SendMail(email);
         //This will generate and return a random password;
         String randomPassword = mailer.send(false);
 
+        //TODO: only add user to database if email is sent successfully
         error = db.addUserToDatabase(firstName, lastName, email, User_Types.employee, birthday, gender, randomPassword, null);
+        LoginValidation user = new LoginValidation(email, randomPassword);
+        user.setValidationStatus(true);
         
         
         if (error == null) {
