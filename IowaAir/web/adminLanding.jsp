@@ -37,6 +37,15 @@
         
         <% } %>
         
+        <% if(session.getAttribute("user_type") == null || !session.getAttribute("user_type").equals("admin")){ %>
+        
+        <div class="middle">
+            <h2 class="failure">You do not have permission to view this page.  Sign in as admin to view.</h2>
+        </div>
+        
+        <% } else { %>
+        
+        
         <div class="admin-toolbar">
             <ul>
                 <li><a class="active" href="adminLanding.jsp">Home</a></li>
@@ -53,6 +62,8 @@
             <h1>Hi <%= session.getAttribute("userFirstName") %>!</h1>
             
         </div>
+            
+        <% } %>
 
     </body>
 </html>

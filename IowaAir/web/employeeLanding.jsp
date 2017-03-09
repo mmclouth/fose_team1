@@ -35,10 +35,20 @@
         </div>
         
         <% } %>
+        
+        <% if(session.getAttribute("user_type") == null || !session.getAttribute("user_type").equals("employee")){ %>
+        
+        <div class="middle">
+            <h2 class="failure">You do not have permission to view this page.  Sign in as admin to view.</h2>
+        </div>
+        
+        <% } else { %>
 
         <div class="middle">
             <h1>Employee Home</h1>
         </div>
+        
+        <% } %>
 
     </body>
 </html>
