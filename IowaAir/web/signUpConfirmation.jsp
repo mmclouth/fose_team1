@@ -26,8 +26,13 @@
     }
     
     //retrieve email and password from session to use for LoginValidation object
-    email = session.getAttribute("emailForConfCode").toString();
-    password = session.getAttribute("passwordForConfCode").toString();
+    if(session.getAttribute("emailForConfCode") != null  &&  session.getAttribute("passwordForConfCode") != null){
+        email = session.getAttribute("emailForConfCode").toString();
+        password = session.getAttribute("passwordForConfCode").toString();
+    } else {
+        email = db.selectString("email", "userr", "id", session.getAttribute("userID").toString());
+        password = db.selectString("password", "userr", "id", session.getAttribute("userID").toString());
+    }
     
     
     //if confirm is not null, this means the user just tried to enter a confirmation code

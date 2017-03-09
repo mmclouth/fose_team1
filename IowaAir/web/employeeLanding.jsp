@@ -29,7 +29,7 @@
         
         <div class="title-top">
             <a class="title" href="<%= session.getAttribute("homePage") %>"><h1>Iowa Air</h1></a>
-            <a class="links" href="<%=request.getContextPath()%>/LogoutServlet"> ><h2>Log Out</h2></a>
+            <a class="links" href="<%=request.getContextPath()%>/LogoutServlet"><h2>Log Out</h2></a>
             <h3>|</h3>
             <a class="links" href="userProfile.jsp" ><h4><%= session.getAttribute("userFirstName") %>'s Profile</h4></a>
         </div>

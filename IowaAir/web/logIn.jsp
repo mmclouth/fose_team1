@@ -38,6 +38,7 @@
                 session.setAttribute("userFirstName", db.selectString("first_name", "userr", "id", Integer.toString(userId)));
                 session.setAttribute("userLastName", db.selectString("last_name", "userr", "id", Integer.toString(userId)));
                 session.setAttribute("user_type", userType);
+                session.setAttribute("validation_status", db.selectString("validation_status", "userr", "id", Integer.toString(userId)));
                 
                 db.closeConnection();
 

@@ -336,6 +336,21 @@ body {
     color: white;
 }
 
+.validate_account_bar {
+    font-family: 'Catamaran', sans-serif;
+    width: 100%;
+}
+
+.validate_account_bar h10{
+    width: 50%;
+    float: left;
+    margin-left: 25%;
+    font-size: 15px;
+    color: midnightblue;
+    text-align: center;
+}
+
+
 
 
 
