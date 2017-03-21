@@ -56,6 +56,25 @@
 
         <div class="middle">
             <h1>Admin Flights Page</h1>
+            <form action="adminFlights.jsp" method="post"><br>
+                <h2>Add New Flight</h2><br>
+            Flight Number: 
+            <input type="text" name="flightNumber" required><br>
+            Airplane ID:
+            <input type="text" name="airplaneID" required><br>
+            Origin Code:
+            <input type="text" name="originCode" required><br>
+            Destination Code:
+            <input type="text" name="destinationCode" required><br>
+            Departure Time:
+            <input type="text" name="departureTime" required><br>
+            Arrival Time:
+            <input type="text" name="=arrivalTime" required><br>
+            Price:
+            <input type="text" name="price" required><br>
+            
+            <input type="submit" value="Add Flight"><br>
+            
         </div>
         
         <% } %>
