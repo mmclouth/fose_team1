@@ -4,6 +4,16 @@
     Author     : kenziemclouth
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="dbResources.Database"%>
+<%@page import="java.util.HashMap"%>
+<%
+    Database db = new Database();
+    ArrayList<HashMap<String, String>> flightData = db.getAllFlightData();
+
+    //close database connection
+    db.closeConnection();
+%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -66,6 +76,8 @@
             <input type="text" name="originCode" required><br>
             Destination Code:
             <input type="text" name="destinationCode" required><br>
+            Flight Date(mm/dd/yyyy):
+            <input type="date" name="flightDate" required><br>
             Departure Time:
             <input type="text" name="departureTime" required><br>
             Arrival Time:
@@ -77,6 +89,43 @@
             </form>
             
         </div>
+        
+        <div class="employee-table">
+
+                <h2>Current Flights</h2>
+
+                <table>
+                    <tr>
+                        <th>Number</th>
+                        <th>Airplane ID</th>
+                        <th>Origin Code</th>
+                        <th>Destination Code</th>
+                        <th>Flight Date</th>
+                        <th>Departure Time</th>
+                        <th>Arrival Time</th>
+                        <th>Duration</th>
+                        <th>Price</th>
+                    </tr>
+
+                    <!- Loop through each employee record and output each field in correct able column ->
+                    <% for (HashMap<String, String> record : flightData) {%>
+                    <tr>
+                        <td><%= record.get("num")%></td>
+                        <td><%= record.get("airplane_id")%></td>
+                        <td><%= record.get("origin_code")%></td>
+                        <td><%= record.get("destination_code")%></td>
+                        <td><%= record.get("flight_date")%></td>
+                        <td><%= record.get("departure_time")%></td>
+                        <td><%= record.get("arrival_time")%></td>
+                        <td><%= record.get("duration")%></td>
+                        <td><%= record.get("price")%></td>
+                    </tr>
+
+                    <% }%>
+
+                </table>
+
+            </div>
         
         <% } %>
 

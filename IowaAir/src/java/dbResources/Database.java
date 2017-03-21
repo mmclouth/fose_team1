@@ -348,4 +348,43 @@ public class Database {
         }
         return correctPassword;
     }
+     
+     public ArrayList<HashMap<String, String>> getAllFlightData(){
+        
+        ArrayList<HashMap<String,String>> allFlightData = new ArrayList<>();
+        HashMap<String, String> flightData;
+        
+        String query = "SELECT * FROM flight;";
+        
+        String[] fields = {"num", "airplane_id", "origin_code", "destination_code", "flight_date", "departure_time", "arrival_time", "duration", "price"};
+        
+        try {
+            PreparedStatement sql = conn.prepareStatement(query);
+            ResultSet results = sql.executeQuery();
+            
+            while(results.next()){
+                
+                flightData = new HashMap<String, String>();
+                
+                flightData.put("id", Integer.toString(results.getInt("id")));
+                
+                for(String field : fields){
+                    flightData.put(field, results.getString(field));
+                    
+                    
+                }
+
+                allFlightData.add(flightData);
+                
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        
+        
+        
+        return allFlightData;
+    }
 }
