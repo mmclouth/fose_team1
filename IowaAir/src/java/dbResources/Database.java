@@ -370,8 +370,7 @@ public class Database {
                 
                 for(String field : fields){
                     flightData.put(field, results.getString(field));
-                    
-                    
+                         
                 }
 
                 allFlightData.add(flightData);
@@ -382,9 +381,37 @@ public class Database {
             e.printStackTrace();
         }
         
-        
-        
-        
         return allFlightData;
+    }
+     
+     public ArrayList<HashMap<String, String>> getAllAirportData(){
+        
+        ArrayList<HashMap<String,String>> allAirportData = new ArrayList<>();
+        HashMap<String, String> airportData;
+        
+        String query = "SELECT * FROM airport;";
+        
+        String[] fields = {"code","city", "sstate", "country", "timezone"};
+        
+        try {
+            PreparedStatement sql = conn.prepareStatement(query);
+            ResultSet results = sql.executeQuery();
+            
+            while(results.next()){
+                
+                airportData = new HashMap<String, String>();
+                
+                for(String field : fields){
+                    airportData.put(field, results.getString(field));
+                    
+                }
+                allAirportData.add(airportData);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+       
+        return allAirportData;
     }
 }

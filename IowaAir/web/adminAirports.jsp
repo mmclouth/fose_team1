@@ -4,6 +4,16 @@
     Author     : kenziemclouth
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="dbResources.Database"%>
+<%@page import="java.util.HashMap"%>
+<%
+    Database db = new Database();
+    ArrayList<HashMap<String, String>> airportData = db.getAllAirportData();
+
+    //close database connection
+    db.closeConnection();
+%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -67,6 +77,35 @@
                 <input type="submit" value="Add Airport"><br>
             </form>
         </div>
+        
+        <div class="employee-table">
+
+                <h2>Current Flights</h2>
+
+                <table>
+                    <tr>
+                        <th>Code</th>
+                        <th>City</th>
+                        <th>State</th>
+                        <th>Country</th>
+                        <th>Time Zone</th>
+                    </tr>
+
+                    <!- Loop through each employee record and output each field in correct able column ->
+                    <% for (HashMap<String, String> record : airportData) {%>
+                    <tr>
+                        <td><%= record.get("code")%></td>
+                        <td><%= record.get("city")%></td>
+                        <td><%= record.get("sstate")%></td>
+                        <td><%= record.get("country")%></td>
+                        <td><%= record.get("timezone")%></td>
+                    </tr>
+
+                    <% }%>
+
+                </table>
+
+            </div>
 
         <% }%>
 
