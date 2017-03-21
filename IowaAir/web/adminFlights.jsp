@@ -71,9 +71,10 @@
             Arrival Time:
             <input type="text" name="=arrivalTime" required><br>
             Price:
-            <input type="text" name="price" required><br>
+            <input type="number" name="price" required><br>
             
             <input type="submit" value="Add Flight"><br>
+            </form>
             
         </div>
         

@@ -56,6 +56,16 @@
 
         <div class="middle">
             <h1>Admin Airports</h1>
+            <form action="adminAirports.jsp" method="post">
+                <h2> Add New Airport</h2>
+                Airport Code:
+                <input type="text" name="airportCode" required><br>
+                City:
+                <input type="text" name="city" required><br>
+                State:
+                <input type="text" name="state" required><br>
+                <input type="submit" value="Add Airport"><br>
+            </form>
         </div>
 
         <% }%>

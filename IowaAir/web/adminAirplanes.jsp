@@ -56,6 +56,20 @@
 
         <div class="middle">
             <h1>Admin Airplanes</h1>
+            <form action="adminAirplanes.jsp" method="post">
+                <h2>Add New Aircraft</h2>
+                Name of Aircraft:
+                <input type="text" name="name" required><br>
+                Type:
+                <input type="text" name="type" required><br>
+                Number of Business Seats:
+                <input type="number" name="numBusinessSeats" required><br>
+                Number of Economy Seats:
+                <input type="number" name="numEconomySeats" required><br>
+                Down time between flights (hrs):
+                <input type="number" name="downTime" required><br>
+                <input type="submit" value="Add Aircraft">
+            </form>
         </div>
 
 
