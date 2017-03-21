@@ -113,7 +113,7 @@
                 and then navigate to your user profile to reset your password.
                 <br>
                 E-Mail:
-                <input type="text" name="username"><br>
+                <input type="text" name="email"><br>
                 <% if (errorMessage != null) {%>
 
             <div style="color:red">
