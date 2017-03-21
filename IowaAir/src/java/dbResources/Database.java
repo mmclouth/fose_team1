@@ -290,5 +290,62 @@ public class Database {
         return allEmployeeData;
     }
 
+    public void updatePassword(int userID, String password)
+    {
+        password = MD5Hashing.encryptString(password);
+        StringBuilder query = new StringBuilder();
+        query.append("UPDATE userr SET password= '" + password + "'WHERE id = '" + userID + "'");
+        try {
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            sql.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     
+    public int findUserId(String email)
+    {
+        int userId = -1;
+        
+        try 
+        {
+            PreparedStatement query = conn.prepareStatement("SELECT id FROM userr WHERE email = '" + email + "'");
+            ResultSet results = query.executeQuery();
+            
+            if (results.next())
+            {
+                userId = results.getInt("id");
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        
+        return userId;
+    }
+    
+     public boolean isPasswordCorrect(String password, int userId)
+    {
+        boolean correctPassword = false;
+        password = MD5Hashing.encryptString(password);
+        try
+        {
+            PreparedStatement query = conn.prepareStatement("SELECT password FROM userr WHERE id = '" + userId + "'");
+            ResultSet results = query.executeQuery();
+            
+            while(results.next())
+            {
+                if (results.getString("password").equals(password))
+                {
+                    correctPassword = true;
+                }
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return correctPassword;
+    }
 }
