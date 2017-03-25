@@ -9,6 +9,66 @@
 <%@page import="java.util.HashMap"%>
 <%
     Database db = new Database();
+    
+    String flightNumber = null;
+    int airplaneID = 0;
+    String originCode = null;
+    String destinationCode = null;
+    String flightDate = null;
+    String departureTime = null;
+    String arrivalTime = null;
+    int duration = 0;
+    double price = 0.0;
+    
+    
+    //Retrieve parameters from request if they have been sent from previous page
+    if (request.getParameter("flightNumber") != null) {
+        flightNumber = request.getParameter("flightNumber");
+    }
+    if (request.getParameter("airplaneID") != null) {
+        airplaneID = Integer.valueOf(request.getParameter("airplaneID"));
+    }
+    if (request.getParameter("originCode") != null) {
+        originCode = request.getParameter("originCode");
+    }
+    if (request.getParameter("destinationCode") != null) {
+        destinationCode = request.getParameter("destinationCode");
+    }
+    if (request.getParameter("flightDate") != null) {
+        flightDate = request.getParameter("flightDate").toString();
+        
+
+        //If browser does not support HTML's date type, format the date string correctly
+        if (!flightDate.matches("^(19|20)\\d\\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$")) {
+
+            String[] flightSplit = flightDate.split("/");
+            String month = flightSplit[0];
+            String day = flightSplit[1];
+            String year = flightSplit[2];
+
+            flightDate = year + "-" + month + "-" + day;
+        }
+    }
+    if (request.getParameter("departureTime") != null) {
+        departureTime = request.getParameter("departureTime").toString();
+    }
+    if (request.getParameter("arrivalTime") != null) {
+        arrivalTime = request.getParameter("arrivalTime").toString();
+    }
+    if (request.getParameter("duration") != null) {
+        duration = Integer.valueOf(request.getParameter("duration"));
+    }
+    if (request.getParameter("price") != null) {
+        price = Double.valueOf(request.getParameter("price"));
+    }
+    
+    if(flightNumber != null && airplaneID != 0 && originCode != null && destinationCode != null && flightDate != null && departureTime != null 
+            && arrivalTime != null && duration != 0 && price != 0.0)
+    {
+        db.addFlightToDatabase(flightNumber,airplaneID,originCode,destinationCode,flightDate,departureTime,arrivalTime,duration,price);
+    }
+    
+    
     ArrayList<HashMap<String, String>> flightData = db.getAllFlightData();
 
     //close database connection
@@ -65,6 +125,7 @@
         </div>
 
         <div class="middle">
+            
             <h1>Admin Flights Page</h1>
             <form action="adminFlights.jsp" method="post"><br>
                 <h2>Add New Flight</h2><br>
@@ -79,11 +140,13 @@
             Flight Date(mm/dd/yyyy):
             <input type="date" name="flightDate" required><br>
             Departure Time:
-            <input type="text" name="departureTime" required><br>
+            <input type="time" name="departureTime" required><br>
             Arrival Time:
-            <input type="text" name="=arrivalTime" required><br>
+            <input type="time" name="arrivalTime" required><br>
+            Duration(mins):
+            <input type="number" name="duration" required><br>
             Price:
-            <input type="number" name="price" required><br>
+            <input type="number" step="0.01" name="price" required><br>
             
             <input type="submit" value="Add Flight"><br>
             </form>

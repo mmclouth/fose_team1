@@ -18,7 +18,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
-
 /**
  *
  * @author kenziemclouth
@@ -413,5 +412,41 @@ public class Database {
         }
        
         return allAirportData;
+    }
+     
+      public void addFlightToDatabase(String num, int airplaneID, String originCode, String destinationCode, String flightDate, String departureTime, String arrivalTime,
+                                    int duration, double price) {
+
+        StringBuilder query = new StringBuilder();
+
+        query.append("INSERT INTO flight (num, airplane_id, origin_code, destination_code, flight_date, departure_time, arrival_time, duration, price) VALUES ('");
+        query.append(num);
+        query.append("', '");
+        query.append(airplaneID);
+        query.append("', '");
+        query.append(originCode);
+        query.append("', '");
+        query.append(destinationCode);
+        query.append("', '");
+        query.append(flightDate);
+        query.append("', '");
+        query.append(departureTime);
+        query.append("', '");
+        query.append(arrivalTime);
+        query.append("', '");  
+        query.append(duration);
+        query.append("', '");
+        query.append(price);
+
+        query.append("') ;");
+
+        try {
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            sql.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 }
