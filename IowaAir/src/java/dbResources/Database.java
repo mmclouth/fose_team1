@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -558,4 +559,58 @@ public class Database {
             e.printStackTrace();
         }
     }
+    
+    
+    public int getAirportQuantity(){
+        
+        String query = "SELECT COUNT(code) FROM airport;";
+        int quantity = 0;
+        
+        try {
+            PreparedStatement sql = conn.prepareStatement(query);
+            ResultSet results = sql.executeQuery();
+
+            while(results.next()){
+                quantity = results.getInt("COUNT(code)");
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return quantity;
+    }
+    
+    public boolean flightBetweenExists(Date date, String origin, String destination){
+        
+        StringBuilder query = new StringBuilder();
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = sdf.format(date);
+        
+        query.append("SELECT id FROM flight WHERE flight_date = '");
+        query.append(formattedDate);
+        query.append("' AND origin_code = '");
+        query.append(origin);
+        query.append("' AND destination_code ='");
+        query.append(destination);
+        query.append("';");
+        
+        try {
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            ResultSet results = sql.executeQuery();
+            
+            while(results.next()){
+                return true;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return false; 
+    }
+    
+    
+    
 }
