@@ -486,7 +486,7 @@ public class Database {
             e.printStackTrace();
         }
     }
-    public void updateFlightDestinationCode(int destinationCode, int id)
+    public void updateFlightDestinationCode(String destinationCode, int id)
     {
         StringBuilder query = new StringBuilder();
         query.append("UPDATE flight SET destination_code= '" + destinationCode + "'WHERE id = '" + id + "'");
@@ -498,7 +498,7 @@ public class Database {
             e.printStackTrace();
         }
     }
-    public void updateFlightFlightDate(String flightDate, int id)
+    public void updateFlightDate(String flightDate, int id)
     {
         StringBuilder query = new StringBuilder();
         query.append("UPDATE flight SET flight_date= '" + flightDate + "'WHERE id = '" + id + "'");
@@ -557,5 +557,28 @@ public class Database {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    public int findFlightID(String num, int airplaneID, String originCode, String destinationCode, String flightDate, String departureTime,
+            String arrivalTime, int duration, double price)
+    {
+        int flightID = -1;
+        
+        try 
+        {
+            PreparedStatement query = conn.prepareStatement("SELECT id FROM userr WHERE num = '" + num + "' airplane_id = '" + airplaneID + "' origin_code = '"
+            + originCode + "' destination_code = '"+destinationCode+"'flight_date = '"+flightDate+"'departure_time = '"+departureTime+"'arrival_time = '"
+            + arrivalTime+"'duration = '"+duration+"'price = '"+price+"'");
+            ResultSet results = query.executeQuery();
+            
+            if (results.next())
+            {
+                flightID = results.getInt("id");
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        
+        return flightID;
     }
 }

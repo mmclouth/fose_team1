@@ -149,6 +149,7 @@
             <input type="number" step="0.01" name="price" required><br>
             
             <input type="submit" value="Add Flight"><br>
+            <a href="modifyFlight.jsp">Modify Flight</a><br>
             </form>
             
         </div>
