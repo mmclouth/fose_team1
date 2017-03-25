@@ -355,7 +355,7 @@ public class Database {
         
         String query = "SELECT * FROM flight;";
         
-        String[] fields = {"num", "airplane_id", "origin_code", "destination_code", "flight_date", "departure_time", "arrival_time", "duration", "price"};
+        String[] fields = {"num", "airplane_id", "origin_code", "destination_code", "flight_date", "departure_time", "arrival_time", "duration", "price_economy","price_first_class","first_class_remaining","economy_remaining"};
         
         try {
             PreparedStatement sql = conn.prepareStatement(query);
@@ -415,11 +415,11 @@ public class Database {
     }
      
       public void addFlightToDatabase(String num, int airplaneID, String originCode, String destinationCode, String flightDate, String departureTime, String arrivalTime,
-                                    int duration, double price) {
+                                    int duration, double priceEconomy, double priceFirstClass, int firstClassSeatsRemaining, int economySeatsRemaining) {
 
         StringBuilder query = new StringBuilder();
 
-        query.append("INSERT INTO flight (num, airplane_id, origin_code, destination_code, flight_date, departure_time, arrival_time, duration, price) VALUES ('");
+        query.append("INSERT INTO flight (num, airplane_id, origin_code, destination_code, flight_date, departure_time, arrival_time, duration, price_economy,price_first_class,first_class_remaining,economy_remaining) VALUES ('");
         query.append(num);
         query.append("', '");
         query.append(airplaneID);
@@ -436,7 +436,13 @@ public class Database {
         query.append("', '");  
         query.append(duration);
         query.append("', '");
-        query.append(price);
+        query.append(priceEconomy);
+        query.append("', '");
+        query.append(priceFirstClass);
+        query.append("', '");
+        query.append(firstClassSeatsRemaining);
+        query.append("', '");
+        query.append(economySeatsRemaining);
 
         query.append("') ;");
 
@@ -546,10 +552,10 @@ public class Database {
             e.printStackTrace();
         }
     }
-    public void updateFlightPrice(double price, int id)
+    public void updateFlightPriceEconomy(double priceEconomy, int id)
     {
         StringBuilder query = new StringBuilder();
-        query.append("UPDATE flight SET price= '" + price + "'WHERE id = '" + id + "'");
+        query.append("UPDATE flight SET price_economy= '" + priceEconomy + "'WHERE id = '" + id + "'");
         try {
             PreparedStatement sql = conn.prepareStatement(query.toString());
             sql.executeUpdate();
@@ -558,16 +564,49 @@ public class Database {
             e.printStackTrace();
         }
     }
-    public int findFlightID(String num, int airplaneID, String originCode, String destinationCode, String flightDate, String departureTime,
-            String arrivalTime, int duration, double price)
+    public void updateFlightPriceFirstClass(double priceFirstClass, int id)
+    {
+        StringBuilder query = new StringBuilder();
+        query.append("UPDATE flight SET price_first_class= '" + priceFirstClass + "'WHERE id = '" + id + "'");
+        try {
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            sql.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void updateFlightFirstClassSeatsRemaining(int firstClassSeatsRemaining, int id)
+    {
+        StringBuilder query = new StringBuilder();
+        query.append("UPDATE flight SET first_class_remaining= '" + firstClassSeatsRemaining + "'WHERE id = '" + id + "'");
+        try {
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            sql.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void updateFlightEconomySeatsRemaining(int economySeatsRemaining, int id)
+    {
+        StringBuilder query = new StringBuilder();
+        query.append("UPDATE flight SET price= '" + economySeatsRemaining + "'WHERE id = '" + id + "'");
+        try {
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            sql.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public int findFlightID(String flightNumber)
     {
         int flightID = -1;
         
         try 
         {
-            PreparedStatement query = conn.prepareStatement("SELECT id FROM userr WHERE num = '" + num + "' airplane_id = '" + airplaneID + "' origin_code = '"
-            + originCode + "' destination_code = '"+destinationCode+"'flight_date = '"+flightDate+"'departure_time = '"+departureTime+"'arrival_time = '"
-            + arrivalTime+"'duration = '"+duration+"'price = '"+price+"'");
+            PreparedStatement query = conn.prepareStatement("SELECT id FROM flight WHERE num = '" + flightNumber + "'");
             ResultSet results = query.executeQuery();
             
             if (results.next())
