@@ -133,4 +133,3 @@ VALUES
     (1, 13, '14C', 1, 'economy'),
     (1, 14, '15C', 1, 'economy'),
     (1, 4, '2C', 1, 'first_class');
-    
