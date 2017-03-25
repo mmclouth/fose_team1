@@ -5,13 +5,13 @@
  */
 
 INSERT INTO 
-    airport (code, city, sstate, country, timezone)
+    airport (code, city, sstate, country, timezone, node_num)
 VALUES
-    ("ORD", "Chicago", "IL", "USA", '6'),
-    ("JFK", "New York", "NY", "USA", '5'),
-    ("IFC","Iowa City", "IA", "USA", '6'),
-    ("ATL","Atlanta","GA","USA", '5'),
-    ("SFO","San Francisco","CA","USA", '8');
+    ("IFC","Iowa City", "IA", "USA", '6', 1),
+    ("ORD", "Chicago", "IL", "USA", '6', 2),
+    ("JFK", "New York", "NY", "USA", '5', 3),
+    ("ATL","Atlanta","GA","USA", '5', 4),
+    ("SFO","San Francisco","CA","USA", '8', 5);
     
 INSERT INTO
     aircraft_type (plane_name, down_time, capacity_total, capacity_first_class, capacity_economy, seats_per_row )

@@ -20,6 +20,7 @@ CREATE TABLE airport
     city VARCHAR(255) NOT NULL,
     sstate VARCHAR(255),
     country VARCHAR(255) NOT NULL,
+    node_num INT NOT NULL,
     timezone ENUM('8', '7', '6', '5', '4', '3') NOT NULL,
         PRIMARY KEY (code)
 );
