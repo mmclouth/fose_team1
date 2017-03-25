@@ -29,7 +29,10 @@ CREATE TABLE aircraft_type
     id INT NOT NULL AUTO_INCREMENT,
     plane_name VARCHAR(191) UNIQUE NOT NULL,
     down_time INT NOT NULL,
-    capacity INT NOT NULL,
+    capacity_total INT NOT NULL,
+    capacity_first_class INT NOT NULL,
+    capacity_economy INT NOT NULL,
+    seats_per_row INT,
         PRIMARY KEY (id)
 );
 
@@ -59,7 +62,10 @@ CREATE TABLE flight
     departure_time TIME NOT NULL,
     arrival_time TIME NOT NULL,
     duration INT NOT NULL,
-    price DECIMAL(7,2) NOT NULL,
+    price_economy DECIMAL(7,2) NOT NULL,
+    price_first_class DECIMAL(7,2) NOT NULL,
+    first_class_remaining INT NOT NULL,
+    economy_remaining INT NOT NULL,
         PRIMARY KEY (id),
         FOREIGN KEY (airplane_id) 
         REFERENCES airplane (id),
@@ -91,6 +97,7 @@ CREATE TABLE boarding_pass
     id INT NOT NULL AUTO_INCREMENT,
     flight_id INT NOT NULL,
     userr_id INT NOT NULL,
+    clas ENUM('first_class', 'economy'),
     seat_num VARCHAR(10),
     luggage_count INT,
         PRIMARY KEY (id),
