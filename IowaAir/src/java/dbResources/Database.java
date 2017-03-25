@@ -449,4 +449,113 @@ public class Database {
         }
 
     }
+      
+    public void updateFlightNum(String num, int id)
+    {
+        StringBuilder query = new StringBuilder();
+        query.append("UPDATE flight SET num= '" + num + "'WHERE id = '" + id + "'");
+        try {
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            sql.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void updateFlightAirplaneID(int airplaneID, int id)
+    {
+        StringBuilder query = new StringBuilder();
+        query.append("UPDATE flight SET airplane_id= '" + airplaneID + "'WHERE id = '" + id + "'");
+        try {
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            sql.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void updateFlightOriginCode(String originCode, int id)
+    {
+        StringBuilder query = new StringBuilder();
+        query.append("UPDATE flight SET origin_code= '" + originCode + "'WHERE id = '" + id + "'");
+        try {
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            sql.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void updateFlightDestinationCode(int destinationCode, int id)
+    {
+        StringBuilder query = new StringBuilder();
+        query.append("UPDATE flight SET destination_code= '" + destinationCode + "'WHERE id = '" + id + "'");
+        try {
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            sql.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void updateFlightFlightDate(String flightDate, int id)
+    {
+        StringBuilder query = new StringBuilder();
+        query.append("UPDATE flight SET flight_date= '" + flightDate + "'WHERE id = '" + id + "'");
+        try {
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            sql.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void updateFlightDepartureTime(String departureTime, int id)
+    {
+        StringBuilder query = new StringBuilder();
+        query.append("UPDATE flight SET departure_time= '" + departureTime + "'WHERE id = '" + id + "'");
+        try {
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            sql.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void updateFlightArrivalTime(String arrivalTime, int id)
+    {
+        StringBuilder query = new StringBuilder();
+        query.append("UPDATE flight SET arrival_time= '" + arrivalTime + "'WHERE id = '" + id + "'");
+        try {
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            sql.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void updateFlightDuration(int duration, int id)
+    {
+        StringBuilder query = new StringBuilder();
+        query.append("UPDATE flight SET duration= '" + duration + "'WHERE id = '" + id + "'");
+        try {
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            sql.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void updateFlightPrice(double price, int id)
+    {
+        StringBuilder query = new StringBuilder();
+        query.append("UPDATE flight SET price= '" + price + "'WHERE id = '" + id + "'");
+        try {
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            sql.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
