@@ -620,4 +620,16 @@ public class Database {
         
         return flightID;
     }
+    public void deleteFlight(int flightID)
+    {
+        StringBuilder query = new StringBuilder();
+        query.append("DELETE FROM flight WHERE id = '" + flightID + "'");
+        try {
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            sql.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

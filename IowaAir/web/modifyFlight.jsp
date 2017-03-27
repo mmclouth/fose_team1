@@ -7,8 +7,7 @@
 <%
     
     Database db = new Database();
-    boolean buttonClicked = false;
-    int flightID = db.findFlightID("AA111");
+    int flightID = db.findFlightID("AA151");
     String flightNumberOrig = (String)session.getAttribute("flightNumber");
     int airplaneIDOrig = Integer.valueOf((String)(session.getAttribute("airplaneID")));
     String originCodeOrig = (String)session.getAttribute("originCode");
@@ -150,7 +149,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Iowa Air: Admin Flights</title>
+        <title>Iowa Air: Modify Flights</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://fonts.googleapis.com/css?family=Catamaran" rel="stylesheet">
@@ -218,6 +217,7 @@
             <input type="number" name="economySeatsRemaining" value="<%=session.getAttribute("economySeatsRemaining")%>" required><br>
             
             <input type="submit" value="Modify Flight"><br>
+            <a href="deleteFlight.jsp">Delete Flight</a><br>
             </form>
 
             </div>
