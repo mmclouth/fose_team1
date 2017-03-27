@@ -98,6 +98,67 @@ public class Database {
         return null;
     }
     
+    
+        /**
+     * Query that returns any string from database given certain table constraints
+     * @param field
+     * @param table
+     * @param constraintField
+     * @param constraintValue
+     * @return results of SELECT query
+     */
+    public ArrayList<String> selectArrayList(String field, String table, String constraintField, String constraintValue){
+        
+        ArrayList<String> strings = new ArrayList<>();
+        StringBuilder query = new StringBuilder();
+        
+        query.append("SELECT ");
+        query.append(field);
+        query.append(" FROM ");
+        query.append(table);
+        query.append(" WHERE ");
+        query.append(constraintField);
+        query.append("='");
+        query.append(constraintValue);
+        query.append("';");
+        
+        try{
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            ResultSet results = sql.executeQuery();
+            
+            while(results.next()){
+                strings.add(results.getString(field));
+            }
+            
+            
+        } catch (SQLException e){
+            e.printStackTrace();
+        }    
+
+        return strings;
+    }
+    
+    
+    public ArrayList<String> getAllAirportCodes(){
+        
+        ArrayList<String> strings = new ArrayList<>();
+        String query = "SELECT code FROM airport;";
+        
+        try{
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            ResultSet results = sql.executeQuery();
+            
+            while(results.next()){
+                strings.add(results.getString("code"));
+            }
+            
+            
+        } catch (SQLException e){
+            e.printStackTrace();
+        }    
+
+        return strings;
+    }
 
     /**
      * Generic method to test database connection.  Verifies if data is present in given table.
@@ -611,6 +672,33 @@ public class Database {
         return false; 
     }
     
+    
+    public HashMap<String, String> getHashMapOfForFLight(String flight_id){
+        HashMap<String,String> flightData = new HashMap<>();
+        
+        String query = "SELECT * FROM flight WHERE id=" + flight_id + ";";
+        
+        try {
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            ResultSet results = sql.executeQuery();
+            
+            while(results.next()){
+                
+                String[] fields = {"id","num","airplane_id","origin_code","destination_code","flight_date","departure_time","arrival_time","duration","price_economy","price_first_class","first_class_remaining", "economy_remaining"};
+                
+                for(String field : fields){
+                    flightData.put(field, results.getString(field));
+                }    
+                
+            }
+            
+        } catch (SQLException e){
+            e.printStackTrace();
+        }    
+        
+        return flightData;
+        
+    }
     
     
 }
