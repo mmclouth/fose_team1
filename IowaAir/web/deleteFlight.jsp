@@ -74,7 +74,7 @@
             <h1>Delete Flight Page</h1>
 
             <form action="deleteFlight.jsp" method="post"><br>
-            Enter the flight number of the flight that you would like to delete. 
+                Enter the flight number of the flight that you would like to delete.<br> 
             Flight Number: 
             <input type="text" name="flightNumber" required><br>
             

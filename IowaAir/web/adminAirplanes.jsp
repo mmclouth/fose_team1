@@ -4,6 +4,58 @@
     Author     : kenziemclouth
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="dbResources.Database"%>
+<%@page import="java.util.HashMap"%>
+<%
+    Database db = new Database();
+    
+    String planeName = null;
+    int downTime = 0;
+    int capacityTotal = 0;
+    int capacityFirstClass = 0;
+    int capacityEconomy = 0;
+    int seatsPerRow = 0;
+    String aircraftNum = null;
+    
+    
+    //Retrieve parameters from request if they have been sent from previous page
+    if (request.getParameter("planeName") != null) {
+        planeName = request.getParameter("planeName");
+    }
+    if (request.getParameter("downTime") != null) {
+        downTime = Integer.valueOf(request.getParameter("downTime"));
+    }
+    if (request.getParameter("capacityTotal") != null) {
+        capacityTotal = Integer.valueOf(request.getParameter("capacityTotal"));
+    }
+    if (request.getParameter("capacityFirstClass") != null) {
+        capacityFirstClass = Integer.valueOf(request.getParameter("capacityFirstClass"));
+    }
+    if (request.getParameter("capacityEconomy") != null) {
+        capacityEconomy = Integer.valueOf(request.getParameter("capacityEconomy"));
+    }
+    if (request.getParameter("seatsPerRow") != null) {
+        seatsPerRow = Integer.valueOf(request.getParameter("seatsPerRow"));
+    }
+    if (request.getParameter("aircraftNum") != null) {
+        aircraftNum = request.getParameter("aircraftNum").toString();
+    }
+    if(planeName != null && downTime != 0 && capacityTotal != 0 && capacityFirstClass != 0 && capacityEconomy != 0 && seatsPerRow != 0 
+            && aircraftNum != null)
+    {
+        db.addAircraftType(planeName,downTime,capacityTotal,capacityFirstClass,capacityEconomy,seatsPerRow);
+        int aircraftTypeID = db.findAircraftTypeID(planeName);
+        db.addAirplane(aircraftTypeID,aircraftNum);
+        
+    }
+    ArrayList<HashMap<String, String>> aircraftData = db.getAllAircraftData();
+    
+
+    //close database connection
+    db.closeConnection();
+%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -58,19 +110,58 @@
             <h1>Admin Airplanes</h1>
             <form action="adminAirplanes.jsp" method="post">
                 <h2>Add New Aircraft</h2>
+                Number of Aircraft:
+                <input type="text" name="aircraftNum" required><br>
                 Name of Aircraft:
-                <input type="text" name="name" required><br>
-                Type:
-                <input type="text" name="type" required><br>
-                Number of Business Seats:
-                <input type="number" name="numBusinessSeats" required><br>
-                Number of Economy Seats:
-                <input type="number" name="numEconomySeats" required><br>
+                <input type="text" name="planeName" required><br>
                 Down time between flights (hrs):
                 <input type="number" name="downTime" required><br>
+                Total Capacity:
+                <input type="number" name="capacityTotal" required><br>
+                First Class Capacity:
+                <input type="number" name="capacityFirstClass" required><br>
+                Economy Capacity:
+                <input type="number" name="capacityEconomy" required><br>
+                Seats Per Row:
+                <input type="number" name="seatsPerRow" required><br>
                 <input type="submit" value="Add Aircraft">
             </form>
         </div>
+        
+        <div class="employee-table">
+
+                <h2>Current Aircrafts</h2>
+
+                <table>
+                    <tr>
+                        <th>Plane Name</th>
+                        <th>Down Time</th>
+                        <th>Total Capacity</th>
+                        <th>First Class Capacity</th>
+                        <th>Economy Capacity</th>
+                        <th>Seats Per Row</th>
+                        <th>Aircraft Type ID</th>
+                        <th>Aircraft Number</th>
+                    </tr>
+
+                    <!- Loop through each employee record and output each field in correct able column ->
+                    <% for (HashMap<String, String> record : aircraftData) {%>
+                    <tr>
+                        <td><%= record.get("plane_name")%></td>
+                        <td><%= record.get("down_time")%></td>
+                        <td><%= record.get("capacity_total")%></td>
+                        <td><%= record.get("capacity_first_class")%></td>
+                        <td><%= record.get("capacity_economy")%></td>
+                        <td><%= record.get("seats_per_row")%></td>
+                        <td><%= record.get("aircraft_type_id")%></td>
+                        <td><%= record.get("num")%></td>
+                    </tr>
+
+                    <% }%>
+
+                </table>
+
+            </div>
 
 
         <% }%>

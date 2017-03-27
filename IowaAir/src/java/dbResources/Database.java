@@ -632,4 +632,103 @@ public class Database {
             e.printStackTrace();
         }
     }
+    public void addAircraftType(String planeName, int downTime, int capacityTotal, int capacityFirstClass,
+            int capacityEconomy, int seatsPerRow)
+    {
+        StringBuilder query = new StringBuilder();
+
+        query.append("INSERT INTO aircraft_type (plane_name, down_time, capacity_total, capacity_first_class, capacity_economy, seats_per_row) VALUES ('");
+        query.append(planeName);
+        query.append("', '");
+        query.append(downTime);
+        query.append("', '");
+        query.append(capacityTotal);
+        query.append("', '");
+        query.append(capacityFirstClass);
+        query.append("', '");
+        query.append(capacityEconomy);
+        query.append("', '");
+        query.append(seatsPerRow);
+
+        query.append("') ;");
+
+        try {
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            sql.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void addAirplane(int aircraftTypeID, String num)
+    {
+        StringBuilder query = new StringBuilder();
+
+        query.append("INSERT INTO airplane (aircraft_type_id, num) VALUES ('");
+        query.append(aircraftTypeID);
+        query.append("', '");
+        query.append(num);
+        query.append("') ;");
+
+        try {
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            sql.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public int findAircraftTypeID(String planeName)
+    {
+        int aircraftTypeID = -1;
+        
+        try 
+        {
+            PreparedStatement query = conn.prepareStatement("SELECT id FROM aircraft_type WHERE plane_name = '" + planeName + "'");
+            ResultSet results = query.executeQuery();
+            
+            if (results.next())
+            {
+                aircraftTypeID = results.getInt("id");
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        
+        return aircraftTypeID;
+    }
+    
+    public ArrayList<HashMap<String, String>> getAllAircraftData(){
+        
+        ArrayList<HashMap<String,String>> allAircraftData = new ArrayList<>();
+        HashMap<String, String> aircraftData;
+        
+        String query = "SELECT * FROM aircraft_type,airplane WHERE aircraft_type.id=airplane.aircraft_type_id;";
+        
+        String[] fields = {"plane_name","down_time", "capacity_total", "capacity_first_class", "capacity_economy","seats_per_row","aircraft_type_id","num"};
+        
+        try {
+            PreparedStatement sql = conn.prepareStatement(query);
+            ResultSet results = sql.executeQuery();
+            
+            while(results.next()){
+                
+                aircraftData = new HashMap<String, String>();
+                
+                for(String field : fields){
+                    aircraftData.put(field, results.getString(field));
+                    
+                }
+                allAircraftData.add(aircraftData);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+       
+        return allAircraftData;
+    }
+    
 }
