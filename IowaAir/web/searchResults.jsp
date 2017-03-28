@@ -34,7 +34,7 @@
     } else {
         departure_date = "n/a";
     }
-    if (request.getParameter("r_date") != null) 
+    if (request.getParameter("r_date") != null && !request.getParameter("r_date").equals("")) 
     {
         return_date = request.getParameter("r_date");
         return_flight = true;
@@ -45,12 +45,12 @@
     
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
     Date d_date = formatter.parse(departure_date);
-    Date r_date = formatter.parse(return_date);
     
     Search search = new Search(origin_code, destination_code, d_date);
     ArrayList<ArrayList<HashMap<String,String>>> searchResults = search.getSearchResults();
     
     if(return_flight){
+        Date r_date = formatter.parse(return_date);
         search = new Search(destination_code, origin_code, r_date);
         returnResults = search.getSearchResults();
     }
