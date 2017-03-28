@@ -101,7 +101,7 @@ public class Search {
         
         
     }
-    
+       
     private ConnectionGraph createConnectionGraph(Date searchDate) {
 
         Database db = new Database();
@@ -192,6 +192,8 @@ public class Search {
             flightIDs.add(flightID);
         }
         
+        db.closeConnection();
+        
         return flightIDs;
     }
     
@@ -210,7 +212,7 @@ public class Search {
             
             connectionsData.add(flightData);
         }
-        
+        db.closeConnection();
         return connectionsData;
     }
 
