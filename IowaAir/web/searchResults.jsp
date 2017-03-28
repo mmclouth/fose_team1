@@ -9,7 +9,9 @@
 <%@page import="java.util.Date"%>
 <%@page import="dbResources.Search"%>
 <%
-    String origin_code, destination_code, departure_date;
+    String origin_code, destination_code, departure_date, return_date;
+    boolean return_flight = false;
+    ArrayList<ArrayList<HashMap<String,String>>> returnResults = new ArrayList<ArrayList<HashMap<String,String>>>();
     
     
     if (request.getParameter("origin") != null) 
@@ -32,14 +34,26 @@
     } else {
         departure_date = "n/a";
     }
+    if (request.getParameter("r_date") != null) 
+    {
+        return_date = request.getParameter("d_date");
+        return_flight = true;
+    } else {
+        return_date = "n/a";
+    }
+
     
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
     Date d_date = formatter.parse(departure_date);
+    Date r_date = formatter.parse(return_date);
     
     Search search = new Search(origin_code, destination_code, d_date);
-    
     ArrayList<ArrayList<HashMap<String,String>>> searchResults = search.getSearchResults();
-
+    
+    if(return_flight){
+        search = new Search(destination_code, origin_code, r_date);
+        returnResults = search.getSearchResults();
+    }
     
 %>    
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -83,6 +97,8 @@
 
         <div class="middle">
             <h1>Search Results Page</h1>
+
+            <h2>Departing Flight</h2>
         </div>
         
         <div class="employee-table">
@@ -129,6 +145,53 @@
         %>
             </table>
         </div>
+            
+        <%
+            if(return_flight){
+        %>    
+          
+        <div class="middle">
+            <h2>Return Flight</h2>
+        </div>
+        
+        <div class="employee-table">
+            
+            <table>
+        
+        <%
+            for(ArrayList<HashMap<String,String>> result : returnResults){        
+        %>
+                <tr>
 
+        <%      
+                for(String field : fields){
+        %>                    
+                    <th><%=field%></th>
+        <%            
+                }      
+        %>
+                </tr>
+        <%
+                for(HashMap<String,String> flight : result){      
+        %>
+                <tr>
+        <%
+                    for(String field : fields){          
+        %>
+                    <td><%= flight.get(field) %> </td>
+        <%
+                    }
+        %>
+                </tr>
+        <%
+                }
+            }
+        %>
+            </table>
+        </div>
+
+        <%
+            }
+        %>  
     </body>
 </html>
