@@ -59,32 +59,16 @@ public class ConnectionGraph {
         
         Database db = new Database();
         Date date = new Date();
-        date.setDate(28);
-        date.setMonth(2);
+        date.setDate(5);
+        date.setMonth(3);
         date.setYear(117);
 
         boolean flight = db.flightBetweenExists(date, "ORD", "JFK");
         
-        Search search = new Search("ORD", "JFK", date);
+        Search search = new Search("IFC", "JFK", date);
         
-        ConnectionGraph newgraph = search.createConnectionGraph(date);
-        
-        LinkedList<String> visited = new LinkedList();
-        visited.add("ORD");
-        
-        ArrayList<ArrayList<String>> possiblePaths = search.depthFirst(newgraph, visited);
-        
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String formattedDate = sdf.format(date);
-        
-        for(ArrayList<String> path : possiblePaths){
-            
-            ArrayList<String> flightIDs = Search.getFlightIdsForConnectionCombo(path, formattedDate);
-            
-            System.out.println("FLIGHT IDS!!!!!: " + flightIDs);
-        }
-        
-        
+        Search.printSearchResults(search.getSearchResults());
+
     }
 }
 

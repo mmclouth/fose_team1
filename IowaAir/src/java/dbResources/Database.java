@@ -714,7 +714,7 @@ public class Database {
     }
     
     
-    public HashMap<String, String> getHashMapOfForFLight(String flight_id){
+    public HashMap<String, String> getHashMapForFLight(String flight_id){
         HashMap<String,String> flightData = new HashMap<>();
         
         String query = "SELECT * FROM flight WHERE id=" + flight_id + ";";
