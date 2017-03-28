@@ -731,6 +731,14 @@ public class Database {
                     flightData.put(field, results.getString(field));
                 }    
                 
+                String time = flightData.get("departure_time");
+                time = time.substring(0, time.length() - 3);
+                flightData.put("departure_time", time);
+                
+                time = flightData.get("arrival_time");
+                time = time.substring(0, time.length() - 3);
+                flightData.put("arrival_time", time);
+                
             }
             
         } catch (SQLException e){
