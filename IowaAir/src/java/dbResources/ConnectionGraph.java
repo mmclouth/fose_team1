@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package dbResources;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -70,11 +72,22 @@ public class ConnectionGraph {
         LinkedList<String> visited = new LinkedList();
         visited.add("ORD");
         
-        search.depthFirst(newgraph, visited);
+        ArrayList<ArrayList<String>> possiblePaths = search.depthFirst(newgraph, visited);
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = sdf.format(date);
+        
+        for(ArrayList<String> path : possiblePaths){
+            
+            ArrayList<String> flightIDs = Search.getFlightIdsForConnectionCombo(path, formattedDate);
+            
+            System.out.println("FLIGHT IDS!!!!!: " + flightIDs);
+        }
         
         
     }
 }
-// This code is contributed by Aakash Hasija
 
+
+//http://stackoverflow.com/questions/58306/graph-algorithm-to-find-all-connections-between-two-arbitrary-vertices
     

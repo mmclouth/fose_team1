@@ -115,6 +115,35 @@ public class Search {
         return path;
     }
     
+    //need function to retrieve flight id for flight from origin to destination on certain date
+    public static ArrayList<String> getFlightIdsForConnectionCombo(ArrayList<String> connections, String date){
+        
+        ArrayList<String> flightIDs = new ArrayList<>();
+        String flightID;
+        
+        Database db = new Database();
+        
+        for(int i=0 ; i<connections.size()-1 ; i++){
+            
+            flightID = db.selectString("id", "flight", "origin_code", connections.get(i), "destination_code", connections.get(i+1), "flight_date", date);
+            
+            flightIDs.add(flightID);
+        }
+        
+        
+        
+        return flightIDs;
+    }
+    
+    
+    
+    
+    
+    //need function that combines all flights from connection combo in to an arraylist
+    // need something to combine all arraylists of flight info into one arraylist????
+    
+    
+    
     
     
     

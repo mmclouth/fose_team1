@@ -60,6 +60,14 @@ public class Database {
         customer, employee, admin
     }
     
+    public String selectString(String field, String table, String constraintField1, String constraintValue1) {
+        return selectString(field,table,constraintField1, constraintValue1, "", "", "", "");
+    }
+    
+    public String selectString(String field, String table, String constraintField1, String constraintValue1, String constraintField2, String constraintValue2) {
+        return selectString(field,table,constraintField1, constraintValue1, constraintField2, constraintValue2, "", "");
+    }
+    
     /**
      * Query that returns any string from database given certain table constraints
      * @param field
@@ -68,36 +76,69 @@ public class Database {
      * @param constraintValue
      * @return results of SELECT query
      */
-    public String selectString(String field, String table, String constraintField, String constraintValue){
-        
+    public String selectString(String field, String table, String constraintField1, String constraintValue1, String constraintField2, String constraintValue2, String constraintField3, String constraintValue3) {
+
         StringBuilder query = new StringBuilder();
-        
-        query.append("SELECT ");
-        query.append(field);
-        query.append(" FROM ");
-        query.append(table);
-        query.append(" WHERE ");
-        query.append(constraintField);
-        query.append("='");
-        query.append(constraintValue);
-        query.append("';");
-        
-        try{
+
+        if (!constraintValue3.equals("")) {
+            query.append("SELECT ");
+            query.append(field);
+            query.append(" FROM ");
+            query.append(table);
+            query.append(" WHERE ");
+            query.append(constraintField1);
+            query.append("='");
+            query.append(constraintValue1);
+            query.append("' AND ");
+            query.append(constraintField2);
+            query.append("='");
+            query.append(constraintValue2);
+            query.append("' AND ");
+            query.append(constraintField3);
+            query.append("='");
+            query.append(constraintValue3);
+            query.append("';");
+        } else if (!constraintValue2.equals("")) {
+            query.append("SELECT ");
+            query.append(field);
+            query.append(" FROM ");
+            query.append(table);
+            query.append(" WHERE ");
+            query.append(constraintField1);
+            query.append("='");
+            query.append(constraintValue1);
+            query.append("' AND ");
+            query.append(constraintField2);
+            query.append("='");
+            query.append(constraintValue2);
+            query.append("';");
+        } else {
+            query.append("SELECT ");
+            query.append(field);
+            query.append(" FROM ");
+            query.append(table);
+            query.append(" WHERE ");
+            query.append(constraintField1);
+            query.append("='");
+            query.append(constraintValue1);
+            query.append("';");
+        }
+
+        try {
             PreparedStatement sql = conn.prepareStatement(query.toString());
             ResultSet results = sql.executeQuery();
-            
-            while(results.next()){
+
+            while (results.next()) {
                 return results.getString(field);
             }
-            
-            
-        } catch (SQLException e){
+
+        } catch (SQLException e) {
             e.printStackTrace();
-        }    
+        }
 
         return null;
     }
-    
+
     
         /**
      * Query that returns any string from database given certain table constraints
