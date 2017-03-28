@@ -38,8 +38,8 @@
     if (request.getParameter("seatsPerRow") != null) {
         seatsPerRow = Integer.valueOf(request.getParameter("seatsPerRow"));
     }
-    if (request.getParameter("aircraftNum") != null) {
-        aircraftNum = request.getParameter("aircraftNum").toString();
+    if (request.getParameter("airplaneNum") != null) {
+        aircraftNum = request.getParameter("airplaneNum").toString();
     }
     if(planeName != null && downTime != 0 && capacityTotal != 0 && capacityFirstClass != 0 && capacityEconomy != 0 && seatsPerRow != 0 
             && aircraftNum != null)
@@ -49,6 +49,18 @@
         db.addAirplane(aircraftTypeID,aircraftNum);
         
     }
+    
+    int aircraftTypeID = db.findAircraftTypeID("ERJ-140");
+    int airplaneID = db.findAirplaneID("PL50001");
+    session.setAttribute("planeName",db.selectString("plane_name","aircraft_type","id",Integer.toString(aircraftTypeID)));
+    session.setAttribute("downTime",db.selectString("down_time","aircraft_type","id",Integer.toString(aircraftTypeID)));
+    session.setAttribute("capacityTotal",db.selectString("capacity_total","aircraft_type","id",Integer.toString(aircraftTypeID)));
+    session.setAttribute("capacityFirstClass",db.selectString("capacity_first_class","aircraft_type","id",Integer.toString(aircraftTypeID)));
+    session.setAttribute("capacityEconomy",db.selectString("capacity_economy","aircraft_type","id",Integer.toString(aircraftTypeID)));
+    session.setAttribute("seatsPerRow",db.selectString("seats_per_row","aircraft_type","id",Integer.toString(aircraftTypeID)));
+    session.setAttribute("airplaneNum", db.selectString("num","airplane","id",Integer.toString(airplaneID)));
+    
+    
     ArrayList<HashMap<String, String>> aircraftData = db.getAllAircraftData();
     
 
@@ -110,8 +122,8 @@
             <h1>Admin Airplanes</h1>
             <form action="adminAirplanes.jsp" method="post">
                 <h2>Add New Aircraft</h2>
-                Number of Aircraft:
-                <input type="text" name="aircraftNum" required><br>
+                Airplane Number:
+                <input type="text" name="airplaneNum" required><br>
                 Name of Aircraft:
                 <input type="text" name="planeName" required><br>
                 Down time between flights (hrs):
@@ -124,7 +136,8 @@
                 <input type="number" name="capacityEconomy" required><br>
                 Seats Per Row:
                 <input type="number" name="seatsPerRow" required><br>
-                <input type="submit" value="Add Aircraft">
+                <input type="submit" value="Add Aircraft"><br>
+                <a href="modifyAircraft.jsp">Modify Aircraft</a><br>
             </form>
         </div>
         
