@@ -189,9 +189,9 @@
                 <label for="destination">Destination:</label>
                 <input type="text" name ="destination"> <br>
                 <label for="d_date">Departure Date:</label>
-                <input type="text" name ="d_date">
+                <input type="date" name ="d_date">
                 <label id = "returnDateLabel" for="r_date">Return Date:</label>
-                <input id="returnDate" type="text" name ="r_date"><br>
+                <input id="returnDate" type="date" name ="r_date"><br>
                 
                 <div class="search-button">
                     <button type="submit" value="Submit">Search</button>
@@ -209,7 +209,7 @@
                 <input id="multiFlightDestination1" type="text" name ="multiFlightDestination1"><br>
                 
                 <label id = "multiFlightDepartLabel1" for="multiFlightDepart1">Flight Depart Date:</label>
-                <input id="multiFlightDepart1" type="text" name ="multiFlightDepart1"><br>
+                <input id="multiFlightDepart1" type="date" name ="multiFlightDepart1"><br>
                 </div>
                 
                 
@@ -222,7 +222,7 @@
                 <input id="multiFlightDestination2" type="text" name ="multiFlightDestination2"><br>
                 
                 <label id = "multiFlightDepartLabel2" for="multiFlightDepart2">Flight Depart Date:</label>
-                <input id="multiFlightDepart2" type="text" name ="multiFlightDepart2"><br>
+                <input id="multiFlightDepart2" type="date" name ="multiFlightDepart2"><br>
                 
                 </div>
                 
@@ -237,7 +237,7 @@
                     <input id="multiFlightDestination3" type="text" name ="multiFlightDestination3"><br>
                 
                     <label id = "multiFlightDepartLabel3" for="multiFlightDepart3">Flight Depart Date:</label>
-                    <input id="multiFlightDepart3" type="text" name ="multiFlightDepart3"><br>
+                    <input id="multiFlightDepart3" type="date" name ="multiFlightDepart3"><br>
                 
                 </div>
                 
@@ -250,7 +250,7 @@
                     <input id="multiFlightDestination4" type="text" name ="multiFlightDestination4"><br>
                 
                     <label id = "multiFlightDepartLabel4" for="multiFlightDepart4">Flight Depart Date:</label>
-                    <input id="multiFlightDepart4" type="text" name ="multiFlightDepart4"><br>
+                    <input id="multiFlightDepart4" type="date" name ="multiFlightDepart4"><br>
                 </div>
                 
                 <div class="search-button">
