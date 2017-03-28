@@ -36,7 +36,7 @@
     }
     if (request.getParameter("r_date") != null) 
     {
-        return_date = request.getParameter("d_date");
+        return_date = request.getParameter("r_date");
         return_flight = true;
     } else {
         return_date = "n/a";

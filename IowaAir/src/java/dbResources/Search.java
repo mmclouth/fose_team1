@@ -5,6 +5,7 @@
  */
 package dbResources;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -75,7 +76,9 @@ public class Search {
         for(ArrayList<String> path : possiblePaths){
             flightOption = this.getFlightDataForConnectionCombo(path, departure_date);
             
-            searchResults.add(flightOption);
+            if(this.isFlightComboValid(flightOption)){
+                searchResults.add(flightOption);
+            }
         }
 
         return searchResults;
@@ -214,6 +217,57 @@ public class Search {
         }
         db.closeConnection();
         return connectionsData;
+    }
+
+    private boolean isFlightComboValid(ArrayList<HashMap<String, String>> flightCombo) {
+
+        int landingHour, landingMinute, takeOffHour, takeOffMinute;
+        String landingTime, takeOffTime;
+        HashMap<String, String> flight1, flight2;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+        String dateString;
+        Date landingDate, takeOffDate;
+
+        for (int i = 0; i < flightCombo.size() - 1; i++) {
+            flight1 = flightCombo.get(i);
+            flight2 = flightCombo.get(i + 1);
+
+            dateString = flight1.get("flight_date");
+
+            try {
+                landingDate = formatter.parse(dateString);
+                dateString = flight2.get("flight_date");
+                
+                takeOffDate = formatter.parse(dateString);
+
+                landingTime = flight1.get("arrival_time");
+                takeOffTime = flight2.get("departure_time");
+
+                String[] splitTime = landingTime.split(":");
+                landingHour = Integer.parseInt(splitTime[0]);
+                landingMinute = Integer.parseInt(splitTime[1]);
+
+                splitTime = takeOffTime.split(":");
+                takeOffHour = Integer.parseInt(splitTime[0]);
+                takeOffMinute = Integer.parseInt(splitTime[1]);
+
+                if(landingDate.after(takeOffDate)){
+                    return false;
+                } else if (landingHour > takeOffHour) {
+                    return false;
+                } else if (landingHour == takeOffHour) {
+                    if (landingMinute > takeOffMinute) {
+                        return false;
+                    }
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        return true;
     }
 
 }
