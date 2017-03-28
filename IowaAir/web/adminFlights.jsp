@@ -18,7 +18,10 @@
     String departureTime = null;
     String arrivalTime = null;
     int duration = 0;
-    double price = 0.0;
+    double priceEconomy = 0.0;
+    double priceFirstClass = 0.0;
+    int firstClassSeatsRemaining = 0;
+    int economySeatsRemaining = 0;
     
     
     //Retrieve parameters from request if they have been sent from previous page
@@ -58,17 +61,38 @@
     if (request.getParameter("duration") != null) {
         duration = Integer.valueOf(request.getParameter("duration"));
     }
-    if (request.getParameter("price") != null) {
-        price = Double.valueOf(request.getParameter("price"));
+    if (request.getParameter("priceEconomy") != null) {
+        priceEconomy = Double.valueOf(request.getParameter("priceEconomy"));
     }
+    if (request.getParameter("priceFirstClass") != null) {
+        priceFirstClass = Double.valueOf(request.getParameter("priceFirstClass"));
+    }
+    if (request.getParameter("firstClassSeatsRemaining") != null) {
+        firstClassSeatsRemaining = Integer.valueOf(request.getParameter("firstClassSeatsRemaining"));
+    }
+    if (request.getParameter("economySeatsRemaining") != null) {
+        economySeatsRemaining = Integer.valueOf(request.getParameter("economySeatsRemaining"));
+    }
+    
     
     if(flightNumber != null && airplaneID != 0 && originCode != null && destinationCode != null && flightDate != null && departureTime != null 
-            && arrivalTime != null && duration != 0 && price != 0.0)
+            && arrivalTime != null && duration != 0 && priceEconomy != 0.0 && priceFirstClass != 0.0 && firstClassSeatsRemaining != 0 && economySeatsRemaining != 0)
     {
-        db.addFlightToDatabase(flightNumber,airplaneID,originCode,destinationCode,flightDate,departureTime,arrivalTime,duration,price);
+        db.addFlightToDatabase(flightNumber,airplaneID,originCode,destinationCode,flightDate,departureTime,arrivalTime,duration,priceEconomy,priceFirstClass,firstClassSeatsRemaining,economySeatsRemaining);
     }
-    
-    
+    int flightID = db.findFlightID("AA111");
+    session.setAttribute("flightNumber",db.selectString("num","flight","id",Integer.toString(flightID)));
+    session.setAttribute("airplaneID",db.selectString("airplane_id","flight","id",Integer.toString(flightID)));
+    session.setAttribute("originCode",db.selectString("origin_code","flight","id",Integer.toString(flightID)));
+    session.setAttribute("destinationCode",db.selectString("destination_code","flight","id",Integer.toString(flightID)));
+    session.setAttribute("flightDate",db.selectString("flight_date","flight","id",Integer.toString(flightID)));
+    session.setAttribute("departureTime",db.selectString("departure_time","flight","id",Integer.toString(flightID)));
+    session.setAttribute("arrivalTime", db.selectString("arrival_time","flight","id",Integer.toString(flightID)));
+    session.setAttribute("duration",db.selectString("duration","flight","id",Integer.toString(flightID)));
+    session.setAttribute("priceEconomy",db.selectString("price_economy","flight","id",Integer.toString(flightID)));
+    session.setAttribute("priceFirstClass",db.selectString("price_first_class","flight","id",Integer.toString(flightID)));
+    session.setAttribute("firstClassSeatsRemaining",db.selectString("first_class_remaining","flight","id",Integer.toString(flightID)));
+    session.setAttribute("economySeatsRemaining",db.selectString("economy_remaining","flight","id",Integer.toString(flightID)));
     ArrayList<HashMap<String, String>> flightData = db.getAllFlightData();
 
     //close database connection
@@ -145,10 +169,17 @@
             <input type="time" name="arrivalTime" required><br>
             Duration(mins):
             <input type="number" name="duration" required><br>
-            Price:
-            <input type="number" step="0.01" name="price" required><br>
+            Economy Price:
+            <input type="number" step="0.01" name="priceEconomy" required><br>
+            First Class Price:
+            <input type="number" step="0.01" name="priceFirstClass" required><br>
+            First Class Seats Remaining:
+            <input type="number" name="firstClassSeatsRemaining" required><br>
+            Economy Seats Remaining:
+            <input type="number" name="economySeatsRemaining" required><br>
             
             <input type="submit" value="Add Flight"><br>
+            <a href="modifyFlight.jsp">Modify Flight</a><br>
             </form>
             
         </div>
@@ -167,7 +198,10 @@
                         <th>Departure Time</th>
                         <th>Arrival Time</th>
                         <th>Duration</th>
-                        <th>Price</th>
+                        <th>Price Economy</th>
+                        <th>Price First Class</th>
+                        <th>First Class Seats Remaining</th>
+                        <th>Economy Seats Remaining</th>
                     </tr>
 
                     <!- Loop through each employee record and output each field in correct able column ->
@@ -181,7 +215,10 @@
                         <td><%= record.get("departure_time")%></td>
                         <td><%= record.get("arrival_time")%></td>
                         <td><%= record.get("duration")%></td>
-                        <td><%= record.get("price")%></td>
+                        <td><%= record.get("price_economy")%></td>
+                        <td><%= record.get("price_first_class")%></td>
+                        <td><%= record.get("first_class_remaining")%></td>
+                        <td><%= record.get("economy_remaining")%></td>
                     </tr>
 
                     <% }%>
