@@ -31,6 +31,7 @@
             Please click here to
             <a class="links" href="signUp.jsp" >sign up</a> or 
             <a class="links" href="logIn.jsp" >log in.</a> 
+            
         </div>
 
         <% } else { %>
@@ -52,8 +53,12 @@
 
         <div class="middle">
             <h1>Confirm Booking</h1>
-            <h2>Booking info goes here</h2>
-        </div>
+            <h3>Flight number<br>
+            Origin: &emsp;&emsp; Time of Departure:<br>
+            Destination:  &emsp;&emsp; Time of Arrival:<br>
+            Price:
+            </h3>            
+            </div>
         
         <% }%>
 
