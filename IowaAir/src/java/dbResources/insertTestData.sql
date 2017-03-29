@@ -52,7 +52,7 @@ VALUES
 
 
 INSERT INTO
-    flight (num, airplane_id, origin_code, destination_code, flight_date, duration, departure_time, arrival_time, price_economy, first_class_remaining, economy_remaining, price_first_class)
+    flight (num, airplane_id, origin_code, destination_code, departure_date, arrival_date, duration, departure_time, arrival_time, price_economy, first_class_remaining, economy_remaining, price_first_class)
 VALUES
     ("AA111", 10000, "ORD","JFK", '2017-03-28', '2017-03-28', 135, '07:00:00', '10:15:00', 300.00, 26, 290, 500.00),
     ("AA115", 10001, "JFK","ATL", '2017-03-28', '2017-03-28', 160, '12:00:00', '14:40:00', 150.00, 35, 295, 300.00),
@@ -116,7 +116,7 @@ VALUES
     ("AA142", 10014, "ATL","ORD", '2017-04-05', '2017-04-05', 160, '11:00:00', '13:40:00', 109.00,  10, 90, 225.00),
     ("AA149", 10018, "JFK","IFC", '2017-04-05', '2017-04-05', 240, '09:10:00', '13:10:00', 309.00,  10, 90, 500.00),
     ("AA150", 10018, "IFC","SFO", '2017-04-05', '2017-04-05', 200, '15:00:00', '18:20:00', 119.00,  10, 90, 225.00),
-    ("AA150", 10018, "SFO","ORD", '2017-04-05', '2017-04-06', 250, '22:00:00', '04:10:00', 119.00,  10, 90, 225.00);
+    ("AA170", 10018, "SFO","ORD", '2017-04-05', '2017-04-06', 250, '22:00:00', '04:10:00', 119.00,  10, 90, 225.00);
 
 
 
