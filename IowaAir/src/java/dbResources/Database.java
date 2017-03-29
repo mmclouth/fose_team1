@@ -140,6 +140,14 @@ public class Database {
     }
 
     
+    public ArrayList<String> selectArrayList(String field, String table, String constraintField1, String constraintValue1) {
+        return selectArrayList(field,table,constraintField1, constraintValue1, "", "", "", "");
+    }
+    
+    public ArrayList<String> selectarrayList(String field, String table, String constraintField1, String constraintValue1, String constraintField2, String constraintValue2) {
+        return selectArrayList(field,table,constraintField1, constraintValue1, constraintField2, constraintValue2, "", "");
+    }
+    
         /**
      * Query that returns any string from database given certain table constraints
      * @param field
@@ -148,20 +156,55 @@ public class Database {
      * @param constraintValue
      * @return results of SELECT query
      */
-    public ArrayList<String> selectArrayList(String field, String table, String constraintField, String constraintValue){
+    public ArrayList<String> selectArrayList(String field, String table, String constraintField1, String constraintValue1, String constraintField2, String constraintValue2, String constraintField3, String constraintValue3) {
         
         ArrayList<String> strings = new ArrayList<>();
-        StringBuilder query = new StringBuilder();
         
-        query.append("SELECT ");
-        query.append(field);
-        query.append(" FROM ");
-        query.append(table);
-        query.append(" WHERE ");
-        query.append(constraintField);
-        query.append("='");
-        query.append(constraintValue);
-        query.append("';");
+                StringBuilder query = new StringBuilder();
+
+        if (!constraintValue3.equals("")) {
+            query.append("SELECT ");
+            query.append(field);
+            query.append(" FROM ");
+            query.append(table);
+            query.append(" WHERE ");
+            query.append(constraintField1);
+            query.append("='");
+            query.append(constraintValue1);
+            query.append("' AND ");
+            query.append(constraintField2);
+            query.append("='");
+            query.append(constraintValue2);
+            query.append("' AND ");
+            query.append(constraintField3);
+            query.append("='");
+            query.append(constraintValue3);
+            query.append("';");
+        } else if (!constraintValue2.equals("")) {
+            query.append("SELECT ");
+            query.append(field);
+            query.append(" FROM ");
+            query.append(table);
+            query.append(" WHERE ");
+            query.append(constraintField1);
+            query.append("='");
+            query.append(constraintValue1);
+            query.append("' AND ");
+            query.append(constraintField2);
+            query.append("='");
+            query.append(constraintValue2);
+            query.append("';");
+        } else {
+            query.append("SELECT ");
+            query.append(field);
+            query.append(" FROM ");
+            query.append(table);
+            query.append(" WHERE ");
+            query.append(constraintField1);
+            query.append("='");
+            query.append(constraintValue1);
+            query.append("';");
+        }
         
         try{
             PreparedStatement sql = conn.prepareStatement(query.toString());
