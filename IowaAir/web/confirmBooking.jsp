@@ -4,6 +4,27 @@
     Author     : Kyle Anderson
 --%>
 
+<%@page import="dbResources.Database"%>
+<%@page import="java.util.HashMap"%>
+<%
+    String flight_id;
+    
+    Database db = new Database();
+    
+    
+    //retrieve flight_id from searchResults.jsp
+    if (request.getParameter("flight_id") != null) 
+    {
+        flight_id = request.getParameter("flight_id");
+    } else {
+        flight_id = "n/a";
+    }
+    
+    //get all flight data from database based on flight_id
+    HashMap<String,String> flightData = db.getHashMapForFLight(flight_id);
+    
+%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -59,7 +80,8 @@
             Destination:  
             <p style="text-align:center">Time of Arrival:</p><br>
             Price:
-            </h3>            
+            </h3>  
+
         </div>
         
         <!--
@@ -80,6 +102,11 @@
         -->
         
         <% }%>
+        
+        <div class="middle">
+        <!-- just testing to make sure the flight_id is getting passed correctly -->
+            <h1>Flight ID: <%= flight_id %></h1>
+        </div>
 
     </body>
 </html>
