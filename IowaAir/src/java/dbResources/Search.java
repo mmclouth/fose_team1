@@ -84,6 +84,16 @@ public class Search {
         return searchResults;
     }
     
+    
+    /**
+     * Currently uses origin, destination, and departure_date to find all possible flight options
+     * between the origin and the destination on the given departure_date.  Difference from getSearhResults
+     * is that it calls the getFlightDataForConnectionCombo2 method.  This eliminates limitation of only
+     * returning one possible flight combo for each connection combo.
+     * @return ArrayList of all possible flight connection options.  Each ArrayList contains an
+     * arraylist of hashmaps. Each Arraylist of hashmaps represents 1 combination of flights that
+     * will begin at the origin and end at the destination on the given date.
+     */
     public ArrayList<ArrayList<HashMap<String,String>>> getSearchResults2(){
         
         //this array list will contain the flight data for each connection in a flight combo option
@@ -107,9 +117,6 @@ public class Search {
         
         //for each flight combo (ArrayList<String>), get the flight data for each flight.
         //Then add each flight combo option with its flight data to final search results ArrayList
-        
-        //TODO: get every flight for the possible combo.  IE if there are 3 direct flights from ORD-->SFO in one day,
-        // all 3 flights should be displayed as options
         for(ArrayList<String> path : possiblePaths){
             flightOptions = this.getFlightDataForConnectionCombo2(path, departure_date);
             
@@ -142,6 +149,11 @@ public class Search {
         
     }
        
+    /**
+     * Creates a ConnectionGraph of all flights on the given date
+     * @param searchDate date used to create graph
+     * @return ConnectionGraph of all flights on given date
+     */
     private ConnectionGraph createConnectionGraph(Date searchDate) {
 
         Database db = new Database();
@@ -166,6 +178,14 @@ public class Search {
         return connections;
     }
     
+    /**
+     * Depth first search of given ConnectionGraph for all possible paths from origin to destination
+     * @param graph ConnectionGraph to search through for possible paths 
+     * @param visited
+     * @param possiblePaths ArrayList of ArrayList of Strings that will be passed to each recursive call
+     *                  and then returned to keep track of all possible paths instead of just printing to screen
+     * @return ArrayList of ArrayLIst of Strings of all possible connection combos to get from origin to destination
+     */
     private ArrayList<ArrayList<String>> depthFirst(ConnectionGraph graph, LinkedList<String> visited, ArrayList<ArrayList<String>> possiblePaths) {
         
         LinkedList<String> nodes = graph.adjacentNodes(visited.getLast());
@@ -204,6 +224,11 @@ public class Search {
     }
     
     
+    /**
+     * Generates ArrayList of Strings of path nodes of the given LinkedLIst
+     * @param visited LinkedList
+     * @return ArrayList of Strings
+     */
     private ArrayList<String> createPathList(LinkedList<String> visited){
         ArrayList<String> path = new ArrayList<>();
         
@@ -214,7 +239,7 @@ public class Search {
         return path;
     }
     
-    //need function to retrieve flight id for flight from origin to destination on certain date
+    //I think I will eventually delete this and replace it with getFlightIdCombosForConnectionCombo
     private ArrayList<String> getFlightIdsForConnectionCombo(ArrayList<String> connections, Date date){
         
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -238,7 +263,12 @@ public class Search {
     }
     
     
-    //need function to retrieve flight id for flight from origin to destination on certain date
+    /**
+     * Takes all combos of connections and generates an ArrayList of all possible flight combos on the given date.
+     * @param connections ArrayList of Strings - All possible connection combos to get from origin to destination
+     * @param date date of search
+     * @return ArrayList of ArrayList of all flight IDs for all possible flight combos that fit the search parameters
+     */
     private ArrayList<ArrayList<String>> getFlightIdCombosForConnectionCombo(ArrayList<String> connections, Date date){
         
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -300,9 +330,7 @@ public class Search {
             allFlightCombos.add(flightCombo);
             
         }
-        
-        
-        
+
         db.closeConnection();
         
         return allFlightCombos;
@@ -313,7 +341,7 @@ public class Search {
     
     
  
-    //need function that combines all flights from connection combo in to an arraylist
+    //Will probably eventually replace with getFlightDataForConnectionCombo2
     private ArrayList<HashMap<String,String>> getFlightDataForConnectionCombo(ArrayList<String> connections, Date date){
         ArrayList<HashMap<String,String>> connectionsData = new ArrayList<>();
         HashMap<String,String> flightData;
