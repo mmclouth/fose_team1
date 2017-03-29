@@ -124,6 +124,7 @@
                 }
                 
         %>
+                    <th>   </th>
                 </tr>
         <%
                 for(HashMap<String,String> flight : result){      
@@ -136,6 +137,12 @@
         <%
                     }
         %>
+                    <td>
+                        <form action="confirmBooking.jsp">
+                            <input type="hidden" name="flight_id" value="<%=flight.get("id") %>">
+                            <input type="submit" value="Book">
+                        </form>
+                    </td>
                 </tr>
         <%
                 }
@@ -170,6 +177,7 @@
         <%            
                 }      
         %>
+                    <th>   </th>
                 </tr>
         <%
                 for(HashMap<String,String> flight : result){      
@@ -182,6 +190,12 @@
         <%
                     }
         %>
+                    <td>
+                        <form action="confirmBooking.jsp">
+                            <input type="hidden" name="flight_id" value="<%=flight.get("flight_id") %>">
+                            <input type="submit" value="Book">
+                        </form>
+                    </td>
                 </tr>
         <%
                 }
