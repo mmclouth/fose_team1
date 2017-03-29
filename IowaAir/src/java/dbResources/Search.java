@@ -73,15 +73,49 @@ public class Search {
         
         //for each flight combo (ArrayList<String>), get the flight data for each flight.
         //Then add each flight combo option with its flight data to final search results ArrayList
-        
-        //TODO: get every flight for the possible combo.  IE if there are 3 direct flights from ORD-->SFO in one day,
-        // all 3 flights should be displayed as options
         for(ArrayList<String> path : possiblePaths){
             flightOption = this.getFlightDataForConnectionCombo(path, departure_date);
             
             if(this.isFlightComboValid(flightOption)){
                 searchResults.add(flightOption);
             }
+        }
+
+        return searchResults;
+    }
+    
+    public ArrayList<ArrayList<HashMap<String,String>>> getSearchResults2(){
+        
+        //this array list will contain the flight data for each connection in a flight combo option
+        ArrayList<ArrayList<HashMap<String,String>>> flightOptions;
+        
+        //this array list will contain all possible flight combo options to get from origin to 
+        //destination on the given date
+        ArrayList<ArrayList<HashMap<String,String>>> searchResults = new ArrayList<>();
+        
+        //create a graph of all flights on this date
+        ConnectionGraph allFlights = this.createConnectionGraph(departure_date);
+        
+        LinkedList<String> visited = new LinkedList<>();
+        visited.add(origin);
+        
+        ArrayList<ArrayList<String>> possiblePaths = new ArrayList<>();
+        
+        //get all possible paths from origin to destination from flight graph
+        //Each ArrayList<String> is the airport codes in order of their flight connections
+        possiblePaths = this.depthFirst(allFlights, visited, possiblePaths);
+        
+        //for each flight combo (ArrayList<String>), get the flight data for each flight.
+        //Then add each flight combo option with its flight data to final search results ArrayList
+        
+        //TODO: get every flight for the possible combo.  IE if there are 3 direct flights from ORD-->SFO in one day,
+        // all 3 flights should be displayed as options
+        for(ArrayList<String> path : possiblePaths){
+            flightOptions = this.getFlightDataForConnectionCombo2(path, departure_date);
+            
+            
+            searchResults.addAll(flightOptions);
+            
         }
 
         return searchResults;
@@ -203,6 +237,81 @@ public class Search {
         return flightIDs;
     }
     
+    
+    //need function to retrieve flight id for flight from origin to destination on certain date
+    private ArrayList<ArrayList<String>> getFlightIdCombosForConnectionCombo(ArrayList<String> connections, Date date){
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = sdf.format(date);
+        
+        ArrayList<ArrayList<String>> flightPool = new ArrayList<>();
+        ArrayList<String> flightsForCurrentConnection = new ArrayList<>();
+        
+        ArrayList<String> flightCombo;
+        ArrayList<ArrayList<String>> allFlightCombos = new ArrayList<>();
+        
+        String flightID;
+        
+        Database db = new Database();
+        
+        for(int i=0 ; i<connections.size()-1 ; i++){
+            
+            flightsForCurrentConnection = db.selectArrayList("id", "flight", "origin_code", connections.get(i), "destination_code", connections.get(i+1), "departure_date", formattedDate);
+            
+            flightPool.add(flightsForCurrentConnection);
+        }
+        
+        int numberOfCombos = 1;
+        
+        for(ArrayList<String> connection : flightPool){
+            numberOfCombos *= connection.size();
+        }
+        
+        
+        for(int i=0 ; i<flightPool.get(0).size() ; i++){
+            flightCombo = new ArrayList<>();
+            flightCombo.add(flightPool.get(0).get(i));
+            
+            if(flightPool.size() > 1){
+                for(int j=0; j<flightPool.get(1).size() ; j++){
+                    flightCombo.add(flightPool.get(1).get(j));
+                    
+                    if(flightPool.size() > 2){
+                        
+                        for(int k=0 ; k<flightPool.get(2).size() ; k++){
+                            flightCombo.add(flightPool.get(2).get(k));
+                            
+                            if(flightPool.size() > 3){
+                                
+                                for(int l=0 ; l<flightPool.get(3).size() ; l++){
+                                    flightCombo.add(flightPool.get(3).get(l));
+                                }
+
+                                
+                            }
+                            
+                        }
+                        
+                    }
+                    
+                }
+            }
+            
+            allFlightCombos.add(flightCombo);
+            
+        }
+        
+        
+        
+        db.closeConnection();
+        
+        return allFlightCombos;
+    }
+    
+    
+    
+    
+    
  
     //need function that combines all flights from connection combo in to an arraylist
     private ArrayList<HashMap<String,String>> getFlightDataForConnectionCombo(ArrayList<String> connections, Date date){
@@ -211,6 +320,7 @@ public class Search {
         
         Database db = new Database();
         
+        //ArrayList<String> flightIDs = this.getFlightIdsForConnectionCombo(connections, date);
         ArrayList<String> flightIDs = this.getFlightIdsForConnectionCombo(connections, date);
         
         for(String id : flightIDs){
@@ -220,6 +330,41 @@ public class Search {
         }
         db.closeConnection();
         return connectionsData;
+    }
+    
+    //need function that combines all flights from connection combo in to an arraylist
+    private ArrayList<ArrayList<HashMap<String,String>>> getFlightDataForConnectionCombo2(ArrayList<String> connections, Date date){
+        
+        ArrayList<ArrayList<HashMap<String,String>>> allCombosData = new ArrayList<>();
+        
+        ArrayList<HashMap<String,String>> flightComboData;
+        HashMap<String,String> flightData;
+        
+        Database db = new Database();
+        
+        //ArrayList<String> flightIDs = this.getFlightIdsForConnectionCombo(connections, date);
+        ArrayList<ArrayList<String>> flightComboIDs = this.getFlightIdCombosForConnectionCombo(connections, date);
+        
+        
+        for (ArrayList<String> flightCombo : flightComboIDs) {
+            
+            flightComboData = new ArrayList<>();
+            
+            for (String id : flightCombo) {
+                flightData = db.getHashMapForFLight(id);
+
+                flightComboData.add(flightData);
+            }
+            
+            if(this.isFlightComboValid(flightComboData)){
+                allCombosData.add(flightComboData);
+            }
+            
+        }
+        
+        
+        db.closeConnection();
+        return allCombosData;
     }
 
     private boolean isFlightComboValid(ArrayList<HashMap<String, String>> flightCombo) {
