@@ -73,6 +73,9 @@ public class Search {
         
         //for each flight combo (ArrayList<String>), get the flight data for each flight.
         //Then add each flight combo option with its flight data to final search results ArrayList
+        
+        //TODO: get every flight for the possible combo.  IE if there are 3 direct flights from ORD-->SFO in one day,
+        // all 3 flights should be displayed as options
         for(ArrayList<String> path : possiblePaths){
             flightOption = this.getFlightDataForConnectionCombo(path, departure_date);
             
