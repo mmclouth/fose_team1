@@ -15,6 +15,7 @@
     
     int numOfFlights;
     
+    //retrieve request parameters from search
     if (request.getParameter("origin") != null) 
     {
         origin_code = request.getParameter("origin");
@@ -43,13 +44,15 @@
         return_date = "n/a";
     }
 
-    
+    //Parse date from date string
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
     Date d_date = formatter.parse(departure_date);
     
+    //Create Search object and then retrieve search results
     Search search = new Search(origin_code, destination_code, d_date);
     ArrayList<ArrayList<HashMap<String,String>>> searchResults = search.getSearchResults();
     
+    //if return flight was specified, parse date, create Search object, retrieve search results
     if(return_flight){
         Date r_date = formatter.parse(return_date);
         search = new Search(destination_code, origin_code, r_date);
@@ -109,21 +112,21 @@
         <%
             String[] fields = {"id","num","origin_code","destination_code","departure_date","arrival_date","departure_time","arrival_time"};
             
+            //iterate through each flight combo
             for(ArrayList<HashMap<String,String>> result : searchResults){
                 
         %>
                 <tr>
 
-        <%
-                
-                for(String field : fields){
-        %>            
+        <%      for(String field : fields){                     //print out table headers for each combo to separate options%>            
                     
                     <th><%=field%></th>
         
         <%            
                 }
                 numOfFlights = result.size();
+
+                //create form that has hidden fields for each flight ID in current combo.  Form directs to confirmBooking.jsp
         %>
                     <th rowspan="<%=numOfFlights + 1%>"> 
                         <form action="confirmBooking.jsp">
@@ -139,29 +142,20 @@
                         </form>
                     </th>
                 </tr>
-        <%
-                for(HashMap<String,String> flight : result){      
-        %>
+        <%      for(HashMap<String,String> flight : result){      %>
                 <tr>
-        <%
-                    for(String field : fields){          
-        %>
+        <%          for(String field : fields){ %>
                     <td><%= flight.get(field) %> </td>
-        <%
-                    }
-        %>
+        <%          }   %>
                 </tr>
         <%
                 }
-
             }
         %>
             </table>
         </div>
             
-        <%
-            if(return_flight){
-        %>    
+        <%  if(return_flight){      %>    
           
         <div class="middle">
             <h2>Return Flight</h2>
@@ -171,18 +165,18 @@
             
             <table>
         
-        <%
-            for(ArrayList<HashMap<String,String>> result : returnResults){        
-        %>
+        <%  for(ArrayList<HashMap<String,String>> result : returnResults){   %>     
+        
                 <tr>
 
-        <%      
-                for(String field : fields){
-        %>                    
+        <%      for(String field : fields){     %> 
+                           
                     <th><%=field%></th>
         <%            
                 }      
                     numOfFlights = result.size();
+
+                    //create form that has hidden fields for each flight ID in current combo.  Form directs to confirmBooking.jsp
         %>
                     <th rowspan="<%=numOfFlights + 1%>"> 
                         <form action="confirmBooking.jsp">
@@ -198,17 +192,13 @@
                         </form>
                     </th>
                 </tr>
-        <%
-                for(HashMap<String,String> flight : result){      
-        %>
+        <%      for(HashMap<String,String> flight : result){    %>  
+        
                 <tr>
-        <%
-                    for(String field : fields){          
-        %>
+        <%          for(String field : fields){          %>
+        
                     <td><%= flight.get(field) %> </td>
-        <%
-                    }
-        %>
+        <%          }   %>
                 </tr>
         <%
                 }
@@ -217,8 +207,6 @@
             </table>
         </div>
 
-        <%
-            }
-        %>  
+        <% }    %>  
     </body>
 </html>

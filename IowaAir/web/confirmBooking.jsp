@@ -13,27 +13,30 @@
     
     Database db = new Database();
     
+    //get all parameters from request
     Map<String, String[]> parameters = request.getParameterMap();
     
     ArrayList<String> flight_ID_parameters = new ArrayList<String>();
     ArrayList<String> flight_IDs = new ArrayList<String>();
     ArrayList<HashMap<String,String>> flightsData = new ArrayList<HashMap<String,String>>();
     
+    //iterate through each parameter name in request parameter map
     for(String parameterName : parameters.keySet()){
+        
+        //add flight_id parameter names to list
         if(parameterName.startsWith("flight_id")){
             flight_ID_parameters.add(parameterName);
         }
     }
     
-    //retrieve flight_ids from searchResults.jsp
+    //loop through each flight_id paramter name and retrieve the actual ID passed from searchResults.jsp
     for(String parameter : flight_ID_parameters){
         if(request.getParameter(parameter) != null){
             flight_IDs.add(request.getParameter(parameter));
         }
     }
 
-    //get all flight data from database based on flight_id
-    
+    //get all flight data for each flight from database based on flight_ids
     for(String flight_id : flight_IDs){
         flightsData.add(db.getHashMapForFLight(flight_id));
     }
@@ -120,9 +123,8 @@
         
         <div class="middle">
         <%
+            //iterate through each flightId retrieved from searchResults.jsp
             for(String flight_id : flight_IDs){
-                
-            
         %>    
         
         <!-- just testing to make sure the flight_id is getting passed correctly -->
