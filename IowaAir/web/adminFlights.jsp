@@ -14,7 +14,8 @@
     int airplaneID = 0;
     String originCode = null;
     String destinationCode = null;
-    String flightDate = null;
+    String departureDate = null;
+    String arrivalDate = null;
     String departureTime = null;
     String arrivalTime = null;
     int duration = 0;
@@ -37,19 +38,34 @@
     if (request.getParameter("destinationCode") != null) {
         destinationCode = request.getParameter("destinationCode");
     }
-    if (request.getParameter("flightDate") != null) {
-        flightDate = request.getParameter("flightDate").toString();
+    if (request.getParameter("departureDate") != null) {
+        departureDate = request.getParameter("departureDate").toString();
         
 
         //If browser does not support HTML's date type, format the date string correctly
-        if (!flightDate.matches("^(19|20)\\d\\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$")) {
+        if (!departureDate.matches("^(19|20)\\d\\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$")) {
 
-            String[] flightSplit = flightDate.split("/");
-            String month = flightSplit[0];
-            String day = flightSplit[1];
-            String year = flightSplit[2];
+            String[] departureDateSplit = departureDate.split("/");
+            String month = departureDateSplit[0];
+            String day = departureDateSplit[1];
+            String year = departureDateSplit[2];
 
-            flightDate = year + "-" + month + "-" + day;
+            departureDate = year + "-" + month + "-" + day;
+        }
+    }
+    if (request.getParameter("arrivalDate") != null) {
+        arrivalDate = request.getParameter("arrivalDate").toString();
+        
+
+        //If browser does not support HTML's date type, format the date string correctly
+        if (!arrivalDate.matches("^(19|20)\\d\\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$")) {
+
+            String[] arrivalDateSplit = arrivalDate.split("/");
+            String month = arrivalDateSplit[0];
+            String day = arrivalDateSplit[1];
+            String year = arrivalDateSplit[2];
+
+            arrivalDate = year + "-" + month + "-" + day;
         }
     }
     if (request.getParameter("departureTime") != null) {
@@ -75,10 +91,10 @@
     }
     
     
-    if(flightNumber != null && airplaneID != 0 && originCode != null && destinationCode != null && flightDate != null && departureTime != null 
+    if(flightNumber != null && airplaneID != 0 && originCode != null && destinationCode != null && departureDate != null && arrivalDate != null && departureTime != null 
             && arrivalTime != null && duration != 0 && priceEconomy != 0.0 && priceFirstClass != 0.0 && firstClassSeatsRemaining != 0 && economySeatsRemaining != 0)
     {
-        db.addFlightToDatabase(flightNumber,airplaneID,originCode,destinationCode,flightDate,departureTime,arrivalTime,duration,priceEconomy,priceFirstClass,firstClassSeatsRemaining,economySeatsRemaining);
+        db.addFlightToDatabase(flightNumber,airplaneID,originCode,destinationCode,departureDate,arrivalDate,departureTime,arrivalTime,duration,priceEconomy,priceFirstClass,firstClassSeatsRemaining,economySeatsRemaining);
     }
     
     ArrayList<HashMap<String, String>> flightData = db.getAllFlightData();
@@ -171,8 +187,10 @@
             <input type="text" name="originCode" required><br>
             Destination Code:
             <input type="text" name="destinationCode" required><br>
-            Flight Date(mm/dd/yyyy):
-            <input type="date" name="flightDate" required><br>
+            Departure Date(mm/dd/yyyy):
+            <input type="date" name="departureDate" required><br>
+            Arrival Date(mm/dd/yyyy):
+            <input type="date" name="arrivalDate" required><br>
             Departure Time:
             <input type="time" name="departureTime" required><br>
             Arrival Time:
@@ -204,7 +222,8 @@
                         <th>Airplane ID</th>
                         <th>Origin Code</th>
                         <th>Destination Code</th>
-                        <th>Flight Date</th>
+                        <th>Departure Date</th>
+                        <th>Arrival Date</th>
                         <th>Departure Time</th>
                         <th>Arrival Time</th>
                         <th>Duration</th>
@@ -218,18 +237,19 @@
                     <!- Loop through each employee record and output each field in correct able column ->
                     <% for (HashMap<String, String> record : flightData) {%>
                     <tr>
-                        <td><input type="text" value="<%= record.get("num")%>"></td>
-                        <td><input type="text" value="<%= record.get("airplane_id")%>"></td>
+                        <td><%= record.get("num")%></td>
+                        <td><input type="number" value="<%= record.get("airplane_id")%>"></td>
                         <td><input type="text" value="<%= record.get("origin_code")%>"></td>
                         <td><input type="text" value="<%= record.get("destination_code")%>"></td>
-                        <td><input type="text" value="<%= record.get("departure_date")%>"></td>
-                        <td><input type="text" value="<%= record.get("departure_time")%>"></td>
-                        <td><input type="text" value="<%= record.get("arrival_time")%>"></td>
-                        <td><input type="text" value="<%= record.get("duration")%>"></td>
-                        <td><input type="text" value="<%= record.get("price_economy")%>"></td>
-                        <td><input type="text" value="<%= record.get("price_first_class")%>"></td>
-                        <td><input type="text" value="<%= record.get("first_class_remaining")%>"></td>
-                        <td><input type="text" value="<%= record.get("economy_remaining")%>"></td>
+                        <td><input type="date" value="<%= record.get("departure_date")%>"></td>
+                        <td><input type="date" value="<%=record.get("arrival_date")%>"></td>
+                        <td><input type="time" value="<%= record.get("departure_time")%>"></td>
+                        <td><input type="time" value="<%= record.get("arrival_time")%>"></td>
+                        <td><input type="number" value="<%= record.get("duration")%>"></td>
+                        <td><input type="number" value="<%= record.get("price_economy")%>"></td>
+                        <td><input type="number" value="<%= record.get("price_first_class")%>"></td>
+                        <td><input type="number" value="<%= record.get("first_class_remaining")%>"></td>
+                        <td><input type="number" value="<%= record.get("economy_remaining")%>"></td>
                         <td><input type="button" value="Update"></td>
                     </tr>
 

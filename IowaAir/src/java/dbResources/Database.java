@@ -560,12 +560,12 @@ public class Database {
         return allAirportData;
     }
      
-      public void addFlightToDatabase(String num, int airplaneID, String originCode, String destinationCode, String flightDate, String departureTime, String arrivalTime,
+      public void addFlightToDatabase(String num, int airplaneID, String originCode, String destinationCode, String departureDate, String arrivalDate, String departureTime, String arrivalTime,
                                     int duration, double priceEconomy, double priceFirstClass, int firstClassSeatsRemaining, int economySeatsRemaining) {
 
         StringBuilder query = new StringBuilder();
 
-        query.append("INSERT INTO flight (num, airplane_id, origin_code, destination_code, departure_date, departure_time, arrival_time, duration, price_economy,price_first_class,first_class_remaining,economy_remaining) VALUES ('");
+        query.append("INSERT INTO flight (num, airplane_id, origin_code, destination_code, departure_date,arrival_date, departure_time, arrival_time, duration, price_economy,price_first_class,first_class_remaining,economy_remaining) VALUES ('");
         query.append(num);
         query.append("', '");
         query.append(airplaneID);
@@ -574,7 +574,9 @@ public class Database {
         query.append("', '");
         query.append(destinationCode);
         query.append("', '");
-        query.append(flightDate);
+        query.append(departureDate);
+        query.append("', '");
+        query.append(arrivalDate);
         query.append("', '");
         query.append(departureTime);
         query.append("', '");
