@@ -25,6 +25,13 @@
             <h3>|</h3>
             <a class="links" href="signUp.jsp" ><h2>Sign Up</h2></a>
         </div>
+        
+        <div class="middle">
+            In order to confirm your booking, you must be signed into your account.
+            Please click here to
+            <a class="links" href="signUp.jsp" >sign up</a> or 
+            <a class="links" href="logIn.jsp" >log in.</a> 
+        </div>
 
         <% } else { %>
 
@@ -42,12 +49,13 @@
             <a class="links" href="userProfile.jsp" ><h4><%= session.getAttribute("userFirstName")%>'s Profile</h4></a>
         </div>
 
-        <% }%>
 
         <div class="middle">
             <h1>Confirm Booking</h1>
             <h2>Booking info goes here</h2>
         </div>
+        
+        <% }%>
 
     </body>
 </html>
