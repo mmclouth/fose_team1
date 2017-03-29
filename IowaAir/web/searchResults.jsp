@@ -50,13 +50,13 @@
     
     //Create Search object and then retrieve search results
     Search search = new Search(origin_code, destination_code, d_date);
-    ArrayList<ArrayList<HashMap<String,String>>> searchResults = search.getSearchResults();
+    ArrayList<ArrayList<HashMap<String,String>>> searchResults = search.getSearchResults2();
     
     //if return flight was specified, parse date, create Search object, retrieve search results
     if(return_flight){
         Date r_date = formatter.parse(return_date);
         search = new Search(destination_code, origin_code, r_date);
-        returnResults = search.getSearchResults();
+        returnResults = search.getSearchResults2();
     }
     
 %>    
