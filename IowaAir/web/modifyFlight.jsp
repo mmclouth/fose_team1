@@ -7,7 +7,7 @@
 <%
     
     Database db = new Database();
-    int flightID = db.findFlightID("AA151");
+    int flightID = Integer.valueOf((String)session.getAttribute("flightID"));
     String flightNumberOrig = (String)session.getAttribute("flightNumber");
     int airplaneIDOrig = Integer.valueOf((String)(session.getAttribute("airplaneID")));
     String originCodeOrig = (String)session.getAttribute("originCode");
@@ -20,7 +20,7 @@
     double priceFirstClassOrig = Double.valueOf((String)session.getAttribute("priceFirstClass"));
     int firstClassSeatsRemainingOrig = Integer.valueOf((String)session.getAttribute("firstClassSeatsRemaining"));
     int economySeatsRemainingOrig = Integer.valueOf((String)session.getAttribute("economySeatsRemaining"));
-    
+ 
     String flightNumber = null;
     int airplaneID = 0;
     String originCode = null;
@@ -128,18 +128,17 @@
         {
             db.updateFlightPriceFirstClass(Double.valueOf(request.getParameter("priceFirstClass")),flightID);
         }
-        if(firstClassSeatsRemaining != (Integer.valueOf(request.getParameter("firstClassSeatsRemaining"))))
+        if(firstClassSeatsRemainingOrig != (Integer.valueOf(request.getParameter("firstClassSeatsRemaining"))))
         {
             db.updateFlightFirstClassSeatsRemaining(Integer.valueOf(request.getParameter("firstClassSeatsRemaining")),flightID);
         }
-        if(economySeatsRemaining != (Integer.valueOf(request.getParameter("economySeatsRemaining"))))
+        if(economySeatsRemainingOrig != (Integer.valueOf(request.getParameter("economySeatsRemaining"))))
         {
             db.updateFlightEconomySeatsRemaining(Integer.valueOf(request.getParameter("economySeatsRemaining")),flightID);
         }
         response.sendRedirect("/IowaAir/adminFlights.jsp");
     }
     
-
     //close database connection
     db.closeConnection();
     

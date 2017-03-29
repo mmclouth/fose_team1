@@ -80,24 +80,33 @@
     {
         db.addFlightToDatabase(flightNumber,airplaneID,originCode,destinationCode,flightDate,departureTime,arrivalTime,duration,priceEconomy,priceFirstClass,firstClassSeatsRemaining,economySeatsRemaining);
     }
-    int flightID = db.findFlightID("AA111");
-    session.setAttribute("flightNumber",db.selectString("num","flight","id",Integer.toString(flightID)));
-    session.setAttribute("airplaneID",db.selectString("airplane_id","flight","id",Integer.toString(flightID)));
-    session.setAttribute("originCode",db.selectString("origin_code","flight","id",Integer.toString(flightID)));
-    session.setAttribute("destinationCode",db.selectString("destination_code","flight","id",Integer.toString(flightID)));
-    session.setAttribute("flightDate",db.selectString("flight_date","flight","id",Integer.toString(flightID)));
-    session.setAttribute("departureTime",db.selectString("departure_time","flight","id",Integer.toString(flightID)));
-    session.setAttribute("arrivalTime", db.selectString("arrival_time","flight","id",Integer.toString(flightID)));
-    session.setAttribute("duration",db.selectString("duration","flight","id",Integer.toString(flightID)));
-    session.setAttribute("priceEconomy",db.selectString("price_economy","flight","id",Integer.toString(flightID)));
-    session.setAttribute("priceFirstClass",db.selectString("price_first_class","flight","id",Integer.toString(flightID)));
-    session.setAttribute("firstClassSeatsRemaining",db.selectString("first_class_remaining","flight","id",Integer.toString(flightID)));
-    session.setAttribute("economySeatsRemaining",db.selectString("economy_remaining","flight","id",Integer.toString(flightID)));
+    
     ArrayList<HashMap<String, String>> flightData = db.getAllFlightData();
 
+    int flightID = db.findFlightID("AA112");
+        session.setAttribute("flightID",db.selectString("id","flight","num","AA112"));
+        session.setAttribute("flightNumber",db.selectString("num","flight","id",Integer.toString(flightID)));
+        session.setAttribute("airplaneID",db.selectString("airplane_id","flight","id",Integer.toString(flightID)));
+        session.setAttribute("originCode",db.selectString("origin_code","flight","id",Integer.toString(flightID)));
+        session.setAttribute("destinationCode",db.selectString("destination_code","flight","id",Integer.toString(flightID)));
+        session.setAttribute("flightDate",db.selectString("flight_date","flight","id",Integer.toString(flightID)));
+        session.setAttribute("departureTime",db.selectString("departure_time","flight","id",Integer.toString(flightID)));
+        session.setAttribute("arrivalTime", db.selectString("arrival_time","flight","id",Integer.toString(flightID)));
+        session.setAttribute("duration",db.selectString("duration","flight","id",Integer.toString(flightID)));
+        session.setAttribute("priceEconomy",db.selectString("price_economy","flight","id",Integer.toString(flightID)));
+        session.setAttribute("priceFirstClass",db.selectString("price_first_class","flight","id",Integer.toString(flightID)));
+        session.setAttribute("firstClassSeatsRemaining",db.selectString("first_class_remaining","flight","id",Integer.toString(flightID)));
+        session.setAttribute("economySeatsRemaining",db.selectString("economy_remaining","flight","id",Integer.toString(flightID)));
     //close database connection
     db.closeConnection();
 %>
+<script type="text/javascript">
+    function update(flightNumb)
+    {
+        Database db = new Database();
+        
+    }
+</script>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -151,6 +160,7 @@
         <div class="middle">
             
             <h1>Admin Flights Page</h1>
+            
             <form action="adminFlights.jsp" method="post"><br>
                 <h2>Add New Flight</h2><br>
             Flight Number: 
@@ -202,23 +212,25 @@
                         <th>Price First Class</th>
                         <th>First Class Seats Remaining</th>
                         <th>Economy Seats Remaining</th>
+                        <th></th>
                     </tr>
 
                     <!- Loop through each employee record and output each field in correct able column ->
                     <% for (HashMap<String, String> record : flightData) {%>
                     <tr>
-                        <td><%= record.get("num")%></td>
-                        <td><%= record.get("airplane_id")%></td>
-                        <td><%= record.get("origin_code")%></td>
-                        <td><%= record.get("destination_code")%></td>
-                        <td><%= record.get("flight_date")%></td>
-                        <td><%= record.get("departure_time")%></td>
-                        <td><%= record.get("arrival_time")%></td>
-                        <td><%= record.get("duration")%></td>
-                        <td><%= record.get("price_economy")%></td>
-                        <td><%= record.get("price_first_class")%></td>
-                        <td><%= record.get("first_class_remaining")%></td>
-                        <td><%= record.get("economy_remaining")%></td>
+                        <td><input type="text" value="<%= record.get("num")%>"></td>
+                        <td><input type="text" value="<%= record.get("airplane_id")%>"></td>
+                        <td><input type="text" value="<%= record.get("origin_code")%>"></td>
+                        <td><input type="text" value="<%= record.get("destination_code")%>"></td>
+                        <td><input type="text" value="<%= record.get("flight_date")%>"></td>
+                        <td><input type="text" value="<%= record.get("departure_time")%>"></td>
+                        <td><input type="text" value="<%= record.get("arrival_time")%>"></td>
+                        <td><input type="text" value="<%= record.get("duration")%>"></td>
+                        <td><input type="text" value="<%= record.get("price_economy")%>"></td>
+                        <td><input type="text" value="<%= record.get("price_first_class")%>"></td>
+                        <td><input type="text" value="<%= record.get("first_class_remaining")%>"></td>
+                        <td><input type="text" value="<%= record.get("economy_remaining")%>"></td>
+                        <td><input type="button" value="Update"></td>
                     </tr>
 
                     <% }%>

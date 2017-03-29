@@ -155,19 +155,21 @@
                         <th>Seats Per Row</th>
                         <th>Aircraft Type ID</th>
                         <th>Aircraft Number</th>
+                        <th></th>
                     </tr>
 
                     <!- Loop through each employee record and output each field in correct able column ->
                     <% for (HashMap<String, String> record : aircraftData) {%>
                     <tr>
-                        <td><%= record.get("plane_name")%></td>
-                        <td><%= record.get("down_time")%></td>
-                        <td><%= record.get("capacity_total")%></td>
-                        <td><%= record.get("capacity_first_class")%></td>
-                        <td><%= record.get("capacity_economy")%></td>
-                        <td><%= record.get("seats_per_row")%></td>
-                        <td><%= record.get("aircraft_type_id")%></td>
-                        <td><%= record.get("num")%></td>
+                        <td><input type="text" value="<%= record.get("plane_name")%>"></td>
+                        <td><input type="text" value="<%= record.get("down_time")%>"></td>
+                        <td><input type="text" value="<%= record.get("capacity_total")%>"></td>
+                        <td><input type="text" value="<%= record.get("capacity_first_class")%>"></td>
+                        <td><input type="text" value="<%= record.get("capacity_economy")%>"></td>
+                        <td><input type="text" value="<%= record.get("seats_per_row")%>"></td>
+                        <td><input type="text" value="<%= record.get("aircraft_type_id")%>"></td>
+                        <td><input type="text" value="<%= record.get("num")%>"></td>
+                        <td><input type="button" value="Update"></td>
                     </tr>
 
                     <% }%>
