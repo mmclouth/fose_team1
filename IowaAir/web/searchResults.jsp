@@ -106,7 +106,7 @@
             <table>
         
         <%
-            String[] fields = {"id","num","origin_code","destination_code","flight_date","departure_time","arrival_time"};
+            String[] fields = {"id","num","origin_code","destination_code","departure_date","arrival_date","departure_time","arrival_time"};
             
             for(ArrayList<HashMap<String,String>> result : searchResults){
                 

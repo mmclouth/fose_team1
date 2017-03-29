@@ -88,7 +88,7 @@ public class Search {
         
         System.out.println("ID \t\t num \t\t origin_code \t dest_code \t date \t\t\t departure \t\t arrival");
         
-        String[] fields = {"id","num","origin_code","destination_code","flight_date","departure_time","arrival_time"};
+        String[] fields = {"id","num","origin_code","destination_code","departure_date", "arrival_date","departure_time","arrival_time"};
         
         for(ArrayList<HashMap<String,String>> result : searchResults){
             for(HashMap<String,String> flight : result){
@@ -190,7 +190,7 @@ public class Search {
         
         for(int i=0 ; i<connections.size()-1 ; i++){
             
-            flightID = db.selectString("id", "flight", "origin_code", connections.get(i), "destination_code", connections.get(i+1), "flight_date", formattedDate);
+            flightID = db.selectString("id", "flight", "origin_code", connections.get(i), "destination_code", connections.get(i+1), "departure_date", formattedDate);
             
             flightIDs.add(flightID);
         }
@@ -233,11 +233,11 @@ public class Search {
             flight1 = flightCombo.get(i);
             flight2 = flightCombo.get(i + 1);
 
-            dateString = flight1.get("flight_date");
+            dateString = flight1.get("arrival_date");
 
             try {
                 landingDate = formatter.parse(dateString);
-                dateString = flight2.get("flight_date");
+                dateString = flight2.get("departure_date");
                 
                 takeOffDate = formatter.parse(dateString);
 

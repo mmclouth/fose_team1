@@ -458,7 +458,7 @@ public class Database {
         
         String query = "SELECT * FROM flight;";
         
-        String[] fields = {"num", "airplane_id", "origin_code", "destination_code", "flight_date", "departure_time", "arrival_time", "duration", "price_economy","price_first_class","first_class_remaining","economy_remaining"};
+        String[] fields = {"num", "airplane_id", "origin_code", "destination_code", "departure_date", "arrival_date", "departure_time", "arrival_time", "duration", "price_economy","price_first_class","first_class_remaining","economy_remaining"};
         
         try {
             PreparedStatement sql = conn.prepareStatement(query);
@@ -522,7 +522,7 @@ public class Database {
 
         StringBuilder query = new StringBuilder();
 
-        query.append("INSERT INTO flight (num, airplane_id, origin_code, destination_code, flight_date, departure_time, arrival_time, duration, price_economy,price_first_class,first_class_remaining,economy_remaining) VALUES ('");
+        query.append("INSERT INTO flight (num, airplane_id, origin_code, destination_code, departure_date, departure_time, arrival_time, duration, price_economy,price_first_class,first_class_remaining,economy_remaining) VALUES ('");
         query.append(num);
         query.append("', '");
         query.append(airplaneID);
@@ -610,7 +610,7 @@ public class Database {
     public void updateFlightDate(String flightDate, int id)
     {
         StringBuilder query = new StringBuilder();
-        query.append("UPDATE flight SET flight_date= '" + flightDate + "'WHERE id = '" + id + "'");
+        query.append("UPDATE flight SET departure_date= '" + flightDate + "'WHERE id = '" + id + "'");
         try {
             PreparedStatement sql = conn.prepareStatement(query.toString());
             sql.executeUpdate();
@@ -995,7 +995,7 @@ public class Database {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = sdf.format(date);
         
-        query.append("SELECT id FROM flight WHERE flight_date = '");
+        query.append("SELECT id FROM flight WHERE departure_date = '");
         query.append(formattedDate);
         query.append("' AND origin_code = '");
         query.append(origin);
@@ -1030,7 +1030,7 @@ public class Database {
             
             while(results.next()){
                 
-                String[] fields = {"id","num","airplane_id","origin_code","destination_code","flight_date","departure_time","arrival_time","duration","price_economy","price_first_class","first_class_remaining", "economy_remaining"};
+                String[] fields = {"id","num","airplane_id","origin_code","destination_code","departure_date", "arrival_date","departure_time","arrival_time","duration","price_economy","price_first_class","first_class_remaining", "economy_remaining"};
                 
                 for(String field : fields){
                     flightData.put(field, results.getString(field));

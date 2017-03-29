@@ -89,7 +89,7 @@
         session.setAttribute("airplaneID",db.selectString("airplane_id","flight","id",Integer.toString(flightID)));
         session.setAttribute("originCode",db.selectString("origin_code","flight","id",Integer.toString(flightID)));
         session.setAttribute("destinationCode",db.selectString("destination_code","flight","id",Integer.toString(flightID)));
-        session.setAttribute("flightDate",db.selectString("flight_date","flight","id",Integer.toString(flightID)));
+        session.setAttribute("flightDate",db.selectString("departure_date","flight","id",Integer.toString(flightID)));
         session.setAttribute("departureTime",db.selectString("departure_time","flight","id",Integer.toString(flightID)));
         session.setAttribute("arrivalTime", db.selectString("arrival_time","flight","id",Integer.toString(flightID)));
         session.setAttribute("duration",db.selectString("duration","flight","id",Integer.toString(flightID)));
@@ -222,7 +222,7 @@
                         <td><input type="text" value="<%= record.get("airplane_id")%>"></td>
                         <td><input type="text" value="<%= record.get("origin_code")%>"></td>
                         <td><input type="text" value="<%= record.get("destination_code")%>"></td>
-                        <td><input type="text" value="<%= record.get("flight_date")%>"></td>
+                        <td><input type="text" value="<%= record.get("departure_date")%>"></td>
                         <td><input type="text" value="<%= record.get("departure_time")%>"></td>
                         <td><input type="text" value="<%= record.get("arrival_time")%>"></td>
                         <td><input type="text" value="<%= record.get("duration")%>"></td>
