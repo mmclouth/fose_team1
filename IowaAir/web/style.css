@@ -350,6 +350,32 @@ body {
     text-align: center;
 }
 
+/*********************
+    Booking Confirmation
+*********************/
+
+.confirmTable {
+    display:table;
+    width:100%;
+}
+.tr {
+    display:table-row;
+}
+.d1 {
+    display:table-cell;
+    width:25%;
+}
+.d2 {
+    display:table-cell;
+    text-align:center;
+    width:50%;
+}
+.d3 {
+    display:table-cell;
+    text-align:right;
+    width:25%;
+}
+
 
 
 
