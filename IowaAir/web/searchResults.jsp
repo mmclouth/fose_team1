@@ -13,6 +13,7 @@
     boolean return_flight = false;
     ArrayList<ArrayList<HashMap<String,String>>> returnResults = new ArrayList<ArrayList<HashMap<String,String>>>();
     
+    int numOfFlights;
     
     if (request.getParameter("origin") != null) 
     {
@@ -122,9 +123,21 @@
         
         <%            
                 }
-                
+                numOfFlights = result.size();
         %>
-                    <th>   </th>
+                    <th rowspan="<%=numOfFlights + 1%>"> 
+                        <form action="confirmBooking.jsp">
+        <%                    
+                            int counter = 1;
+                            for(HashMap<String,String> flight : result){ 
+        %>                    
+                            <input type="hidden" name="flight_id<%=counter%>" value="<%=flight.get("id") %>">
+        <%                      counter++;
+                            }
+        %>                    
+                            <input type="submit" value="Book" >
+                        </form>
+                    </th>
                 </tr>
         <%
                 for(HashMap<String,String> flight : result){      
@@ -137,18 +150,11 @@
         <%
                     }
         %>
-                    <td>
-                        <form action="confirmBooking.jsp">
-                            <input type="hidden" name="flight_id" value="<%=flight.get("id") %>">
-                            <input type="submit" value="Book">
-                        </form>
-                    </td>
                 </tr>
         <%
                 }
-            }
-        
 
+            }
         %>
             </table>
         </div>
@@ -176,8 +182,21 @@
                     <th><%=field%></th>
         <%            
                 }      
+                    numOfFlights = result.size();
         %>
-                    <th>   </th>
+                    <th rowspan="<%=numOfFlights + 1%>"> 
+                        <form action="confirmBooking.jsp">
+        <%                    
+                            int counter = 1;
+                            for(HashMap<String,String> flight : result){ 
+        %>                    
+                            <input type="hidden" name="flight_id<%=counter%>" value="<%=flight.get("id") %>">
+        <%                      counter++;
+                            }
+        %>                    
+                            <input type="submit" value="Book" >
+                        </form>
+                    </th>
                 </tr>
         <%
                 for(HashMap<String,String> flight : result){      
@@ -190,12 +209,6 @@
         <%
                     }
         %>
-                    <td>
-                        <form action="confirmBooking.jsp">
-                            <input type="hidden" name="flight_id" value="<%=flight.get("flight_id") %>">
-                            <input type="submit" value="Book">
-                        </form>
-                    </td>
                 </tr>
         <%
                 }

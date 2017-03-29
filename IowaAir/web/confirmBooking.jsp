@@ -4,24 +4,39 @@
     Author     : Kyle Anderson
 --%>
 
+<%@page import="java.util.Map"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="dbResources.Database"%>
 <%@page import="java.util.HashMap"%>
 <%
-    String flight_id;
     
     Database db = new Database();
     
+    Map<String, String[]> parameters = request.getParameterMap();
     
-    //retrieve flight_id from searchResults.jsp
-    if (request.getParameter("flight_id") != null) 
-    {
-        flight_id = request.getParameter("flight_id");
-    } else {
-        flight_id = "n/a";
+    ArrayList<String> flight_ID_parameters = new ArrayList<String>();
+    ArrayList<String> flight_IDs = new ArrayList<String>();
+    ArrayList<HashMap<String,String>> flightsData = new ArrayList<HashMap<String,String>>();
+    
+    for(String parameterName : parameters.keySet()){
+        if(parameterName.startsWith("flight_id")){
+            flight_ID_parameters.add(parameterName);
+        }
     }
     
+    //retrieve flight_ids from searchResults.jsp
+    for(String parameter : flight_ID_parameters){
+        if(request.getParameter(parameter) != null){
+            flight_IDs.add(request.getParameter(parameter));
+        }
+    }
+
     //get all flight data from database based on flight_id
-    HashMap<String,String> flightData = db.getHashMapForFLight(flight_id);
+    
+    for(String flight_id : flight_IDs){
+        flightsData.add(db.getHashMapForFLight(flight_id));
+    }
     
 %>
 
@@ -104,9 +119,17 @@
         <% }%>
         
         <div class="middle">
+        <%
+            for(String flight_id : flight_IDs){
+                
+            
+        %>    
+        
         <!-- just testing to make sure the flight_id is getting passed correctly -->
-            <h1>Flight ID: <%= flight_id %></h1>
-        </div>
+            <h2>Flight ID: <%= flight_id %></h2>
+        
 
+        <% }%>
+        </div>
     </body>
 </html>
