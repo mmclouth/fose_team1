@@ -60,7 +60,7 @@ CREATE TABLE flight
     origin_code VARCHAR(10) NOT NULL,
     destination_code VARCHAR(10) NOT NULL,
     departure_date DATE NOT NULL,
-    arrival_date DATE,
+    arrival_date DATE NOT NULL,
     departure_time TIME NOT NULL,
     arrival_time TIME NOT NULL,
     duration INT NOT NULL,
