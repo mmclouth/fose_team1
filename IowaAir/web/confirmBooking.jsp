@@ -91,37 +91,8 @@
 
 
         <div class="middle">
-            <h1>Confirm Booking</h1>
-            <h3>Flight number<br>
-            Origin: 
-            <p style="text-align:center">Time of Departure:</p><br>
-            Destination:  
-            <p style="text-align:center">Time of Arrival:</p><br>
-            Price:
-            </h3>  
+            <h1>Confirm Booking</h1><br>
 
-        </div>
-        
-        <!--
-        <div class="middle">
-            <h1>Confirm Booking</h1>
-            <h3>Flight number<br>
-            <div class="confirmTable">
-                <div class="tr">
-                <div class="d1">Origin:</div>
-                <div class="d2">Time of Departure:</div><br>
-                <div class="d1">Destination:</div>
-                <div class="d2">Time of Arrival:</div><br>
-                <div class="d1">Price:</div>
-                </div>
-            </div>
-            </h3>
-        </div>
-        -->
-        
-        <% }%>
-        
-        <div class="middle">
             <% for(HashMap<String, String> maps : flightsData) { %>
             <h3>
                 Flight Number: <%= maps.get("num") %><br>
@@ -148,5 +119,6 @@
 
             <% } %>
         </div>
+        <% } %>
     </body>
 </html>
