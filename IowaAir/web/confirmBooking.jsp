@@ -123,18 +123,29 @@
         
         <div class="middle">
             <% for(HashMap<String, String> maps : flightsData) { %>
-            <h2>
+            <h3>
                 Flight Number: <%= maps.get("num") %><br>
-                Departure Date: <%= maps.get("departure_date") %><br>
-                Departure Time: <%= maps.get("departure_time") %><br>
-                Departure City: <%= maps.get("origin_code") %><br>
-                Arrival Date: <%= maps.get("arrival_date") %><br>
-                Arrival Time: <%= maps.get("arrival_time") %><br>
-                Arrival City: <%= maps.get("origin_code") %><br>
-                Duration: <%= maps.get("duration") %><br>
-                Price First Class: <%= maps.get("price_first_class") %><br>
-                Price Economy: <%= maps.get("price_economy") %><br>    
-            </h2>      
+            </h3>
+            <h4>
+                    <table style="width:100%">
+                        <tr>
+                            <td>Departure Date: <%= maps.get("departure_date") %></td>
+                            <td>Departure Time: <%= maps.get("departure_time") %></td>
+                            <td>Departure City: <%= maps.get("origin_code") %></td>
+                        </tr>
+                        <tr>
+                            <td>Arrival Date: <%= maps.get("arrival_date") %></td>
+                            <td>Arrival Time: <%= maps.get("arrival_time") %></td>
+                            <td>Arrival City: <%= maps.get("origin_code") %></td>
+                        </tr>
+                        <tr>
+                            <td>Duration: <%= maps.get("duration") %> minutes</td>
+                            <td>Price First Class: $<%= maps.get("price_first_class") %></td>
+                            <td>Price Economy: $<%= maps.get("price_economy") %></td>
+                        </tr>    
+                    </table><br><br>
+            </h4>   
+
             <% } %>
         </div>
     </body>
