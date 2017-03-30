@@ -12,6 +12,7 @@
     String origin_code, destination_code, departure_date, return_date;
     boolean return_flight = false;
     ArrayList<ArrayList<HashMap<String,String>>> returnResults = new ArrayList<ArrayList<HashMap<String,String>>>();
+    int num_of_passengers;
     
     int numOfFlights;
     
@@ -42,6 +43,12 @@
         return_flight = true;
     } else {
         return_date = "n/a";
+    }
+    if (request.getParameter("num_of_passengers") != null && !request.getParameter("num_of_passengers").equals("")) 
+    {
+        num_of_passengers = Integer.parseInt(request.getParameter("num_of_passengers"));
+    } else {
+        num_of_passengers = 1;
     }
 
     //Parse date from date string
