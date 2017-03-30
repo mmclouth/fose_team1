@@ -354,10 +354,8 @@ body {
     Booking Confirmation
 *********************/
 
-.confirmTable {
-    td {
-        padding: 20px;
-    }
+table#confirmBooking {
+        width: 100%;
 }
 
 

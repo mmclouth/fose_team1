@@ -127,7 +127,7 @@
                 Flight Number: <%= maps.get("num") %><br>
             </h3>
             <h4>
-                    <table style="width:100%">
+                    <table id="confirmBooking">
                         <tr>
                             <td>Departure Date: <%= maps.get("departure_date") %></td>
                             <td>Departure Time: <%= maps.get("departure_time") %></td>
