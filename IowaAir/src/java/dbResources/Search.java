@@ -24,6 +24,7 @@ public class Search {
     String destination;
     Date departure_date;
     Date return_date;
+    int number_of_passengers;
 
     
     public Search(String origin, String destination, Date departure_date){
@@ -32,6 +33,7 @@ public class Search {
         this.departure_date = departure_date;
         this.roundtrip = false;
         this.multi_city = false;
+        this.number_of_passengers = 1;
     }
     
     public Search(String origin, String destination, Date departure_date, Date return_date){
@@ -41,6 +43,17 @@ public class Search {
         this.return_date = return_date;
         this.roundtrip = true;
         this.multi_city = false;
+        this.number_of_passengers = 1;
+    }
+    
+    public Search(String origin, String destination, Date departure_date, Date return_date, int number_of_passengers){
+        this.origin = origin;
+        this.destination = destination;
+        this.departure_date = departure_date;
+        this.return_date = return_date;
+        this.roundtrip = true;
+        this.multi_city = false;
+        this.number_of_passengers = number_of_passengers;
     }
 
     /**
@@ -428,6 +441,22 @@ public class Search {
         for (int i = 0; i < flightCombo.size() - 1; i++) {
             flight1 = flightCombo.get(i);
             flight2 = flightCombo.get(i + 1);
+            
+            int first_class_remaining, economy_remaining;
+            
+            first_class_remaining = Integer.parseInt(flight1.get("first_class_remaining"));
+            economy_remaining = Integer.parseInt(flight1.get("economy_remaining"));
+            
+            if(first_class_remaining + economy_remaining < this.number_of_passengers){
+                return false;
+            }
+            
+            first_class_remaining = Integer.parseInt(flight2.get("first_class_remaining"));
+            economy_remaining = Integer.parseInt(flight2.get("economy_remaining"));
+            
+            if(first_class_remaining + economy_remaining < this.number_of_passengers){
+                return false;
+            }
 
             dateString = flight1.get("arrival_date");
 
