@@ -299,35 +299,55 @@ public class Search {
         
         
         for(int i=0 ; i<flightPool.get(0).size() ; i++){
-            flightCombo = new ArrayList<>();
-            flightCombo.add(flightPool.get(0).get(i));
             
             if(flightPool.size() > 1){
                 for(int j=0; j<flightPool.get(1).size() ; j++){
-                    flightCombo.add(flightPool.get(1).get(j));
                     
+                    
+
                     if(flightPool.size() > 2){
                         
                         for(int k=0 ; k<flightPool.get(2).size() ; k++){
-                            flightCombo.add(flightPool.get(2).get(k));
-                            
+
                             if(flightPool.size() > 3){
                                 
                                 for(int l=0 ; l<flightPool.get(3).size() ; l++){
+                                    
+                                    flightCombo = new ArrayList<>();
+                                    flightCombo.add(flightPool.get(0).get(i));
+                                    flightCombo.add(flightPool.get(1).get(j));
+                                    flightCombo.add(flightPool.get(2).get(k));
                                     flightCombo.add(flightPool.get(3).get(l));
+                                    
+                                    allFlightCombos.add(flightCombo);
                                 }
 
+                            } else {
+                                flightCombo = new ArrayList<>();
+                                flightCombo.add(flightPool.get(0).get(i));
+                                flightCombo.add(flightPool.get(1).get(j));
+                                flightCombo.add(flightPool.get(2).get(k));
                                 
+                                allFlightCombos.add(flightCombo);
                             }
                             
                         }
                         
+                    } else {
+                        flightCombo = new ArrayList<>();
+                        flightCombo.add(flightPool.get(0).get(i));
+                        flightCombo.add(flightPool.get(1).get(j));
+                        
+                        allFlightCombos.add(flightCombo);
                     }
                     
                 }
+            } else {
+                flightCombo = new ArrayList<>();
+                flightCombo.add(flightPool.get(0).get(i));
+                
+                allFlightCombos.add(flightCombo);
             }
-            
-            allFlightCombos.add(flightCombo);
             
         }
 
