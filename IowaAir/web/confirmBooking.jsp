@@ -122,16 +122,20 @@
         <% }%>
         
         <div class="middle">
-        <%
-            //iterate through each flightId retrieved from searchResults.jsp
-            for(String flight_id : flight_IDs){
-        %>    
-        
-        <!-- just testing to make sure the flight_id is getting passed correctly -->
-            <h2>Flight ID: <%= flight_id %></h2>
-        
-
-        <% }%>
+            <% for(HashMap<String, String> maps : flightsData) { %>
+            <h2>
+                Flight Number: <%= maps.get("num") %><br>
+                Departure Date: <%= maps.get("departure_date") %><br>
+                Departure Time: <%= maps.get("departure_time") %><br>
+                Departure City: <%= maps.get("origin_code") %><br>
+                Arrival Date: <%= maps.get("arrival_date") %><br>
+                Arrival Time: <%= maps.get("arrival_time") %><br>
+                Arrival City: <%= maps.get("origin_code") %><br>
+                Duration: <%= maps.get("duration") %><br>
+                Price First Class: <%= maps.get("price_first_class") %><br>
+                Price Economy: <%= maps.get("price_economy") %><br>    
+            </h2>      
+            <% } %>
         </div>
     </body>
 </html>
