@@ -191,7 +191,9 @@
                 <label for="d_date">Departure Date:</label>
                 <input type="date" name ="d_date">
                 <label id = "returnDateLabel" for="r_date">Return Date:</label>
-                <input id="returnDate" type="date" name ="r_date"><br>
+                <input id="returnDate" type="date" name ="r_date"> <br>
+                <label for="num_of_passengers">Number of Passengers:</label>
+                <input type="number" name ="num_of_passengers"> <br>
                 
                 <div class="search-button">
                     <button type="submit" value="Submit">Search</button>
@@ -200,6 +202,12 @@
             
             <div class="multiflight">
             <form id="form2" action="searchResults.jsp">
+                
+                <div class="numOfPassBox">
+                <label for="num_of_passengers">No. of Passengers:</label>
+                <input type="number" name ="num_of_passengers">
+                </div>
+                
                 <div class="flightBox">
                 <p id="flight1">Flight 1</p>
                 <label id = "multiFlightOriginLabel1" for="multiFlightOrigin1">Flight Origin:</label>
