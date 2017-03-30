@@ -91,7 +91,7 @@
 
 
         <div class="middle">
-            <h1>Confirm Booking</h1><br>
+            <h1>Confirm Booking</h1>
 
             <% for(HashMap<String, String> maps : flightsData) { %>
             <h3>
