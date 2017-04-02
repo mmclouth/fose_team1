@@ -3,6 +3,17 @@
     Created on : Mar 4, 2017, 2:26:24 PM
     Author     : kenziemclouth
 --%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="dbResources.Database"%>
+<%
+    
+    Database db = new Database();
+    ArrayList<String> airports = db.getAllAirportCodes();
+    
+    db.closeConnection();
+    
+%>    
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -185,9 +196,27 @@
             
             <form id="form1" action="searchResults.jsp">
                 <label for="origin">Origin:</label>
-                <input type="text" name ="origin"> <br> 
+                <select name="origin">
+                    <option value="null">------</option>
+    <%
+                     for(String airport : airports){      
+    %>
+                    <option value="<%=airport%>"><%=airport%></option>     
+                    
+                    <% } %>                  
+                </select>    
+                <br> 
                 <label for="destination">Destination:</label>
-                <input type="text" name ="destination"> <br>
+                <select name="destination">
+                    <option value="null">------</option>
+    <%
+                     for(String airport : airports){      
+    %>
+                    <option value="<%=airport%>"><%=airport%></option>     
+                    
+                    <% } %>                  
+                </select>  
+                <br>
                 <label for="d_date">Departure Date:</label>
                 <input type="date" name ="d_date">
                 <label id = "returnDateLabel" for="r_date">Return Date:</label>
@@ -211,10 +240,30 @@
                 <div class="flightBox">
                 <p id="flight1">Flight 1</p>
                 <label id = "multiFlightOriginLabel1" for="multiFlightOrigin1">Flight Origin:</label>
-                <input id="multiFlightOrigin1" type="text" name ="multiFlightOrigin1"><br>
+            
+                <select name="multiFlightOrigin1">
+                    <option value="null">------</option>
+    <%
+                     for(String airport : airports){      
+    %>
+                    <option value="<%=airport%>"><%=airport%></option>     
+                    
+                    <% } %>                  
+                </select>  
+                <br>
                 
                 <label id = "multiFlightDestinationLabel1" for="multiFlightDestination1">Flight Destination:</label>
-                <input id="multiFlightDestination1" type="text" name ="multiFlightDestination1"><br>
+               
+                <select name="multiFlightDestination1">
+                    <option value="null">------</option>
+    <%
+                     for(String airport : airports){      
+    %>
+                    <option value="<%=airport%>"><%=airport%></option>     
+                    
+                    <% } %>                  
+                </select>  
+                <br>
                 
                 <label id = "multiFlightDepartLabel1" for="multiFlightDepart1">Flight Depart Date:</label>
                 <input id="multiFlightDepart1" type="date" name ="multiFlightDepart1"><br>
@@ -224,10 +273,28 @@
                 <div class="flightBox">
                 <p id='flight2'>Flight 2</p>
                 <label id = "multiFlightOriginLabel2" for="multiFlightOrigin2">Flight Origin:</label>
-                <input id="multiFlightOrigin2" type="text" name ="multiFlightOrigin2"><br>
+                <select name="multiFlightOrigin2">
+                    <option value="null">------</option>
+    <%
+                     for(String airport : airports){      
+    %>
+                    <option value="<%=airport%>"><%=airport%></option>     
+                    
+                    <% } %>                  
+                </select>  
+                <br>
                 
                 <label id = "multiFlightDestinationLabel2" for="multiFlightDestination2">Flight Destination:</label>
-                <input id="multiFlightDestination2" type="text" name ="multiFlightDestination2"><br>
+                <select name="multiFlightDestination2">
+                    <option value="null">------</option>
+    <%
+                     for(String airport : airports){      
+    %>
+                    <option value="<%=airport%>"><%=airport%></option>     
+                    
+                    <% } %>                  
+                </select>  
+                <br>
                 
                 <label id = "multiFlightDepartLabel2" for="multiFlightDepart2">Flight Depart Date:</label>
                 <input id="multiFlightDepart2" type="date" name ="multiFlightDepart2"><br>
@@ -239,10 +306,28 @@
                 <div class="flightBox" id="flight3div">
                     <p id="flight3">Flight 3</p>
                     <label id = "multiFlightOriginLabel3" for="multiFlightOrigin3">Flight Origin:</label>
-                    <input id="multiFlightOrigin3" type="text" name ="multiFlightOrigin3"><br>
+                    <select name="multiFlightOrigin3">
+                        <option value="null">------</option>
+    <%
+                     for(String airport : airports){      
+    %>
+                    <option value="<%=airport%>"><%=airport%></option>     
+                    
+                    <% } %>                  
+                </select>  
+                <br>
                 
                     <label id = "multiFlightDestinationLabel3" for="multiFlightDestination3">Flight Destination:</label>
-                    <input id="multiFlightDestination3" type="text" name ="multiFlightDestination3"><br>
+                    <select name="multiFlightDestination3">
+                        <option value="null">------</option>
+    <%
+                     for(String airport : airports){      
+    %>
+                        <option value="<%=airport%>"><%=airport%></option>     
+                    
+                    <% } %>                  
+                    </select>  
+                <br>
                 
                     <label id = "multiFlightDepartLabel3" for="multiFlightDepart3">Flight Depart Date:</label>
                     <input id="multiFlightDepart3" type="date" name ="multiFlightDepart3"><br>
@@ -252,10 +337,28 @@
                 <div class="flightBox" id="flight4div">
                     <p id="flight4">Flight 4</p>
                     <label id = "multiFlightOriginLabel4" for="multiFlightOrigin4">Flight Origin:</label>
-                    <input id="multiFlightOrigin4" type="text" name ="multiFlightOrigin4"><br>
+                    <select name="multiFlightOrigin4">
+                        <option value="null">------</option>
+    <%
+                     for(String airport : airports){      
+    %>
+                        <option value="<%=airport%>"><%=airport%></option>     
+                    
+                    <% } %>                  
+                    </select>  
+                <br>
                 
                     <label id = "multiFlightDestinationLabel4" for="multiFlightDestination4">Flight Destination:</label>
-                    <input id="multiFlightDestination4" type="text" name ="multiFlightDestination4"><br>
+                    <select name="multiFlightDestination4">
+                        <option value="null">------</option>
+    <%
+                     for(String airport : airports){      
+    %>
+                    <option value="<%=airport%>"><%=airport%></option>     
+                    
+                    <% } %>                  
+                </select>  
+                <br>
                 
                     <label id = "multiFlightDepartLabel4" for="multiFlightDepart4">Flight Depart Date:</label>
                     <input id="multiFlightDepart4" type="date" name ="multiFlightDepart4"><br>
