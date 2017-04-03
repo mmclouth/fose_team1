@@ -3,24 +3,43 @@
     Created on : Feb 14, 2017, 2:06:46 PM
     Author     : kenziemclouth
 --%>
+<%@page import="java.util.Map"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Date"%>
 <%@page import="dbResources.Search"%>
 <%
-    String origin_code, destination_code, departure_date, return_date;
+    String origin_code, destination_code, departure_date = null, return_date;
     boolean return_flight = false;
     ArrayList<ArrayList<HashMap<String,String>>> returnResults = new ArrayList<ArrayList<HashMap<String,String>>>();
     int num_of_passengers;
     int first_class_remaining, economy_remaining, total;
+    ArrayList<String> flight_ID_parameters = new ArrayList<String>();
+    ArrayList<String> flight_IDs = new ArrayList<String>();
     
+    String[] columnHeaders = {"Flight","Origin","Destination","Departure","Time","Arrival","Time"};
+    String[] fields = {"num","origin_code","destination_code","departure_date","departure_time","arrival_date","arrival_time"};
+    
+    boolean selectingReturnFlight = false;
     int numOfFlights;
+    
+    
+    Map<String, String[]> parameters = request.getParameterMap();
+    
+    if(session.getAttribute("has_return_flight") != null){
+        if(session.getAttribute("has_return_flight").equals("true")){
+            return_flight = true;
+        } else {
+            return_flight = false;
+        }
+    }
     
     //retrieve request parameters from search
     if (request.getParameter("origin") != null) 
     {
         origin_code = request.getParameter("origin");
+        session.setAttribute("origin_code", origin_code);
     } else {
         origin_code = "n/a";
     }
@@ -28,6 +47,7 @@
     if (request.getParameter("destination") != null) 
     {
         destination_code = request.getParameter("destination");
+        session.setAttribute("destination_code", destination_code);
     } else {
         destination_code = "n/a";
     }
@@ -35,35 +55,94 @@
     if (request.getParameter("d_date") != null) 
     {
         departure_date = request.getParameter("d_date");
-    } else {
-        departure_date = "n/a";
-    }
+    } 
     if (request.getParameter("r_date") != null && !request.getParameter("r_date").equals("")) 
     {
-        return_date = request.getParameter("r_date");
-        return_flight = true;
-    } else {
-        return_date = "n/a";
-    }
+        session.setAttribute("return_date", request.getParameter("r_date")); 
+        session.setAttribute("has_return_flight", "true");
+    } 
     if (request.getParameter("num_of_passengers") != null && !request.getParameter("num_of_passengers").equals("")) 
     {
         num_of_passengers = Integer.parseInt(request.getParameter("num_of_passengers"));
+        session.setAttribute("num_of_passengers", Integer.parseInt(request.getParameter("num_of_passengers")));
     } else {
         num_of_passengers = 1;
+    }
+    
+    
+    if(request.getParameter("flight_id1") != null){
+        
+        for(String parameterName : parameters.keySet()){
+        
+            //add flight_id parameter names to list
+            if(parameterName.startsWith("flight_id")){
+                flight_ID_parameters.add(parameterName);
+            }
+        }
+        
+        for(String parameter : flight_ID_parameters){
+            if(request.getParameter(parameter) != null){
+                flight_IDs.add(request.getParameter(parameter));
+            }
+        }
+        
+        
+        session.setAttribute("depart_flight", flight_IDs);
+        
+        if(!return_flight){
+            
+            session.setAttribute("selectingReturnFlight", "false");
+            session.setAttribute("has_return_flight", "false");
+            
+            response.sendRedirect("/IowaAir/confirmBooking.jsp");
+            return;
+        } else {
+            session.setAttribute("selectingReturnFlight", "true");
+            selectingReturnFlight = true;
+        }
+        
+    }
+    
+    if(request.getParameter("return_flight_id1") != null && session.getAttribute("selectingReturnFlight").equals("true")){
+        
+        selectingReturnFlight = true;
+        for(String parameterName : parameters.keySet()){
+        
+            //add flight_id parameter names to list
+            if(parameterName.startsWith("return_flight_id")){
+                flight_ID_parameters.add(parameterName);
+            }
+        }
+        
+        for(String parameter : flight_ID_parameters){
+            if(request.getParameter(parameter) != null){
+                flight_IDs.add(request.getParameter(parameter));
+            }
+        }
+        
+        session.setAttribute("return_flight", flight_IDs);
+        
+        session.setAttribute("selectingReturnFlight", "false");
+        session.setAttribute("has_return_flight", "false");
+        
+        response.sendRedirect("/IowaAir/confirmBooking.jsp");
+        return;
     }
 
     //Parse date from date string
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-    Date d_date = formatter.parse(departure_date);
+    
     
     //Create Search object and then retrieve search results
-    Search search = new Search(origin_code, destination_code, d_date);
-    ArrayList<ArrayList<HashMap<String,String>>> searchResults = search.getSearchResults2();
+    //Search search = new Search(origin_code, destination_code, d_date);
+    //ArrayList<ArrayList<HashMap<String,String>>> searchResults = search.getSearchResults2();
     
     //if return flight was specified, parse date, create Search object, retrieve search results
-    if(return_flight){
-        Date r_date = formatter.parse(return_date);
-        search = new Search(destination_code, origin_code, r_date);
+    if(selectingReturnFlight){
+        Date r_date = formatter.parse((String) session.getAttribute("return_date"));
+        origin_code = (String) session.getAttribute("origin_code");
+        destination_code = (String) session.getAttribute("destination_code");
+        Search search = new Search(destination_code, origin_code, r_date);
         returnResults = search.getSearchResults2();
     }
     
@@ -110,7 +189,11 @@
         <div class="middle">
             <h1>Search Results Page</h1>
 
-            <h2>Departing Flight</h2>
+        
+        
+        <% if(!selectingReturnFlight){ %>
+        
+            <h2>Select Flight to <%=session.getAttribute("destination_code")%></h2>
         </div>
         
         <div class="employee-table">
@@ -118,8 +201,12 @@
             <table>
         
         <%
-            String[] columnHeaders = {"Flight","Origin","Destination","Departure","Time","Arrival","Time"};
-            String[] fields = {"num","origin_code","destination_code","departure_date","departure_time","arrival_date","arrival_time"};
+            
+            if(departure_date != null){
+                Date d_date = formatter.parse(departure_date);
+                Search search = new Search(origin_code, destination_code, d_date);
+                ArrayList<ArrayList<HashMap<String,String>>> searchResults = search.getSearchResults2();
+            
             
             //iterate through each flight combo
             for(ArrayList<HashMap<String,String>> result : searchResults){
@@ -139,7 +226,7 @@
         %>
                     <th>Seats Left</th>
                     <th rowspan="<%=numOfFlights + 1%>"> 
-                        <form action="confirmBooking.jsp">
+                        <form action="searchResults.jsp">
         <%                    
                             int counter = 1;
                             for(HashMap<String,String> flight : result){ 
@@ -148,7 +235,7 @@
         <%                      counter++;
                             }
         %>                    
-                            <input type="submit" value="Book" >
+                            <input type="submit" value="Select" >
                         </form>
                     </th>
                 </tr>
@@ -167,16 +254,15 @@
                     <td><%= total %> </td>
                 </tr>
         <%
-                }
+                }}
             }
         %>
             </table>
         </div>
             
-        <%  if(return_flight){      %>    
+        <% }  else if(selectingReturnFlight){      %>    
           
-        <div class="middle">
-            <h2>Return Flight</h2>
+            <h2>Select Return Flight</h2>
         </div>
         
         <div class="employee-table">
@@ -198,16 +284,16 @@
         %>
                     <th>Seats Left</th>
                     <th rowspan="<%=numOfFlights + 1%>"> 
-                        <form action="confirmBooking.jsp">
+                        <form action="searchResults.jsp">
         <%                    
                             int counter = 1;
                             for(HashMap<String,String> flight : result){ 
         %>                    
-                            <input type="hidden" name="flight_id<%=counter%>" value="<%=flight.get("id") %>">
+                            <input type="hidden" name="return_flight_id<%=counter%>" value="<%=flight.get("id") %>">
         <%                      counter++;
                             }
         %>                    
-                            <input type="submit" value="Book" >
+                            <input type="submit" value="Select" >
                         </form>
                     </th>
                 </tr>

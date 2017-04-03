@@ -36,6 +36,25 @@
         }
     }
 
+    
+    
+
+    ArrayList<String> depart_flight = new ArrayList<String>();
+    ArrayList<String> return_flight = new ArrayList<String>();
+
+    if(session.getAttribute("depart_flight") != null){
+        depart_flight = (ArrayList<String>) session.getAttribute("depart_flight");
+        System.out.println("Departing flights");
+    }
+    if(session.getAttribute("return_flight") != null){
+        return_flight = (ArrayList<String>) session.getAttribute("return_flight");
+        System.out.println("Return flights");
+    }
+    
+    flight_IDs = depart_flight;
+    flight_IDs.addAll(return_flight);
+    
+
     //get all flight data for each flight from database based on flight_ids
     for(String flight_id : flight_IDs){
         flightsData.add(db.getHashMapForFLight(flight_id));

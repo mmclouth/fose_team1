@@ -12,6 +12,9 @@
     
     db.closeConnection();
     
+    session.setAttribute("depart_flight", null);
+    session.setAttribute("return_flight", null);
+    
 %>    
 
 
