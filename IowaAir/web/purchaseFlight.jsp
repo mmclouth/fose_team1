@@ -3,6 +3,13 @@
     Created on : Apr 2, 2017, 5:54:46 PM
     Author     : Kyle Anderson
 --%>
+<%@page import="java.util.Map"%>
+<%  Map<String,String[]> parameters = request.getParameterMap();
+    String[] price = parameters.get("price");
+%>
+
+
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -49,6 +56,9 @@
         
         <div class="middle">
             <h1>Purchase Flight</h1>
+            <% for(String prices : price) { %>
+            <h3> Total Price $<%=prices%> </h3>
+            <% } %>
             <form action="home.jsp" method="post">
                     Credit card number: 
                     <input type="text" name="cardNumber" required><br>
