@@ -144,11 +144,11 @@
             </h4>   
 
             <% } %>
-            <form action="home.jsp" method="post">
+            <form action="purchaseFlight.jsp" method="post">
                 <p align="right"><input type="submit" value="Book Economy: $<%= economyPrice %>0" ></p>
             </form>
             
-            <form action="home.jsp" method="post">
+            <form action="purchaseFlight.jsp" method="post">
                 <p align="right"><input type="submit" value="Book First Class: $<%= firstClassPrice %>0" ></p>
             </form>
         </div>
