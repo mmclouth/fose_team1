@@ -59,7 +59,7 @@
             <% for(String prices : price) { %>
             <h3> Total Price $<%=prices%> </h3>
             <% } %>
-            <form action="home.jsp" method="post">
+            <form action="userFlightHistory.jsp" method="post">
                     Credit card number: 
                     <input type="text" name="cardNumber" required><br>
                     Expiration date:
