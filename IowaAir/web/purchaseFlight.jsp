@@ -49,7 +49,7 @@
         
         <div class="middle">
             <h1>Purchase Flight</h1>
-            <form action="home.jsp" method="post">    
+            <form action="home.jsp" method="post">
                     Credit card number: 
                     <input type="text" name="cardNumber" required><br>
                     Expiration date:

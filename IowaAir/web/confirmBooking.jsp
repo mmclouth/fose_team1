@@ -146,10 +146,12 @@
             <% } %>
             <form action="purchaseFlight.jsp" method="post">
                 <p align="right"><input type="submit" value="Book Economy: $<%= economyPrice %>0" ></p>
+                <input type="hidden" name="price" value="<%= economyPrice %>">
             </form>
             
             <form action="purchaseFlight.jsp" method="post">
                 <p align="right"><input type="submit" value="Book First Class: $<%= firstClassPrice %>0" ></p>
+                <input type="hidden" name="price" value="<%= firstClassPrice %>">
             </form>
         </div>
         <% } %>
