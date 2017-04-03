@@ -243,6 +243,65 @@ public class Database {
 
         return strings;
     }
+    
+    public ArrayList<String> getAllAirplaneIDs(){
+        
+        ArrayList<String> strings = new ArrayList<>();
+        String query = "SELECT id FROM airplane;";
+        
+        try{
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            ResultSet results = sql.executeQuery();
+            
+            while(results.next()){
+                strings.add(results.getString("id"));
+            }
+            
+            
+        } catch (SQLException e){
+            e.printStackTrace();
+        }    
+
+        return strings;
+    }
+    public String getFirstClassCapacity(int id)
+    {
+        String firstClassCapacity = null;
+        String query = "SELECT capacity_first_class FROM aircraft_type WHERE id ="+ id +";";
+        
+        try{
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            ResultSet results = sql.executeQuery();
+            
+            while(results.next())
+            {
+                firstClassCapacity = results.getString("id");
+            }
+            
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return firstClassCapacity;
+    }
+    public int getAircraftTypeID(int id)
+    {
+        int aircraftTypeID = -1;
+        String query = "SELECT aircraft_type_id FROM airplane WHERE id ="+ id +";";
+        
+        try{
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            ResultSet results = sql.executeQuery();
+            
+            while(results.next())
+            {
+                aircraftTypeID = results.getInt("id");
+            }
+            
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return aircraftTypeID;
+    }
 
     /**
      * Generic method to test database connection.  Verifies if data is present in given table.

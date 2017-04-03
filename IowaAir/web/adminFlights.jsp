@@ -9,7 +9,8 @@
 <%@page import="java.util.HashMap"%>
 <%
     Database db = new Database();
-    
+    ArrayList<String> airports = db.getAllAirportCodes();
+    ArrayList<String> airplaneIDs = db.getAllAirplaneIDs();
     String flightNumber = null;
     int airplaneID = 0;
     String originCode = null;
@@ -119,7 +120,20 @@
 <script type="text/javascript">
     function update(flightNumb)
     {
-        Database db = new Database();
+        //Database db = new Database();
+        
+    }
+</script>
+<script type="text/javascript">   
+    function autoPopulateFirstClassCapacity()
+    {
+        var airplaneID = document.getElementsByName('airplaneID').value;
+        
+        var aircraftTypeID = db.getAircraftTypeID(airplaneID);
+        
+        var firstClassCapacity = db.getFirstClassCapacity(aircraftTypeID);
+        
+        document.getElementsByName('firstClassSeatsRemaining').value = firstClassCapacity;
         
     }
 </script>
@@ -179,14 +193,41 @@
             
             <form action="adminFlights.jsp" method="post"><br>
                 <h2>Add New Flight</h2><br>
-            Flight Number: 
+                <label for="flightNumber">Flight Number:</label> 
             <input type="text" name="flightNumber" required><br>
-            Airplane ID:
-            <input type="text" name="airplaneID" required><br>
-            Origin Code:
-            <input type="text" name="originCode" required><br>
-            Destination Code:
-            <input type="text" name="destinationCode" required><br>
+            <label for="airplaneID">Airplane ID:</label>
+            <select name="airplaneID">
+                    <option value="null">------</option>
+                    <%
+                        for(String ids : airplaneIDs){      
+                    %>
+                    <option value="<%=ids%>"><%=ids%></option>     
+                    
+                    <% } %>                  
+                </select>    
+                <br> 
+            <label for="origin">Origin:</label>
+                <select name="originCode">
+                    <option value="null">------</option>
+                    <%
+                        for(String airport : airports){      
+                    %>
+                    <option value="<%=airport%>"><%=airport%></option>     
+                    
+                    <% } %>                  
+                </select>    
+                <br> 
+                <label for="destinationCode">Destination:</label>
+                <select name="destinationCode">
+                    <option value="null">------</option>
+                    <%
+                        for(String airport : airports){      
+                    %>
+                    <option value="<%=airport%>"><%=airport%></option>     
+                    
+                    <% } %>                  
+                </select>  
+                <br>
             Departure Date(mm/dd/yyyy):
             <input type="date" name="departureDate" required><br>
             Arrival Date(mm/dd/yyyy):
@@ -238,9 +279,33 @@
                     <% for (HashMap<String, String> record : flightData) {%>
                     <tr>
                         <td><%= record.get("num")%></td>
-                        <td><input type="number" value="<%= record.get("airplane_id")%>"></td>
-                        <td><input type="text" value="<%= record.get("origin_code")%>"></td>
-                        <td><input type="text" value="<%= record.get("destination_code")%>"></td>
+                        <td><select name="airplaneID">
+                        <option value="<%= record.get("airplane_id")%>"><%= record.get("airplane_id")%></option>
+                        <%
+                            for(String ids : airplaneIDs){      
+                        %>
+                            <option value="<%=ids%>"><%=ids%></option>     
+                    
+                        <% } %>                  
+                    </select> </td>
+                        <td><select name="originCode">
+                        <option value="<%= record.get("origin_code")%>"><%= record.get("origin_code")%></option>
+                        <%
+                            for(String airport : airports){      
+                        %>
+                        <option value="<%=airport%>"><%=airport%></option>     
+
+                        <% } %>                  
+                        </select></td>
+                        <td><select name="destinationCode">
+                        <option value="<%= record.get("destination_code")%>"><%= record.get("destination_code")%></option>
+                        <%
+                            for(String airport : airports){      
+                        %>
+                        <option value="<%=airport%>"><%=airport%></option>     
+
+                        <% } %>           
+                        </select></td>
                         <td><input type="date" value="<%= record.get("departure_date")%>"></td>
                         <td><input type="date" value="<%=record.get("arrival_date")%>"></td>
                         <td><input type="time" value="<%= record.get("departure_time")%>"></td>
