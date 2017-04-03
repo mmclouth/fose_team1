@@ -70,8 +70,12 @@
             }      
     
             function addFlight3(){
+                
+                document.getElementById("multiAddFlight").setAttribute( "onClick", "javascript: addFlight4();" );
+                
                 if(isHidden(document.getElementById("multiFlightOriginLabel3")))
                 {
+                    document.getElementById("flight3").style.visibility="visible"; 
                     
                     document.getElementById("flight3div").style.visibility="visible";
                     document.getElementById("multiFlightOriginLabel3").style.visibility="visible"; 
@@ -81,13 +85,11 @@
                     document.getElementById("multiFlightOrigin3").style.visibility="visible"; 
                     document.getElementById("multiFlightDestination3").style.visibility="visible"; 
                     document.getElementById("multiFlightDepart3").style.visibility="visible";
-                    
-                    document.getElementById("flight3").style.visibility="visible"; 
-                    
+
+                    document.getElementById("multiAddFlight").setAttribute( "onClick", "javascript: addFlight4();" );
 
                 }
-                
-                document.getElementById("multiAddFlight").setAttribute( "onClick", "javascript: addFlight4();" );
+
             }
             
             function addFlight4(){
@@ -305,16 +307,16 @@
                 
                 <div class="flightBox" id="flight3div">
                     <p id="flight3">Flight 3</p>
-                    <label id = "multiFlightOriginLabel3" for="multiFlightOrigin3">Flight Origin:</label>
+                    <label id="multiFlightOriginLabel3" for="multiFlightOrigin3">Flight Origin:</label>
                     <select name="multiFlightOrigin3">
                         <option value="null">------</option>
     <%
                      for(String airport : airports){      
     %>
-                    <option value="<%=airport%>"><%=airport%></option>     
+                        <option value="<%=airport%>"><%=airport%></option>     
                     
                     <% } %>                  
-                </select>  
+                    </select>  
                 <br>
                 
                     <label id = "multiFlightDestinationLabel3" for="multiFlightDestination3">Flight Destination:</label>
