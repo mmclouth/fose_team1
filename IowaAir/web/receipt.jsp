@@ -1,15 +1,8 @@
 <%-- 
-    Document   : purchaseFlight
-    Created on : Apr 2, 2017, 5:54:46 PM
+    Document   : receipt
+    Created on : Apr 3, 2017, 6:46:47 PM
     Author     : Kyle Anderson
 --%>
-<%@page import="java.util.Map"%>
-<%  Map<String,String[]> parameters = request.getParameterMap();
-    String[] price = parameters.get("price");
-%>
-
-
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -55,19 +48,7 @@
         </div>
         
         <div class="middle">
-            <h1>Purchase Flight</h1>
-            <% for(String prices : price) { %>
-            <h3> Total Price $<%=prices%> </h3>
-            <% } %>
-            <form action="receipt.jsp" method="post">
-                    Credit card number: 
-                    <input type="text" name="cardNumber" required><br>
-                    Expiration date:
-                    <input type="date" name="expiration" required> <br>
-                    CVV: 
-                    <input type="text" name="cvv" required><br>
-                    <input type="submit" value="Finalize purchase"><br>
-            </form>
+            <h1>Flight Booked!</h1>
         </div>
         <% } %>
     </body>
