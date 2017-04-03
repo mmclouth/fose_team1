@@ -48,7 +48,16 @@
         </div>
         
         <div class="middle">
-            <h1>Test</h1>
+            <h1>Purchase Flight</h1>
+            <form action="home.jsp" method="post">    
+                    Credit card number: 
+                    <input type="text" name="cardNumber" required><br>
+                    Expiration date:
+                    <input type="date" name="expiration" required> <br>
+                    CVV: 
+                    <input type="text" name="cvv" required><br>
+                    <input type="submit" value="Finalize purchase"><br>
+            </form>
         </div>
         <% } %>
     </body>
