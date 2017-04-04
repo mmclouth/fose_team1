@@ -11,6 +11,8 @@
 <%@page import="java.util.HashMap"%>
 <%
     
+    double economyPrice = 0;
+    double firstClassPrice = 0;
     Database db = new Database();
     
     //get all parameters from request
@@ -112,7 +114,12 @@
         <div class="middle">
             <h1>Confirm Booking</h1>
 
-            <% for(HashMap<String, String> maps : flightsData) { %>
+            <% for(HashMap<String, String> maps : flightsData) {
+                   String tempFirstClass = maps.get("price_first_class");
+                   String tempEconomy = maps.get("price_economy");
+                   firstClassPrice += Double.parseDouble(tempFirstClass);
+                   economyPrice += Double.parseDouble(tempEconomy);
+            %>
             <h3>
                 Flight Number: <%= maps.get("num") %><br>
             </h3>
@@ -133,10 +140,19 @@
                             <td>Price First Class: $<%= maps.get("price_first_class") %></td>
                             <td>Price Economy: $<%= maps.get("price_economy") %></td>
                         </tr>    
-                    </table><br><br>
+                    </table><br>
             </h4>   
 
             <% } %>
+            <form action="purchaseFlight.jsp" method="post">
+                <p align="right"><input type="submit" value="Book Economy: $<%= economyPrice %>0" ></p>
+                <input type="hidden" name="price" value="<%= economyPrice %>">
+            </form>
+            
+            <form action="purchaseFlight.jsp" method="post">
+                <p align="right"><input type="submit" value="Book First Class: $<%= firstClassPrice %>0" ></p>
+                <input type="hidden" name="price" value="<%= firstClassPrice %>">
+            </form>
         </div>
         <% } %>
     </body>
