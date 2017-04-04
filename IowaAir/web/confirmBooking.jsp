@@ -14,6 +14,7 @@
     double economyPrice = 0;
     double firstClassPrice = 0;
     Database db = new Database();
+    Integer numTickets = (Integer)session.getAttribute("num_of_passengers");
     
     //get all parameters from request
     Map<String, String[]> parameters = request.getParameterMap();
@@ -144,14 +145,22 @@
             </h4>   
 
             <% } %>
+            <b>Number of Tickets: <%= numTickets %>
+            
             <form action="purchaseFlight.jsp" method="post">
-                <p align="right"><input type="submit" value="Book Economy: $<%= economyPrice %>0" ></p>
-                <input type="hidden" name="price" value="<%= economyPrice %>">
+                <p align="right"><input type="submit" value="Book Economy: $<%= economyPrice * numTickets%>0" ></p>
+                <input type="hidden" name="price" value="<%= economyPrice * numTickets %>">
+                <% for(String flight_id : flight_IDs) { %>
+                <input type="hidden" name="flight_ids" value="<%= flight_id %>">
+                <% }%>
             </form>
             
             <form action="purchaseFlight.jsp" method="post">
-                <p align="right"><input type="submit" value="Book First Class: $<%= firstClassPrice %>0" ></p>
-                <input type="hidden" name="price" value="<%= firstClassPrice %>">
+                <p align="right"><input type="submit" value="Book First Class: $<%= firstClassPrice * numTickets %>0" ></p>
+                <input type="hidden" name="price" value="<%= firstClassPrice * numTickets %>">
+                <% for(String flight_id : flight_IDs) { %>
+                <input type="hidden" name="flight_ids" value="<%= flight_id %>">
+                <% }%>
             </form>
         </div>
         <% } %>

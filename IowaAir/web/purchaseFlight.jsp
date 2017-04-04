@@ -11,7 +11,11 @@
     String errorMessage = null;
     
     String cardNum = null, cvv = null, price = null;
+    String[] flightIDs = null;
     
+    if(parameters.get("flight_ids") != null) {
+        flightIDs = parameters.get("flight_ids");
+    }
     //Retrieve parameters from request if they have been sent from previous page
     if (request.getParameter("price") != null) {
         price = request.getParameter("price");
@@ -34,11 +38,11 @@
         errorMessage = "";
         
         if(!Payment.cardNumberIsValid(cardNum)) {
-            errorMessage = "Card number must be 10 digits. <br>";
+            errorMessage = "Card number must be 10 digits. ";
             allFieldsValid = false;
         }
         if(!Payment.cvvIsValid(cvv)) {
-            errorMessage = "CVV must be 3 digits. <br>";
+            errorMessage += "CVV must be 3 digits. <br>";
             allFieldsValid = false;
         }
         
@@ -109,6 +113,9 @@
                 <h1>Purchase Flight</h1>
                 <h3> Total Price $<%=price%>0 </h3>
                 <input type="hidden" name="price" value="<%=price%>">
+                <% for(String s : flightIDs) { %>
+                <input type="hidden" name="flight_ids" value="<%= s %>">
+                <% } %>
                 Credit card number: 
                 <input type="text" name="cardNumber" required><br>
                 Expiration date:
