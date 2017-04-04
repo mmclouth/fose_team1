@@ -10,7 +10,7 @@ package dbResources;
  * @author Kyle Anderson
  */
 public class Payment {
-    private static boolean validateCardNumber(String cardNumber) {
+    public static boolean cardNumberIsValid(String cardNumber) {
         if(cardNumber.length() != 10) {
             return false;
         }
@@ -25,7 +25,7 @@ public class Payment {
         return true; 
     }
     
-    private static boolean validateCVV(String cvv) {
+    public static boolean cvvIsValid(String cvv) {
         if(cvv.length() != 3) {
             return false;
         }

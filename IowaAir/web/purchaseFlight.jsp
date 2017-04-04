@@ -3,27 +3,52 @@
     Created on : Apr 2, 2017, 5:54:46 PM
     Author     : Kyle Anderson
 --%>
+<%@page import="dbResources.Payment"%>
 <%@page import="dbResources.Database"%>
 <%@page import="java.util.Map"%>
 <%  Map<String,String[]> parameters = request.getParameterMap();
     //String[] price = parameters.get("price");
+    String errorMessage = null;
     
     String cardNum = null, cvv = null, price = null;
     
     //Retrieve parameters from request if they have been sent from previous page
     if (request.getParameter("price") != null) {
         price = request.getParameter("price");
+        //errorMessage = "Price is" + price + " <br>";
     }
     if (request.getParameter("cardNumber") != null) {
         cardNum = request.getParameter("cardNumber");
+        //errorMessage += "Card number is " + cardNum + " <br>";
     }
     if (request.getParameter("cvv") != null) {
-        cvv = request.getParameter("lastName");
+        cvv = request.getParameter("cvv");
+        //errorMessage += "CVV number is " + cvv + " <br>";
     }
     
-    
     Database db = new Database();
-    String errorMessage = null;
+    
+    if (price != null && cardNum != null && cvv != null) {
+
+        boolean allFieldsValid = true;
+        errorMessage = "";
+        
+        if(!Payment.cardNumberIsValid(cardNum)) {
+            errorMessage = "Card number must be 10 digits. <br>";
+            allFieldsValid = false;
+        }
+        if(!Payment.cvvIsValid(cvv)) {
+            errorMessage = "CVV must be 3 digits. <br>";
+            allFieldsValid = false;
+        }
+        
+        if(allFieldsValid) {
+            errorMessage = null;
+            response.sendRedirect("/IowaAir/userFlightHistory.jsp");
+            
+        }
+        
+    }
 %>
 
 
@@ -81,16 +106,15 @@
         <div class="middle">
             <form action="purchaseFlight.jsp" method="post">
                 <h1>Purchase Flight</h1>
-                <h3> Total Price $<%=price%> </h3>
-                <input type="hidden" name="price">
-                
-                    Credit card number: 
-                    <input type="text" name="cardNumber" required><br>
-                    Expiration date:
-                    <input type="date" name="expiration" required> <br>
-                    CVV: 
-                    <input type="text" name="cvv" required><br>
-                    <input type="submit" value="Finalize purchase"><br>
+                <h3> Total Price $<%=price%>0 </h3>
+                <input type="hidden" name="price" value="<%=price%>">
+                Credit card number: 
+                <input type="text" name="cardNumber" required><br>
+                Expiration date:
+                <input type="date" name="expiration" required> <br>
+                CVV:
+                <input type="text" name="cvv" required><br>
+                <input type="submit" value="Finalize purchase"><br>
             </form>
         </div>
         <% } %>
