@@ -264,9 +264,9 @@ public class Database {
 
         return strings;
     }
-    public String getFirstClassCapacity(int id)
+    public int getFirstClassCapacity(int id)
     {
-        String firstClassCapacity = null;
+        int firstClassCapacity = -1;
         String query = "SELECT capacity_first_class FROM aircraft_type WHERE id ="+ id +";";
         
         try{
@@ -275,7 +275,7 @@ public class Database {
             
             while(results.next())
             {
-                firstClassCapacity = results.getString("id");
+                firstClassCapacity = results.getInt("id");
             }
             
         } catch (SQLException e){
@@ -674,6 +674,25 @@ public class Database {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    
+    public void updateFlight(String num, int airplaneID, String originCode, String destinationCode, String departureDate, String arrivalDate, String departureTime, String arrivalTime,
+                                    int duration, double priceEconomy, double priceFirstClass, int firstClassSeatsRemaining, int economySeatsRemaining) {
+
+        StringBuilder query = new StringBuilder();
+
+        query.append("UPDATE flight SET airplane_id='"+airplaneID+"'origin_code='" +originCode+ "'destination_code='"+destinationCode+"'departure_date='"+departureDate
+                +"'arrival_date='"+arrivalDate+"'duration='"+duration+"'price_economy='"+priceEconomy+"'price_first_class='"+priceFirstClass+"'first_class_remaining='"+firstClassSeatsRemaining
+                +"'economy_remaining='"+economySeatsRemaining+"'WHERE num ='"+num+"'");
+
+        try {
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            sql.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
     public void updateFlightAirplaneID(int airplaneID, int id)
     {
