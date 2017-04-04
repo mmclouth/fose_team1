@@ -13,7 +13,7 @@
 <%@page import="java.util.Date"%>
 <%@page import="dbResources.Search"%>
 <%
-    String origin_code, destination_code, departure_date = null, return_date;
+    String return_date;
     
     SearchResults returnResults = new SearchResults();
     int num_of_passengers;
@@ -51,22 +51,16 @@
     //retrieve request parameters from search
     if (request.getParameter("origin") != null) 
     {
-        origin_code = request.getParameter("origin");
-        session.setAttribute("origin_code", origin_code);
-    } else {
-        origin_code = "n/a";
+        session.setAttribute("origin_code", request.getParameter("origin"));
     }
     
     if (request.getParameter("destination") != null) 
     {
-        destination_code = request.getParameter("destination");
-        session.setAttribute("destination_code", destination_code);
-    } else {
-        destination_code = "n/a";
-    }
+        session.setAttribute("destination_code", request.getParameter("destination"));
+    } 
     if (request.getParameter("d_date") != null) 
     {
-        departure_date = request.getParameter("d_date");
+        session.setAttribute("departure_date", request.getParameter("d_date"));
     } 
     if (request.getParameter("r_date") != null && !request.getParameter("r_date").equals("")) 
     {
@@ -121,6 +115,10 @@
         
     }
     
+    if(request.getParameter("sortParameter") != null){
+        session.setAttribute("sortParameter", request.getParameter("sortParameter"));
+    }
+    
     
     //If return flight has been selected, get all flight IDs and set "return_flight" session attribute to ArrayList of flight_IDs
     if(request.getParameter("return_flight_id1") != null && selectingReturnFlight){
@@ -158,13 +156,16 @@
     //if return flight was specified, parse date, create Search object, retrieve search results
     if(selectingReturnFlight){
         Date r_date = formatter.parse((String) session.getAttribute("return_date"));
-        origin_code = (String) session.getAttribute("origin_code");
-        destination_code = (String) session.getAttribute("destination_code");
         
         //Create Search object and then retrieve search results
-        Search2 search = new Search2(destination_code, origin_code, r_date);
+        Search2 search = new Search2((String) session.getAttribute("destination_code"), (String) session.getAttribute("origin_code"), r_date);
         returnResults = search.getSearchResults();
-        returnResults.sortBy("arrival_time", true);
+        
+        if(session.getAttribute("sortParameter") != null){
+            returnResults.sortBy((String) session.getAttribute("sortParameter"), true);
+        } else {
+            returnResults.sortBy("departure_time", true);
+        }
     }
     
 %>    
@@ -210,7 +211,15 @@
         <div class="middle">
             <h1>Search Results Page</h1>
 
-        
+            <form action="searchResults.jsp">
+                <select name="sortParameter">
+                    <option value="price">Price</option>
+                    <option value="departure_time">Departure Time</option>
+                    <option value="arrival_time">Arrival Time</option>
+                    <option value="duration">Duration</option>
+                </select>
+                <input type="submit" value="Sort">
+            </form>
         
         <% if(!selectingReturnFlight){ %>
         
@@ -223,14 +232,18 @@
         
         <%
             
-            if(departure_date != null){
-                Date d_date = formatter.parse(departure_date);
+            if(session.getAttribute("departure_date") != null){
+                Date d_date = formatter.parse((String) session.getAttribute("departure_date"));
                 
                 //Create Search object and then retrieve search results
-                Search2 search = new Search2(origin_code, destination_code, d_date);
+                Search2 search = new Search2((String) session.getAttribute("origin_code"),(String) session.getAttribute("destination_code"), d_date);
                 SearchResults searchResults = search.getSearchResults();
                 
-                searchResults.sortBy("departure_time", true);
+                if(session.getAttribute("sortParameter") != null){
+                    searchResults.sortBy((String) session.getAttribute("sortParameter"), true);
+                } else {
+                    searchResults.sortBy("departure_time", true);
+                }
             
             
             //iterate through each flight combo
@@ -263,6 +276,7 @@
                             <input type="submit" value="Select" >
                         </form>
                     </th>
+                    <th rowspan="<%=numOfFlights + 1%>"> <%= flightCombo.getDuration()  %> </th>
                 </tr>
         <%      for(HashMap<String,String> flight : flightCombo.getFlights()){     
 
@@ -277,6 +291,7 @@
                     <td><%= flight.get(field) %> </td>
         <%          }   %>
                     <td><%= total %> </td>
+                    
                 </tr>
         <%
                 }}

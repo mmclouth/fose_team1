@@ -74,13 +74,13 @@ public class FlightCombo {
         String time1, time2;
         String[] split;
         
-        for(int i=flights.size()-1 ; i>=0 ; i--){
+        for(int i=0 ; i < flights.size() ; i++){
             
             minutes = minutes + Integer.parseInt(flights.get(i).get("duration"));
             
-            if(i > 0){
+            if(i < flights.size() - 1){
                 time1 = flights.get(i).get("arrival_time");
-                time2 = flights.get(i-1).get("departure_time");
+                time2 = flights.get(i+1).get("departure_time");
                 
                 split = time1.split(":");
                 hour1 = Integer.parseInt(split[0]);
