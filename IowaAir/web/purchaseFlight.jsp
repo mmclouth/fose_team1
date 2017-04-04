@@ -6,7 +6,21 @@
 <%@page import="dbResources.Database"%>
 <%@page import="java.util.Map"%>
 <%  Map<String,String[]> parameters = request.getParameterMap();
-    String[] price = parameters.get("price");
+    //String[] price = parameters.get("price");
+    
+    String cardNum = null, cvv = null, price = null;
+    
+    //Retrieve parameters from request if they have been sent from previous page
+    if (request.getParameter("price") != null) {
+        price = request.getParameter("price");
+    }
+    if (request.getParameter("cardNumber") != null) {
+        cardNum = request.getParameter("cardNumber");
+    }
+    if (request.getParameter("cvv") != null) {
+        cvv = request.getParameter("lastName");
+    }
+    
     
     Database db = new Database();
     String errorMessage = null;
@@ -67,10 +81,8 @@
         <div class="middle">
             <form action="purchaseFlight.jsp" method="post">
                 <h1>Purchase Flight</h1>
-                <% for(String prices : price) { %>
-                <h3> Total Price $<%=prices%> </h3>
+                <h3> Total Price $<%=price%> </h3>
                 <input type="hidden" name="price">
-                <% } %>
                 
                     Credit card number: 
                     <input type="text" name="cardNumber" required><br>

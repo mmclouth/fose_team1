@@ -10,47 +10,33 @@ package dbResources;
  * @author Kyle Anderson
  */
 public class Payment {
-    private long cardNumber = -1L;
-    private int cvv = -1;
-    
-    public Payment(String cardNumber, String cvv) {
-        this.cardNumber = validateCardNumber(cardNumber);
-        this.cvv = validateCVV(cvv);
-    }
-    
-    private static long validateCardNumber(String cardNumber) {
-        long validCard = -1L;
+    private static boolean validateCardNumber(String cardNumber) {
         if(cardNumber.length() != 10) {
-            return validCard;
+            return false;
         }
-        try {
-            validCard = Long.parseLong(cardNumber);
-        } catch(NumberFormatException nfe) {
-            validCard = -1L;
-            return validCard;
-        }
-        return validCard;
+        try  
+        {  
+          double d = Double.parseDouble(cardNumber);  
+        }  
+        catch(NumberFormatException nfe)  
+        {  
+          return false;  
+        }  
+        return true; 
     }
     
-    private static int validateCVV(String cvv) {
-        int validCVV = -1;
-        if(cvv.length() != 3)
-        try {
-            validCVV = Integer.parseInt(cvv);
-        } catch(NumberFormatException nfe) {
-            validCVV = -1;
-            return validCVV;
+    private static boolean validateCVV(String cvv) {
+        if(cvv.length() != 3) {
+            return false;
         }
-        
-        return validCVV;
+        try  
+        {  
+          double d = Double.parseDouble(cvv);  
+        }  
+        catch(NumberFormatException nfe)  
+        {  
+          return false;  
+        }  
+        return true; 
     }
-
-    public long getCardNumber() {
-        return cardNumber;
-    }
-
-    public int getCvv() {
-        return cvv;
-    }
-
 }
