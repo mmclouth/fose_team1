@@ -1,11 +1,8 @@
 <%-- 
-    Document   : searchResults
+    Document   : searchResults2
     Created on : Feb 14, 2017, 2:06:46 PM
     Author     : kenziemclouth
 --%>
-<%@page import="dbResources.FlightCombo"%>
-<%@page import="dbResources.SearchResults"%>
-<%@page import="dbResources.Search2"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.HashMap"%>
@@ -15,7 +12,7 @@
 <%
     String origin_code, destination_code, departure_date = null, return_date;
     
-    SearchResults returnResults = new SearchResults();
+    ArrayList<ArrayList<HashMap<String,String>>> returnResults = new ArrayList<ArrayList<HashMap<String,String>>>();
     int num_of_passengers;
     int first_class_remaining, economy_remaining, total;
     ArrayList<String> flight_ID_parameters = new ArrayList<String>();
@@ -162,9 +159,8 @@
         destination_code = (String) session.getAttribute("destination_code");
         
         //Create Search object and then retrieve search results
-        Search2 search = new Search2(destination_code, origin_code, r_date);
-        returnResults = search.getSearchResults();
-        returnResults.sortBy("arrival_time", true);
+        Search search = new Search(destination_code, origin_code, r_date);
+        returnResults = search.getSearchResults2();
     }
     
 %>    
@@ -227,14 +223,12 @@
                 Date d_date = formatter.parse(departure_date);
                 
                 //Create Search object and then retrieve search results
-                Search2 search = new Search2(origin_code, destination_code, d_date);
-                SearchResults searchResults = search.getSearchResults();
-                
-                searchResults.sortBy("departure_time", true);
+                Search search = new Search(origin_code, destination_code, d_date);
+                ArrayList<ArrayList<HashMap<String,String>>> searchResults = search.getSearchResults2();
             
             
             //iterate through each flight combo
-            for(FlightCombo flightCombo : searchResults.getFlightCombos()){
+            for(ArrayList<HashMap<String,String>> result : searchResults){
                 
         %>
                 <tr>
@@ -245,7 +239,7 @@
         
         <%            
                 }
-                numOfFlights = flightCombo.getNumberOfFlights();
+                numOfFlights = result.size();
 
                 //create form that has hidden fields for each flight ID in current combo.  Form directs to confirmBooking.jsp
         %>
@@ -254,7 +248,7 @@
                         <form action="searchResults.jsp">
         <%                    
                             int counter = 1;
-                            for(HashMap<String,String> flight : flightCombo.getFlights()){ 
+                            for(HashMap<String,String> flight : result){ 
         %>                    
                             <input type="hidden" name="flight_id<%=counter%>" value="<%=flight.get("id") %>">
         <%                      counter++;
@@ -264,7 +258,7 @@
                         </form>
                     </th>
                 </tr>
-        <%      for(HashMap<String,String> flight : flightCombo.getFlights()){     
+        <%      for(HashMap<String,String> flight : result){     
 
                     first_class_remaining = Integer.parseInt(flight.get("first_class_remaining"));
                     economy_remaining = Integer.parseInt(flight.get("economy_remaining"));
@@ -294,7 +288,7 @@
             
             <table>
         
-        <%  for(FlightCombo flightCombo : returnResults.getFlightCombos()){   %>     
+        <%  for(ArrayList<HashMap<String,String>> result : returnResults){   %>     
         
                 <tr>
 
@@ -303,7 +297,7 @@
                     <th><%=field%></th>
         <%            
                 }      
-                    numOfFlights = flightCombo.getNumberOfFlights();
+                    numOfFlights = result.size();
 
                     //create form that has hidden fields for each flight ID in current combo.  Form directs to confirmBooking.jsp
         %>
@@ -312,7 +306,7 @@
                         <form action="searchResults.jsp">
         <%                    
                             int counter = 1;
-                            for(HashMap<String,String> flight : flightCombo.getFlights()){ 
+                            for(HashMap<String,String> flight : result){ 
         %>                    
                             <input type="hidden" name="return_flight_id<%=counter%>" value="<%=flight.get("id") %>">
         <%                      counter++;
@@ -322,7 +316,7 @@
                         </form>
                     </th>
                 </tr>
-        <%      for(HashMap<String,String> flight : flightCombo.getFlights()){   
+        <%      for(HashMap<String,String> flight : result){   
 
                     first_class_remaining = Integer.parseInt(flight.get("first_class_remaining"));
                     economy_remaining = Integer.parseInt(flight.get("economy_remaining"));
