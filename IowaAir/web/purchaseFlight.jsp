@@ -9,6 +9,7 @@
     String[] price = parameters.get("price");
     
     Database db = new Database();
+    String errorMessage = null;
 %>
 
 
@@ -57,12 +58,20 @@
             <a class="links" href="userProfile.jsp" ><h4><%= session.getAttribute("userFirstName")%>'s Profile</h4></a>
         </div>
         
+        <% if (errorMessage != null) {%>
+
+            <h2 class="failure"><%= errorMessage%></h2> <br>
+
+        <% }%>
+        
         <div class="middle">
-            <h1>Purchase Flight</h1>
-            <% for(String prices : price) { %>
-            <h3> Total Price $<%=prices%> </h3>
-            <% } %>
-            <form action="receipt.jsp" method="post">
+            <form action="purchaseFlight.jsp" method="post">
+                <h1>Purchase Flight</h1>
+                <% for(String prices : price) { %>
+                <h3> Total Price $<%=prices%> </h3>
+                <input type="hidden" name="price">
+                <% } %>
+                
                     Credit card number: 
                     <input type="text" name="cardNumber" required><br>
                     Expiration date:
