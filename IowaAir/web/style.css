@@ -394,3 +394,80 @@ table#confirmBooking {
 
 
 
+
+
+/*******************
+
+    SEARCH RESULTS
+
+********************/
+
+.search-results-table {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    
+    float: left;
+    padding:1%;
+    
+}
+
+.search-results-table #inner {
+
+    border:midnightblue 1px solid;
+    
+}
+
+.search-results-table h2 {
+    width: 100%;
+    float: left;
+    font-size: 30px;
+    color: midnightblue;
+    border-bottom: 1px solid midnightblue;
+}
+
+.search-results-table table {
+    width: 100%;
+    float: left;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-family: 'Catamaran', sans-serif;
+}
+
+.search-results-table th {
+    width: 15%;
+    color: royalblue;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 200;
+}
+
+.search-results-table td {
+    color: midnightblue;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 100;
+}
+
+.search-results-table tr.middleRow td {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+}
+
+.search-results-table tr.topRow td {
+    border-top: midnightblue solid 1px;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+}
+
+.search-results-table tr.bottomRow  td{
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: midnightblue solid 1px;
+}
+
+

@@ -21,7 +21,7 @@
     ArrayList<String> flight_ID_parameters = new ArrayList<String>();
     ArrayList<String> flight_IDs = new ArrayList<String>();
     
-    String[] columnHeaders = {"Flight","Origin","Destination","Departure","Time","Arrival","Time"};
+    String[] columnHeaders = {"Flight","Origin","Destination","Departure","Arrival"};
     String[] fields = {"num","origin_code","destination_code","departure_date","departure_time","arrival_date","arrival_time"};
     
     
@@ -226,10 +226,30 @@
             <h2>Select Flight to <%=session.getAttribute("destination_code")%></h2>
         </div>
         
-        <div class="employee-table">
+        <div class="search-results-table">
             
             <table>
-        
+                <tr>
+                    <th>Flight</th>
+                    <th>Origin</th>
+                    <th>Destination</th>
+                    <th colspan="2">Departure</th>
+                    <th colspan="2">Arrival</th>
+                    <th>Duration</th>
+                    <th>Price</th>
+                </tr>
+                <tr>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+            </table>    
         <%
             
             if(session.getAttribute("departure_date") != null){
@@ -248,116 +268,179 @@
             
             //iterate through each flight combo
             for(FlightCombo flightCombo : searchResults.getFlightCombos()){
-                
-        %>
-                <tr>
-
-        <%      for(String field : columnHeaders){                     //print out table headers for each combo to separate options%>            
-                    
-                    <th><%=field%></th>
-        
-        <%            
-                }
                 numOfFlights = flightCombo.getNumberOfFlights();
-
-                //create form that has hidden fields for each flight ID in current combo.  Form directs to confirmBooking.jsp
-        %>
-                    <th>Seats Left</th>
-                    <th rowspan="<%=numOfFlights + 1%>"> 
-                        <form action="searchResults.jsp">
-        <%                    
-                            int counter = 1;
-                            for(HashMap<String,String> flight : flightCombo.getFlights()){ 
-        %>                    
-                            <input type="hidden" name="flight_id<%=counter%>" value="<%=flight.get("id") %>">
-        <%                      counter++;
-                            }
-        %>                    
-                            <input type="submit" value="Select" >
-                        </form>
-                    </th>
-                    <th rowspan="<%=numOfFlights + 1%>"> <%= flightCombo.getDuration()  %> </th>
+   
+            boolean first = true;
+            int rowCounter = 1;   %>
+            
+            <table id="inner">
+            
+                <tr>
+                    <th> </th>
+                    <th> </th>
+                    <th> </th>
+                    <th colspan="2"> </th>
+                    <th colspan="2"> </th>                  
+                    <th> </th>
+                    <th> </th>
+                    
                 </tr>
-        <%      for(HashMap<String,String> flight : flightCombo.getFlights()){     
+            
+            <%
+            for(HashMap<String,String> flight : flightCombo.getFlights()){     
 
                     first_class_remaining = Integer.parseInt(flight.get("first_class_remaining"));
                     economy_remaining = Integer.parseInt(flight.get("economy_remaining"));
                     
                     total = first_class_remaining + economy_remaining;
-        
+     
         %>
                 <tr>
-        <%          for(String field : fields){ %>
+        <%      
+                for(String field : fields){ %>
                     <td><%= flight.get(field) %> </td>
         <%          }   %>
-                    <td><%= total %> </td>
-                    
+                    <%   if(first){       %>
+                    <td rowspan="<%=numOfFlights%>"><%= flightCombo.getDuration() %></td>
+                    <td rowspan="<%=numOfFlights%>"><%= flightCombo.getPrice() %></td>
+                    <td rowspan="<%=numOfFlights%>">
+                        <form action="searchResults.jsp">
+        <%                    
+                            int counter = 1;
+                            for(HashMap<String,String> flightForForm : flightCombo.getFlights()){ 
+        %>                    
+                            <input type="hidden" name="flight_id<%=counter%>" value="<%=flightForForm.get("id") %>">
+        <%                      counter++;
+                            }
+        %>                    
+                            <input type="submit" value="Select" >
+                        </form>
+                    </td>
+                    <% first = false;
+                    } %>
                 </tr>
         <%
-                }}
+            
+                    rowCounter++;
+                }
+%>
+                </table>
+<%}
             }
         %>
-            </table>
+            
         </div>
             
         <% }  else if(selectingReturnFlight){      %>    
           
-            <h2>Select Return Flight</h2>
+                    
+            <h2>Select Return Flight <%=session.getAttribute("origin_code")%></h2>
         </div>
         
-        <div class="employee-table">
+        <div class="search-results-table">
             
             <table>
-        
-        <%  for(FlightCombo flightCombo : returnResults.getFlightCombos()){   %>     
-        
                 <tr>
-
-        <%      for(String field : columnHeaders){     %> 
-                           
-                    <th><%=field%></th>
-        <%            
-                }      
-                    numOfFlights = flightCombo.getNumberOfFlights();
-
-                    //create form that has hidden fields for each flight ID in current combo.  Form directs to confirmBooking.jsp
-        %>
-                    <th>Seats Left</th>
-                    <th rowspan="<%=numOfFlights + 1%>"> 
-                        <form action="searchResults.jsp">
-        <%                    
-                            int counter = 1;
-                            for(HashMap<String,String> flight : flightCombo.getFlights()){ 
-        %>                    
-                            <input type="hidden" name="return_flight_id<%=counter%>" value="<%=flight.get("id") %>">
-        <%                      counter++;
-                            }
-        %>                    
-                            <input type="submit" value="Select" >
-                        </form>
-                    </th>
+                    <th>Flight</th>
+                    <th>Origin</th>
+                    <th>Destination</th>
+                    <th colspan="2">Departure</th>
+                    <th colspan="2">Arrival</th>
+                    <th>Duration</th>
+                    <th>Price</th>
+                    
                 </tr>
-        <%      for(HashMap<String,String> flight : flightCombo.getFlights()){   
+                <tr>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+            </table>    
+        <%
+            
+            if(session.getAttribute("departure_date") != null){
+                Date d_date = formatter.parse((String) session.getAttribute("departure_date"));
+                
+                //Create Search object and then retrieve search results
+                Search2 search = new Search2((String) session.getAttribute("origin_code"),(String) session.getAttribute("destination_code"), d_date);
+                SearchResults searchResults = search.getSearchResults();
+                
+                if(session.getAttribute("sortParameter") != null){
+                    searchResults.sortBy((String) session.getAttribute("sortParameter"), true);
+                } else {
+                    searchResults.sortBy("departure_time", true);
+                }
+            
+            
+            //iterate through each flight combo
+            for(FlightCombo flightCombo : returnResults.getFlightCombos()){
+                numOfFlights = flightCombo.getNumberOfFlights();
+   
+            boolean first = true;
+            int rowCounter = 1;   %>
+            
+            <table id="inner">
+            
+                <tr>
+                    <th> </th>
+                    <th> </th>
+                    <th> </th>
+                    <th colspan="2"> </th>
+                    <th colspan="2"> </th>
+                    <th> </th>
+                    <th> </th>
+                    
+                </tr>
+            
+            <%
+            for(HashMap<String,String> flight : flightCombo.getFlights()){     
 
                     first_class_remaining = Integer.parseInt(flight.get("first_class_remaining"));
                     economy_remaining = Integer.parseInt(flight.get("economy_remaining"));
                     
                     total = first_class_remaining + economy_remaining;
-        
-        %>  
-        
+     
+        %>
                 <tr>
-        <%          for(String field : fields){          %>
-        
+        <%      
+                for(String field : fields){ %>
                     <td><%= flight.get(field) %> </td>
         <%          }   %>
-                    <td><%= total %> </td>
+                    <%   if(first){       %>
+                    <td rowspan="<%=numOfFlights%>"><%= flightCombo.getDuration() %></td>
+                    <td rowspan="<%=numOfFlights%>"><%= flightCombo.getPrice() %></td>
+                    <td rowspan="<%=numOfFlights%>">
+                        <form action="searchResults.jsp">
+        <%                    
+                            int counter = 1;
+                            for(HashMap<String,String> flightForForm : flightCombo.getFlights()){ 
+        %>                    
+                            <input type="hidden" name="return_flight_id<%=counter%>" value="<%=flightForForm.get("id") %>">
+        <%                      counter++;
+                            }
+        %>                    
+                            <input type="submit" value="Select" >
+                        </form>
+                    </td>
+                    <% first = false;
+                    } %>
                 </tr>
         <%
+            
+                    rowCounter++;
                 }
+%>
+                </table>
+<%}
             }
         %>
-            </table>
+            
         </div>
 
         <% }    %>  

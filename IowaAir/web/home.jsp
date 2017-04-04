@@ -14,6 +14,8 @@
     
     session.setAttribute("depart_flight", null);
     session.setAttribute("return_flight", null);
+    session.setAttribute("has_return_flight", "false");
+    session.setAttribute("selectingReturnFlight", "false");
     
 %>    
 
