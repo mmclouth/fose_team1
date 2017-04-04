@@ -44,6 +44,7 @@
         
         if(allFieldsValid) {
             errorMessage = null;
+            session.setAttribute("booked", true);
             response.sendRedirect("/IowaAir/userFlightHistory.jsp");
             
         }
