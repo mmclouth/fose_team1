@@ -10,8 +10,12 @@
     //String[] price = parameters.get("price");
     String errorMessage = null;
     
-    String cardNum = null, cvv = null, price = null;
+    String cardNum = null, cvv = null, price = null, ticketType = null;
     String[] flightIDs = null;
+    
+    if(parameters.get("type_of_tickets") != null) {
+        ticketType = request.getParameter("type_of_tickets");
+    }
     
     if(parameters.get("flight_ids") != null) {
         flightIDs = parameters.get("flight_ids");
@@ -48,6 +52,10 @@
         
         if(allFieldsValid) {
             errorMessage = null;
+            //updateFlightFirstClassSeatsRemaining(int firstClassSeatsRemaining, int id)
+            //updateFlightEconomySeatsRemaining(int economySeatsRemaining, int id)
+            
+            
             session.setAttribute("booked", true);
             response.sendRedirect("/IowaAir/userFlightHistory.jsp");
             
@@ -116,6 +124,7 @@
                 <% for(String s : flightIDs) { %>
                 <input type="hidden" name="flight_ids" value="<%= s %>">
                 <% } %>
+                <input type="hidden" name="type_of_tickets" value="<%= ticketType %>">
                 Credit card number: 
                 <input type="text" name="cardNumber" required><br>
                 Expiration date:
