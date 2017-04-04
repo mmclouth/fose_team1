@@ -81,9 +81,9 @@ public class SearchResults {
             @Override
             public int compare(FlightCombo combo1, FlightCombo combo2) {
                 if(ascending){
-                    return Integer.compare(combo1.getDepartureTimeInMin(), combo2.getDepartureTimeInMin());    
+                    return Integer.compare(combo2.getDepartureTimeInMin(), combo1.getDepartureTimeInMin());    
                 } else {
-                    return Integer.compare(combo2.getDepartureTimeInMin(), combo1.getDepartureTimeInMin());
+                    return Integer.compare(combo1.getDepartureTimeInMin(), combo2.getDepartureTimeInMin());
                 }
             }
         });
