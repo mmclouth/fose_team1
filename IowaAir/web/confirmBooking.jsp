@@ -166,7 +166,7 @@
 
             <% } %>
             <b>Number of Tickets: <%= numTickets %>
-            
+            <% if(numTickets <= leastEconomySeats || numTickets <= leastFirstClassSeats) { %>
             <% if(numTickets <= leastEconomySeats) { %>
             <form action="purchaseFlight.jsp" method="post">
                 <p align="right"><input type="submit" value="Book Economy: $<%= economyPrice * numTickets%>0" ></p>
@@ -176,7 +176,7 @@
                 <input type="hidden" name="flight_ids" value="<%= flight_id %>">
                 <% }%>
             </form>
-            <% } else if(numTickets <= leastFirstClassSeats) { %>
+            <% } if(numTickets <= leastFirstClassSeats) { %>
             <form action="purchaseFlight.jsp" method="post">
                 <p align="right"><input type="submit" value="Book First Class: $<%= firstClassPrice * numTickets %>0" ></p>
                 <input type="hidden" name="price" value="<%= firstClassPrice * numTickets %>">
@@ -185,6 +185,7 @@
                 <input type="hidden" name="flight_ids" value="<%= flight_id %>">
                 <% }%>
             </form>
+            <% } %>
             <% } else { %>
             <h2>ERROR: Not enough seats left on the plane. 
                 <a href="home.jsp">Return to Home Page</a><br>
