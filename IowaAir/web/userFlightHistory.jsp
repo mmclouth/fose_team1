@@ -53,7 +53,7 @@
 
         <div class="middle">
             <h1>User Flight History Page</h1>
-            <% if((Boolean)session.getAttribute("booked")) { %>
+            <% if(session.getAttribute("booked") != null) { %>
                 <h2>Flight Successfully Booked!</h2>
                 <% session.removeAttribute("booked");       
             } %>

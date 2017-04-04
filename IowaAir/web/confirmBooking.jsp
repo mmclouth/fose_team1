@@ -4,6 +4,7 @@
     Author     : Kyle Anderson
 --%>
 
+<%@page import="java.util.Collections"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
@@ -14,6 +15,7 @@
     double economyPrice = 0;
     double firstClassPrice = 0;
     Database db = new Database();
+    Integer numTickets = (Integer)session.getAttribute("num_of_passengers");
     
     //get all parameters from request
     Map<String, String[]> parameters = request.getParameterMap();
@@ -61,6 +63,25 @@
     for(String flight_id : flight_IDs){
         flightsData.add(db.getHashMapForFLight(flight_id));
     }
+    
+    int leastEconomySeats = Integer.MAX_VALUE; //Collections.min(economySeats);
+    int leastFirstClassSeats = Integer.MAX_VALUE; //Collections.min(firstClassSeats);
+
+    
+    for(HashMap<String, String> maps : flightsData) {
+       String economyTemp = maps.get("economy_remaining");
+       String firstClassTemp = maps.get("first_class_remaining");
+       economyTemp = economyTemp.replaceAll("\\s+","");
+       firstClassTemp = firstClassTemp.replaceAll("\\s+","");
+       Integer tempEconomy = Integer.parseInt(economyTemp);
+       Integer tempFirstClass = Integer.parseInt(firstClassTemp);
+       leastEconomySeats = (tempEconomy < leastEconomySeats) ? tempEconomy : leastEconomySeats;
+       leastFirstClassSeats = (tempFirstClass < leastFirstClassSeats) ? tempFirstClass : leastFirstClassSeats;
+    }
+    
+
+
+
     
 %>
 
@@ -144,15 +165,33 @@
             </h4>   
 
             <% } %>
+            <b>Number of Tickets: <%= numTickets %>
+            <% if(numTickets <= leastEconomySeats || numTickets <= leastFirstClassSeats) { %>
+            <% if(numTickets <= leastEconomySeats) { %>
             <form action="purchaseFlight.jsp" method="post">
-                <p align="right"><input type="submit" value="Book Economy: $<%= economyPrice %>0" ></p>
-                <input type="hidden" name="price" value="<%= economyPrice %>">
+                <p align="right"><input type="submit" value="Book Economy: $<%= economyPrice * numTickets%>0" ></p>
+                <input type="hidden" name="price" value="<%= economyPrice * numTickets %>">
+                <input type="hidden" name="type_of_tickets" value="economy">
+                <% for(String flight_id : flight_IDs) { %>
+                <input type="hidden" name="flight_ids" value="<%= flight_id %>">
+                <% }%>
             </form>
+            <% } if(numTickets <= leastFirstClassSeats) { %>
+            <form action="purchaseFlight.jsp" method="post">
+                <p align="right"><input type="submit" value="Book First Class: $<%= firstClassPrice * numTickets %>0" ></p>
+                <input type="hidden" name="price" value="<%= firstClassPrice * numTickets %>">
+                <input type="hidden" name="type_of_tickets" value="firstClass">
+                <% for(String flight_id : flight_IDs) { %>
+                <input type="hidden" name="flight_ids" value="<%= flight_id %>">
+                <% }%>
+            </form>
+            <% } %>
+            <% } else { %>
+            <h2>ERROR: Not enough seats left on the plane. 
+                <a href="home.jsp">Return to Home Page</a><br>
+            </h2>
+            <% } %>
             
-            <form action="purchaseFlight.jsp" method="post">
-                <p align="right"><input type="submit" value="Book First Class: $<%= firstClassPrice %>0" ></p>
-                <input type="hidden" name="price" value="<%= firstClassPrice %>">
-            </form>
         </div>
         <% } %>
     </body>
