@@ -227,7 +227,7 @@
                 <label id = "returnDateLabel" for="r_date">Return Date:</label>
                 <input id="returnDate" type="date" name ="r_date"> <br>
                 <label for="num_of_passengers">Number of Passengers:</label>
-                <input type="number" name ="num_of_passengers"> <br>
+                <input type="number" name ="num_of_passengers" value="1"> <br>
                 
                 <div class="search-button">
                     <button type="submit" value="Submit">Search</button>
@@ -239,7 +239,7 @@
                 
                 <div class="numOfPassBox">
                 <label for="num_of_passengers">No. of Passengers:</label>
-                <input type="number" name ="num_of_passengers">
+                <input type="number" name ="num_of_passengers" value="1">
                 </div>
                 
                 <div class="flightBox">
