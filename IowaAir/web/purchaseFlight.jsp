@@ -3,9 +3,12 @@
     Created on : Apr 2, 2017, 5:54:46 PM
     Author     : Kyle Anderson
 --%>
+<%@page import="dbResources.Database"%>
 <%@page import="java.util.Map"%>
 <%  Map<String,String[]> parameters = request.getParameterMap();
     String[] price = parameters.get("price");
+    
+    Database db = new Database();
 %>
 
 

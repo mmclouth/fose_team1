@@ -10,8 +10,8 @@ package dbResources;
  * @author Kyle Anderson
  */
 public class Payment {
-    long cardNumber = -1;
-    int cvv = -1;
+    private long cardNumber = -1L;
+    private int cvv = -1;
     
     public Payment(String cardNumber, String cvv) {
         this.cardNumber = validateCardNumber(cardNumber);
@@ -19,14 +19,14 @@ public class Payment {
     }
     
     private static long validateCardNumber(String cardNumber) {
-        long validCard = -1;
+        long validCard = -1L;
         if(cardNumber.length() != 10) {
             return validCard;
         }
         try {
             validCard = Long.parseLong(cardNumber);
         } catch(NumberFormatException nfe) {
-            validCard = -1;
+            validCard = -1L;
             return validCard;
         }
         return validCard;
@@ -41,7 +41,16 @@ public class Payment {
             validCVV = -1;
             return validCVV;
         }
+        
         return validCVV;
     }
-    
+
+    public long getCardNumber() {
+        return cardNumber;
+    }
+
+    public int getCvv() {
+        return cvv;
+    }
+
 }

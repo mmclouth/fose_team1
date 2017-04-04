@@ -11,7 +11,6 @@
 <%@page import="dbResources.LoginValidation"%>
 <%@page import="dbResources.Database"%>
 <%
-    String result = "failed";
     boolean mailSuccess = false;
     String errorMessage = null;
 
