@@ -64,10 +64,9 @@
         flightsData.add(db.getHashMapForFLight(flight_id));
     }
     
-    int leastEconomySeats = Integer.MAX_VALUE; //Collections.min(economySeats);
-    int leastFirstClassSeats = Integer.MAX_VALUE; //Collections.min(firstClassSeats);
+    int leastEconomySeats = Integer.MAX_VALUE;
+    int leastFirstClassSeats = Integer.MAX_VALUE;
 
-    
     for(HashMap<String, String> maps : flightsData) {
        String economyTemp = maps.get("economy_remaining");
        String firstClassTemp = maps.get("first_class_remaining");
@@ -78,11 +77,6 @@
        leastEconomySeats = (tempEconomy < leastEconomySeats) ? tempEconomy : leastEconomySeats;
        leastFirstClassSeats = (tempFirstClass < leastFirstClassSeats) ? tempFirstClass : leastFirstClassSeats;
     }
-    
-
-
-
-    
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
