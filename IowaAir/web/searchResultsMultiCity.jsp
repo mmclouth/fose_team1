@@ -29,7 +29,7 @@
     if(session.getAttribute("flight_info_retrieved") == null){
     
     for(String parameterName : parameters.keySet()){
-        //add flight_id parameter names to list
+        
         if(parameterName.startsWith("multiFlightOrigin")){
             if(request.getParameter(parameterName) != null  && !request.getParameter(parameterName).equals("null")){
                 origins.add(request.getParameter(parameterName));
@@ -74,7 +74,8 @@
             int holder = Integer.parseInt((String) session.getAttribute("flight_index")) + 1;
             session.setAttribute("flight_index", Integer.toString(holder));
         } else {
-            
+            response.sendRedirect("/IowaAir/confirmBooking.jsp");
+            return;
         }
     }
     
