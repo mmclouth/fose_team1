@@ -4,6 +4,14 @@
     Author     : kenziemclouth
 --%>
 
+<%@page import="dbResources.Database"%>
+<%
+    Database db = new Database();
+    //get flight data and display
+    
+    
+%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -57,6 +65,8 @@
                 <h2>Flight Successfully Booked!</h2>
                 <% session.removeAttribute("booked");       
             } %>
+            
+            
         </div>
 
     </body>
