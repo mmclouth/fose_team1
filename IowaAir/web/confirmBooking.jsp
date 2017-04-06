@@ -178,7 +178,7 @@
             <form action="purchaseFlight.jsp" method="post">
                 <p align="right"><input type="submit" value="Book First Class: $<%= firstClassPrice * numTickets %>0" ></p>
                 <input type="hidden" name="price" value="<%= firstClassPrice * numTickets %>">
-                <input type="hidden" name="type_of_tickets" value="firstClass">
+                <input type="hidden" name="type_of_tickets" value="first_class">
                 <% for(String flight_id : flight_IDs) { %>
                 <input type="hidden" name="flight_ids" value="<%= flight_id %>">
                 <% }%>

@@ -17,6 +17,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Logger;
 
 /**
@@ -886,6 +888,53 @@ public class Database {
             e.printStackTrace();
         }
     }
+    
+    public void addBoardingPass(int flight_id, int user_id, String flightClass) {
+        StringBuilder query = new StringBuilder();
+        
+        query.append("INSERT INTO boarding_pass (flight_id, userr_id, clas, seat_num, luggage_count) VALUES ('");
+        query.append(flight_id);
+        query.append("', '");
+        query.append(user_id);
+        query.append("', '");
+        if(flightClass.equals("economy")) {
+            query.append("economy");
+        } else {
+            query.append("first_class");
+        }
+        query.append("', '");
+        query.append(generateRandomSeat(flight_id, flightClass));
+        query.append("', '");
+        query.append(ThreadLocalRandom.current().nextInt(1, 5));
+        query.append("') ;");
+        
+        try {
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            sql.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public String generateRandomSeat(int flightID, String flightClass) {
+        HashMap<String, String> flight = this.getHashMapForFLight(Integer.toString(flightID));
+        String[] fields = {"id","num","airplane_id","origin_code","destination_code","departure_date", 
+            "arrival_date","departure_time","arrival_time","duration",
+            "price_economy","price_first_class","first_class_remaining", "economy_remaining"};
+        /****RANDOM GENERATING A LETTER AND NUMBER, THIS WILL BE CHANGED
+            if(flightClass.equals("economy")) {
+                String seatsLeft = flight.get("economy_remaining");
+
+            }
+        *****/
+        String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String digits = "123456789";
+        char letter = alphabet.charAt(ThreadLocalRandom.current().nextInt(0, alphabet.length()));
+        char num = digits.charAt(ThreadLocalRandom.current().nextInt(1, digits.length()));
+        return Character.toString(letter) + Character.toString(num);
+    }
+    
     public int findAircraftTypeID(String planeName)
     {
         int aircraftTypeID = -1;

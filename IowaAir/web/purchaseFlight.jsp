@@ -11,10 +11,16 @@
     String errorMessage = null;
     
     String cardNum = null, cvv = null, price = null, ticketType = null;
+    Integer userID = null;
+    
     String[] flightIDs = null, seatsAvailable = null;
     
     if(parameters.get("numSeats") != null) {
         seatsAvailable = parameters.get("numSeats");
+    }
+    
+    if(session.getAttribute("userID") != null) {
+        userID = (Integer)session.getAttribute("userID");
     }
     
     if(parameters.get("type_of_tickets") != null) {
@@ -40,7 +46,7 @@
     
     Database db = new Database();
     
-    if (price != null && cardNum != null && cvv != null) {
+    if (price != null && cardNum != null && cvv != null && userID != null) {
 
         boolean allFieldsValid = true;
         errorMessage = "";
@@ -67,12 +73,15 @@
                 }
                 
                 //update first class flight seats
-                if(ticketType.equals("firstClass")) {
+                if(ticketType.equals("first_class")) {
                     int seats = Integer.parseInt(seatsAvailable[i]);
                     int flight = Integer.parseInt(flightIDs[i]);
                     db.updateFlightEconomySeatsRemaining(seats, flight);
                 }
             }
+            
+            for(int i = 0; i < flightIDs.length; ++i)
+            db.addBoardingPass(Integer.parseInt(flightIDs[i]), userID, ticketType);
             
             
             session.setAttribute("booked", true);
