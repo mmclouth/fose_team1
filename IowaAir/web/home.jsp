@@ -237,7 +237,7 @@
             </form>
             
             <div class="multiflight">
-            <form id="form2" action="searchResults.jsp">
+            <form id="form2" action="searchResultsMultiCity.jsp">
                 
                 <div class="numOfPassBox">
                 <label for="num_of_passengers">No. of Passengers:</label>
