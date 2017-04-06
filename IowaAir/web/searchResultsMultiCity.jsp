@@ -4,10 +4,19 @@
     Author     : kenziemclouth
 --%>
 
+<%@page import="java.util.HashMap"%>
+<%@page import="dbResources.FlightCombo"%>
+<%@page import="dbResources.Search2"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="dbResources.SearchResults"%>
+<%@page import="dbResources.Search"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.ArrayList"%>
 <%
-
+    String[] fields = {"num","origin_code","destination_code","departure_date","departure_time","arrival_date","arrival_time"};
+    
+    
     ArrayList<String> origins = new ArrayList<String>();
     ArrayList<String> destinations = new ArrayList<String>();
     ArrayList<String> dates = new ArrayList<String>();
@@ -16,6 +25,8 @@
     int numberOfFlights = 0;
     
     Map<String, String[]> parameters = request.getParameterMap();
+    
+    if(session.getAttribute("flight_info_retrieved") == null){
     
     for(String parameterName : parameters.keySet()){
         //add flight_id parameter names to list
@@ -38,12 +49,41 @@
         }
     }
     
+    session.setAttribute("origins", origins);
+    session.setAttribute("destinations", destinations);
+    session.setAttribute("dates", dates);
+    
     if(request.getParameter("num_of_passengers") != null){
-        numOfPassengers = Integer.parseInt(request.getParameter("num_of_passengers"));
+        session.setAttribute("numberOfPassengers", Integer.parseInt(request.getParameter("num_of_passengers")));
     }
+    
+    }
+    
+    origins = (ArrayList<String>) session.getAttribute("origins");
+    destinations = (ArrayList<String>) session.getAttribute("destinations");
+    dates = (ArrayList<String>) session.getAttribute("dates");
+    
     
     numberOfFlights = origins.size();
     
+    if(session.getAttribute("flight_index") == null){
+        session.setAttribute("flight_index",  "0");
+        session.setAttribute("flight_info_retrieved", "true");
+    } else {
+        if(Integer.parseInt((String) session.getAttribute("flight_index")) < numberOfFlights ){
+            int holder = Integer.parseInt((String) session.getAttribute("flight_index")) + 1;
+            session.setAttribute("flight_index", Integer.toString(holder));
+        } else {
+            
+        }
+    }
+    
+    int flightIndex = Integer.parseInt((String) session.getAttribute("flight_index"));
+    
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+    
+    Search2 search = new Search2(origins.get(flightIndex), destinations.get(flightIndex), formatter.parse(dates.get(flightIndex)));
+    SearchResults results = search.getSearchResults();
 
 
 
@@ -90,6 +130,7 @@
         <div class="middle">
             
             <h1>Number of Passengers: <%=numOfPassengers %></h1>
+            <h1>Current Flight Index: <%=flightIndex %></h1>
             
             <% for(int i=0 ; i<origins.size() ; i++){  %>
              
@@ -99,7 +140,100 @@
             <br><br>
             
             <% } %>
+            
+            <h2>Select Flight to <%=session.getAttribute("destination_code")%></h2>
         </div>
+        
+        <div class="search-results-table">
+            
+            <table>
+                <tr>
+                    <th>Flight</th>
+                    <th>Origin</th>
+                    <th>Destination</th>
+                    <th colspan="2">Departure</th>
+                    <th colspan="2">Arrival</th>
+                    <th>Duration</th>
+                    <th>Price</th>
+                </tr>
+                <tr>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+            </table>    
+        <%
+            
+            //iterate through each flight combo
+            for(FlightCombo flightCombo : results.getFlightCombos()){
+                int numOfFlights = flightCombo.getNumberOfFlights();
+   
+            boolean first = true;
+            int rowCounter = 1;   %>
+            
+            <table id="inner">
+            
+                <tr>
+                    <th> </th>
+                    <th> </th>
+                    <th> </th>
+                    <th colspan="2"> </th>
+                    <th colspan="2"> </th>                  
+                    <th> </th>
+                    <th> </th>
+                    
+                </tr>
+            
+            <%
+            for(HashMap<String,String> flight : flightCombo.getFlights()){     
+
+                    int first_class_remaining = Integer.parseInt(flight.get("first_class_remaining"));
+                    int economy_remaining = Integer.parseInt(flight.get("economy_remaining"));
+                    
+                    int total = first_class_remaining + economy_remaining;
+     
+        %>
+                <tr>
+        <%      
+                for(String field : fields){ %>
+                    <td><%= flight.get(field) %> </td>
+        <%          }   %>
+                    <%   if(first){       %>
+                    <td rowspan="<%=numOfFlights%>"><%= flightCombo.getDuration() %></td>
+                    <td rowspan="<%=numOfFlights%>"><%= flightCombo.getPrice() %></td>
+                    <td rowspan="<%=numOfFlights%>">
+                        <form action="searchResultsMultiCity.jsp">
+        <%                    
+                            int counter = 1;
+                            for(HashMap<String,String> flightForForm : flightCombo.getFlights()){ 
+        %>                    
+                            <input type="hidden" name="flight_id<%=counter%>" value="<%=flightForForm.get("id") %>">
+        <%                      counter++;
+                            }
+        %>                    
+                            <input type="submit" value="Select" >
+                        </form>
+                    </td>
+                    <% first = false;
+                    } %>
+                </tr>
+        <%
+            
+                    rowCounter++;
+                }
+
+            }
+%>
+                </table>
+            
+        </div>
+
 
     </body>
 </html>
