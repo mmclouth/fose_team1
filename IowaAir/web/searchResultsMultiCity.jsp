@@ -4,6 +4,50 @@
     Author     : kenziemclouth
 --%>
 
+<%@page import="java.util.Map"%>
+<%@page import="java.util.ArrayList"%>
+<%
+
+    ArrayList<String> origins = new ArrayList<String>();
+    ArrayList<String> destinations = new ArrayList<String>();
+    ArrayList<String> dates = new ArrayList<String>();
+    
+    int numOfPassengers = 1;
+    int numberOfFlights = 0;
+    
+    Map<String, String[]> parameters = request.getParameterMap();
+    
+    for(String parameterName : parameters.keySet()){
+        //add flight_id parameter names to list
+        if(parameterName.startsWith("multiFlightOrigin")){
+            if(request.getParameter(parameterName) != null  && !request.getParameter(parameterName).equals("null")){
+                origins.add(request.getParameter(parameterName));
+            }
+        }
+        
+        if(parameterName.startsWith("multiFlightDestination")){
+            if(request.getParameter(parameterName) != null && !request.getParameter(parameterName).equals("null")){
+                destinations.add(request.getParameter(parameterName));
+            }
+        }
+                
+        if(parameterName.startsWith("multiFlightDepart")){
+            if(request.getParameter(parameterName) != null && !request.getParameter(parameterName).equals("null")){
+                dates.add(request.getParameter(parameterName));
+            }
+        }
+    }
+    
+    if(request.getParameter("num_of_passengers") != null){
+        numOfPassengers = Integer.parseInt(request.getParameter("num_of_passengers"));
+    }
+    
+    numberOfFlights = origins.size();
+    
+
+
+
+%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -42,6 +86,20 @@
         </div>
         
         <% } %>
+        
+        <div class="middle">
+            
+            <h1>Number of Passengers: <%=numOfPassengers %></h1>
+            
+            <% for(int i=0 ; i<origins.size() ; i++){  %>
+             
+            <h1><%=origins.get(i) %></h1>
+            <h1><%= destinations.get(i)%></h1>
+            <h1><%= dates.get(i)%></h1>
+            <br><br>
+            
+            <% } %>
+        </div>
 
     </body>
 </html>
