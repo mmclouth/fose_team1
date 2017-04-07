@@ -11,7 +11,17 @@
     String errorMessage = null;
     
     String cardNum = null, cvv = null, price = null, ticketType = null;
-    String[] flightIDs = null;
+    Integer userID = null;
+    
+    String[] flightIDs = null, seatsAvailable = null;
+    
+    if(parameters.get("numSeats") != null) {
+        seatsAvailable = parameters.get("numSeats");
+    }
+    
+    if(session.getAttribute("userID") != null) {
+        userID = (Integer)session.getAttribute("userID");
+    }
     
     if(parameters.get("type_of_tickets") != null) {
         ticketType = request.getParameter("type_of_tickets");
@@ -36,7 +46,7 @@
     
     Database db = new Database();
     
-    if (price != null && cardNum != null && cvv != null) {
+    if (price != null && cardNum != null && cvv != null && userID != null) {
 
         boolean allFieldsValid = true;
         errorMessage = "";
@@ -53,8 +63,25 @@
         if(allFieldsValid) {
             errorMessage = null;
             //entity should be triangle, process should be circular
-            //db.updateFlightFirstClassSeatsRemaining(int firstClassSeatsRemaining, int id)
-            //db.updateFlightEconomySeatsRemaining(int economySeatsRemaining, int id) 
+            for(int i = 0; i < flightIDs.length; ++i ) {
+                
+                //update economy flight seats
+                if(ticketType.equals("economy")) {
+                    int seats = Integer.parseInt(seatsAvailable[i]);
+                    int flight = Integer.parseInt(flightIDs[i]);
+                    db.updateFlightFirstClassSeatsRemaining(seats, flight);
+                }
+                
+                //update first class flight seats
+                if(ticketType.equals("first_class")) {
+                    int seats = Integer.parseInt(seatsAvailable[i]);
+                    int flight = Integer.parseInt(flightIDs[i]);
+                    db.updateFlightEconomySeatsRemaining(seats, flight);
+                }
+            }
+            
+            for(int i = 0; i < flightIDs.length; ++i)
+            db.addBoardingPass(Integer.parseInt(flightIDs[i]), userID, ticketType);
             
             
             session.setAttribute("booked", true);
@@ -124,6 +151,9 @@
                 <input type="hidden" name="price" value="<%=price%>">
                 <% for(String s : flightIDs) { %>
                 <input type="hidden" name="flight_ids" value="<%= s %>">
+                <% } %>
+                <% for(String s : seatsAvailable) { %>
+                <input type="hidden" name="numSeats" value="<%= s %>">
                 <% } %>
                 <input type="hidden" name="type_of_tickets" value="<%= ticketType %>">
                 Credit card number: 
