@@ -16,6 +16,12 @@
     session.setAttribute("return_flight", null);
     session.setAttribute("has_return_flight", "false");
     session.setAttribute("selectingReturnFlight", "false");
+    session.setAttribute("flight_index", null);
+    session.setAttribute("flight_info_retrieved", null);
+    session.setAttribute("flight0", null);
+    session.setAttribute("flight1", null);
+    session.setAttribute("flight2", null);
+    session.setAttribute("flight3", null);
     
 %>    
 

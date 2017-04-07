@@ -21,6 +21,8 @@
     ArrayList<String> destinations = new ArrayList<String>();
     ArrayList<String> dates = new ArrayList<String>();
     
+    ArrayList<String> flightIDs = new ArrayList<String>();
+    
     int numOfPassengers = 1;
     int numberOfFlights = 0;
     
@@ -54,7 +56,7 @@
     session.setAttribute("dates", dates);
     
     if(request.getParameter("num_of_passengers") != null){
-        session.setAttribute("numberOfPassengers", Integer.parseInt(request.getParameter("num_of_passengers")));
+        session.setAttribute("num_of_passengers", Integer.parseInt(request.getParameter("num_of_passengers")));
     }
     
     }
@@ -70,14 +72,24 @@
         session.setAttribute("flight_index",  "0");
         session.setAttribute("flight_info_retrieved", "true");
     } else {
-        if(Integer.parseInt((String) session.getAttribute("flight_index")) < numberOfFlights ){
-            int holder = Integer.parseInt((String) session.getAttribute("flight_index")) + 1;
-            session.setAttribute("flight_index", Integer.toString(holder));
-        } else {
-            response.sendRedirect("/IowaAir/confirmBooking.jsp");
-            return;
+            for (String parameterName : parameters.keySet()) {
+
+                if (request.getParameter(parameterName) != null) {
+                    if (parameterName.startsWith("flight_id")) {
+                        flightIDs.add(request.getParameter(parameterName));
+                    }
+                }
+            }
+            session.setAttribute("flight" + (String) session.getAttribute("flight_index"), flightIDs);
+        
+            if (Integer.parseInt((String) session.getAttribute("flight_index")) < numberOfFlights - 1) {
+                int holder = Integer.parseInt((String) session.getAttribute("flight_index")) + 1;
+                session.setAttribute("flight_index", Integer.toString(holder));
+            } else {
+                response.sendRedirect("/IowaAir/confirmBookingMultiCity.jsp");
+                return;
+            }
         }
-    }
     
     int flightIndex = Integer.parseInt((String) session.getAttribute("flight_index"));
     
