@@ -142,6 +142,10 @@ public class Database {
     }
 
     
+    public ArrayList<String> selectArrayList(String field, String table) {
+        return selectArrayList(field,table,"", "", "", "", "", "");
+    }
+    
     public ArrayList<String> selectArrayList(String field, String table, String constraintField1, String constraintValue1) {
         return selectArrayList(field,table,constraintField1, constraintValue1, "", "", "", "");
     }
@@ -196,7 +200,7 @@ public class Database {
             query.append("='");
             query.append(constraintValue2);
             query.append("';");
-        } else {
+        } else if(!constraintValue2.equals("")){
             query.append("SELECT ");
             query.append(field);
             query.append(" FROM ");
@@ -206,6 +210,12 @@ public class Database {
             query.append("='");
             query.append(constraintValue1);
             query.append("';");
+        } else {
+            query.append("SELECT ");
+            query.append(field);
+            query.append(" FROM ");
+            query.append(table);
+            query.append(";");
         }
         
         try{
@@ -1206,6 +1216,35 @@ public class Database {
         return flightData;
         
     }
+   
     
+    public HashMap<String,String> getHashMapForAircraftType(String name){
+        HashMap<String,String> aircraftData = new HashMap<String,String>();
+
+        String query = "SELECT * FROM aircraft_type WHERE plane_name ='" + name + "';";
+        
+        try{
+            PreparedStatement sql = conn.prepareStatement(query);
+            ResultSet results = sql.executeQuery();
+            
+            while(results.next()){
+                
+                aircraftData.put("id", results.getString("id"));
+                aircraftData.put("plane_name", results.getString("plane_name"));
+                aircraftData.put("down_time", results.getString("down_time"));
+                aircraftData.put("capacity_total", results.getString("capacity_total"));
+                aircraftData.put("capacity_first_class", results.getString("capacity_first_class"));
+                aircraftData.put("capacity_economy", results.getString("capacity_economy"));
+                aircraftData.put("seats_per_row", results.getString("seats_per_row"));
+                
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        
+        return aircraftData;
+    }
     
 }
+
+
