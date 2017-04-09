@@ -319,7 +319,7 @@
             <input type="number" name="economySeatsRemaining" required><br>
             
             <input type="submit" value="Add Flight"><br>
-            <a href="adminFlights.jsp">Modify Flight</a><br>
+            <a href="deleteFlight.jsp">Delete Flight</a><br>
             </form>
             
         </div>
@@ -349,47 +349,24 @@
                     <!- Loop through each employee record and output each field in correct able column ->
                     <% for (HashMap<String, String> record : flightData) {%>
                     <tr>
-                        <form action="adminFlights.jsp" method="post">
-                        <td><input name="flightNumberTable" value="<%= record.get("num")%>" readonly></td>
-                        <td><select name="airplaneIDTable">
-                        <option value="<%= record.get("airplane_id")%>"><%= record.get("airplane_id")%></option>
-                        <%
-                            for(String ids : airplaneIDs){      
-                        %>
-                            <option value="<%=ids%>"><%=ids%></option>     
-                    
-                        <% } %>                  
-                    </select> </td>
-                        <td><select name="originCodeTable">
-                        <option value="<%= record.get("origin_code")%>"><%= record.get("origin_code")%></option>
-                        <%
-                            for(String airport : airports){      
-                        %>
-                        <option value="<%=airport%>"><%=airport%></option>     
-
-                        <% } %>                  
-                        </select></td>
-                        <td><select name="destinationCodeTable">
-                        <option value="<%= record.get("destination_code")%>"><%= record.get("destination_code")%></option>
-                        <%
-                            for(String airport : airports){      
-                        %>
-                        <option value="<%=airport%>"><%=airport%></option>     
-
-                        <% } %>           
-                        </select></td>
-                        <td><input type="date" name="departureDateTable" value="<%= record.get("departure_date")%>"></td>
-                        <td><input type="date" name="arrivaleDateTable" value="<%=record.get("arrival_date")%>"></td>
-                        <td><input type="time" name="departureTimeTable" value="<%= record.get("departure_time")%>"></td>
-                        <td><input type="time" name="arrivalTimeTable" value="<%= record.get("arrival_time")%>"></td>
-                        <td><input type="number" name="durationTable" value="<%= record.get("duration")%>"></td>
-                        <td><input type="number" name="priceEconomyTable" value="<%= record.get("price_economy")%>"></td>
-                        <td><input type="number" name="priceFirstClassTable" value="<%= record.get("price_first_class")%>"></td>
-                        <td><input type="number" name="firstClassSeatsTable" value="<%= record.get("first_class_remaining")%>"></td>
-                        <td><input type="number" name="economySeatsTable" value="<%= record.get("economy_remaining")%>"></td>
-                        <td><input type="submit" value="Update"></td>
-                        </form>
+                        
+                        <td><%= record.get("num")%></td>
+                        <td><%= record.get("airplane_id")%></td>
+                        <td><%= record.get("origin_code")%></td>
+                        <td><%= record.get("destination_code")%></td>
+                        <td><%= record.get("departure_date")%></td>
+                        <td><%=record.get("arrival_date")%></td>
+                        <td><%= record.get("departure_time")%></td>
+                        <td><%= record.get("arrival_time")%></td>
+                        <td><%= record.get("duration")%></td>
+                        <td><%= record.get("price_economy")%></td>
+                        <td><%= record.get("price_first_class")%></td>
+                        <td><%= record.get("first_class_remaining")%></td>
+                        <td><%= record.get("economy_remaining")%></td>
+                        <td><input type="submit" value="Update" onclick="<%session.setAttribute("flightNumber", record.get("num"));response.sendRedirect("IowaAir/modifyFlight");%>"></td>
+                           
                     </tr>
+                    </form>
 
                     <% }%>
 

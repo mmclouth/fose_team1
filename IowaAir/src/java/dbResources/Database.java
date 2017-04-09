@@ -674,6 +674,7 @@ public class Database {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        
     }
     
     public void updateFlight(String num, int airplaneID, String originCode, String destinationCode, String departureDate, String arrivalDate, String departureTime, String arrivalTime,
