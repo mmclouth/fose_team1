@@ -11,7 +11,17 @@
     String errorMessage = null;
     
     String cardNum = null, cvv = null, price = null, ticketType = null;
-    String[] flightIDs = null;
+    Integer userID = null;
+    
+    String[] flightIDs = null, seatsAvailable = null;
+    
+    if(parameters.get("numSeats") != null) {
+        seatsAvailable = parameters.get("numSeats");
+    }
+    
+    if(session.getAttribute("userID") != null) {
+        userID = (Integer)session.getAttribute("userID");
+    }
     
     if(parameters.get("type_of_tickets") != null) {
         ticketType = request.getParameter("type_of_tickets");
@@ -36,7 +46,7 @@
     
     Database db = new Database();
     
-    if (price != null && cardNum != null && cvv != null) {
+    if (price != null && cardNum != null && cvv != null && userID != null) {
 
         boolean allFieldsValid = true;
         errorMessage = "";
@@ -52,8 +62,26 @@
         
         if(allFieldsValid) {
             errorMessage = null;
-            //updateFlightFirstClassSeatsRemaining(int firstClassSeatsRemaining, int id)
-            //updateFlightEconomySeatsRemaining(int economySeatsRemaining, int id)
+            //entity should be triangle, process should be circular
+            for(int i = 0; i < flightIDs.length; ++i ) {
+                
+                //update economy flight seats
+                if(ticketType.equals("economy")) {
+                    int seats = Integer.parseInt(seatsAvailable[i]);
+                    int flight = Integer.parseInt(flightIDs[i]);
+                    db.updateFlightFirstClassSeatsRemaining(seats, flight);
+                }
+                
+                //update first class flight seats
+                if(ticketType.equals("first_class")) {
+                    int seats = Integer.parseInt(seatsAvailable[i]);
+                    int flight = Integer.parseInt(flightIDs[i]);
+                    db.updateFlightEconomySeatsRemaining(seats, flight);
+                }
+            }
+            
+            for(int i = 0; i < flightIDs.length; ++i)
+            db.addBoardingPass(Integer.parseInt(flightIDs[i]), userID, ticketType);
             
             
             session.setAttribute("booked", true);
@@ -124,11 +152,50 @@
                 <% for(String s : flightIDs) { %>
                 <input type="hidden" name="flight_ids" value="<%= s %>">
                 <% } %>
+                <% for(String s : seatsAvailable) { %>
+                <input type="hidden" name="numSeats" value="<%= s %>">
+                <% } %>
                 <input type="hidden" name="type_of_tickets" value="<%= ticketType %>">
                 Credit card number: 
                 <input type="text" name="cardNumber" required><br>
-                Expiration date:
-                <input type="date" name="expiration" required> <br>
+                Expiration date: <br>
+                Month: 
+                <select>
+                    <option value="january">01</option>
+                    <option value="february">02</option>
+                    <option value="march">03</option>
+                    <option value="april">04</option>
+                    <option value="may">05</option>
+                    <option value="june">06</option>
+                    <option value="july">07</option>
+                    <option value="august">08</option>
+                    <option value="september">09</option>
+                    <option value="october">10</option>
+                    <option value="november">11</option>
+                    <option value="december">12</option>
+                </select>
+                Year: 
+                <select>
+                    <option value="2017">17</option>
+                    <option value="2018">18</option>
+                    <option value="2019">19</option>
+                    <option value="2020">20</option>
+                    <option value="2021">21</option>
+                    <option value="2022">22</option>
+                    <option value="2023">23</option>
+                    <option value="2024">24</option>
+                    <option value="2025">25</option>
+                    <option value="2026">26</option>
+                    <option value="2027">27</option>
+                    <option value="2028">28</option>
+                    <option value="2029">29</option>
+                    <option value="2030">30</option>
+                    <option value="2031">31</option>
+                    <option value="2032">32</option>
+                    <option value="2033">33</option>
+                    <option value="2034">34</option>
+                    <option value="2035">35</option>
+                </select><br>
                 CVV:
                 <input type="text" name="cvv" required><br>
                 <input type="submit" value="Finalize purchase"><br>

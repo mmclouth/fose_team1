@@ -64,10 +64,9 @@
         flightsData.add(db.getHashMapForFLight(flight_id));
     }
     
-    int leastEconomySeats = Integer.MAX_VALUE; //Collections.min(economySeats);
-    int leastFirstClassSeats = Integer.MAX_VALUE; //Collections.min(firstClassSeats);
+    int leastEconomySeats = Integer.MAX_VALUE;
+    int leastFirstClassSeats = Integer.MAX_VALUE;
 
-    
     for(HashMap<String, String> maps : flightsData) {
        String economyTemp = maps.get("economy_remaining");
        String firstClassTemp = maps.get("first_class_remaining");
@@ -78,11 +77,6 @@
        leastEconomySeats = (tempEconomy < leastEconomySeats) ? tempEconomy : leastEconomySeats;
        leastFirstClassSeats = (tempFirstClass < leastFirstClassSeats) ? tempFirstClass : leastFirstClassSeats;
     }
-    
-
-
-
-    
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -172,6 +166,10 @@
                 <p align="right"><input type="submit" value="Book Economy: $<%= economyPrice * numTickets%>0" ></p>
                 <input type="hidden" name="price" value="<%= economyPrice * numTickets %>">
                 <input type="hidden" name="type_of_tickets" value="economy">
+                <% for(HashMap<String, String> maps : flightsData) { %>
+                <input type="hidden" name="numSeats" value="<%= Integer.parseInt(maps.get("economy_remaining")) - numTickets %>">
+                <% } %>
+                
                 <% for(String flight_id : flight_IDs) { %>
                 <input type="hidden" name="flight_ids" value="<%= flight_id %>">
                 <% }%>
@@ -180,7 +178,7 @@
             <form action="purchaseFlight.jsp" method="post">
                 <p align="right"><input type="submit" value="Book First Class: $<%= firstClassPrice * numTickets %>0" ></p>
                 <input type="hidden" name="price" value="<%= firstClassPrice * numTickets %>">
-                <input type="hidden" name="type_of_tickets" value="firstClass">
+                <input type="hidden" name="type_of_tickets" value="first_class">
                 <% for(String flight_id : flight_IDs) { %>
                 <input type="hidden" name="flight_ids" value="<%= flight_id %>">
                 <% }%>
