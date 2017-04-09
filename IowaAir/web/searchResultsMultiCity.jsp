@@ -65,7 +65,6 @@
     destinations = (ArrayList<String>) session.getAttribute("destinations");
     dates = (ArrayList<String>) session.getAttribute("dates");
     
-    
     numberOfFlights = origins.size();
     
     if(session.getAttribute("flight_index") == null){
@@ -141,20 +140,7 @@
         <% } %>
         
         <div class="middle">
-            
-            <h1>Number of Passengers: <%=numOfPassengers %></h1>
-            <h1>Current Flight Index: <%=flightIndex %></h1>
-            
-            <% for(int i=0 ; i<origins.size() ; i++){  %>
-             
-            <h1><%=origins.get(i) %></h1>
-            <h1><%= destinations.get(i)%></h1>
-            <h1><%= dates.get(i)%></h1>
-            <br><br>
-            
-            <% } %>
-            
-            <h2>Select Flight to <%=session.getAttribute("destination_code")%></h2>
+            <h2>Select Flight <%=Integer.parseInt((String)session.getAttribute("flight_index")) + 1%></h2>
         </div>
         
         <div class="search-results-table">

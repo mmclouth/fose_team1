@@ -4,9 +4,19 @@
     Author     : kenziemclouth
 --%>
 
+<%@page import="org.json.JSONObject"%>
+<%@page import="java.util.Map"%>
+<%@page import="javax.script.ScriptEngine"%>
+<%@page import="javax.script.ScriptEngineManager"%>
+<%@page import="jdk.nashorn.internal.objects.NativeObject"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="dbResources.Database"%>
 <%@page import="java.util.HashMap"%>
+
+
+
+
+
 <%
     Database db = new Database();
     
@@ -62,7 +72,26 @@
     
     
     ArrayList<HashMap<String, String>> aircraftData = db.getAllAircraftData();
+    ArrayList<String> aircraft_type_names = db.selectArrayList("plane_name", "aircraft_type");
     
+    HashMap<String,String> aircraft;
+    
+    ScriptEngineManager factory = new ScriptEngineManager();
+    ScriptEngine engine = factory.getEngineByName("javascript");
+    ArrayList<HashMap<String,String>> airplanes = new ArrayList<HashMap<String,String>>();
+    
+    if (request.getParameter("planeNameSelect") != null) {
+        planeName = request.getParameter("planeNameSelect").toString();
+        
+        HashMap<String,String> planeFillData = db.getHashMapForAircraftType(planeName);
+        
+        downTime = Integer.parseInt(planeFillData.get("down_time"));
+        capacityTotal = Integer.parseInt(planeFillData.get("capacity_total"));
+        capacityFirstClass = Integer.parseInt(planeFillData.get("capacity_first_class"));
+        capacityEconomy = Integer.parseInt(planeFillData.get("capacity_economy"));
+        seatsPerRow = Integer.parseInt(planeFillData.get("seats_per_row"));
+    }
+ 
 
     //close database connection
     db.closeConnection();
@@ -72,6 +101,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+       
         <title>Iowa Air: Admin Airplanes</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -120,27 +150,62 @@
 
         <div class="middle">
             <h1>Admin Airplanes</h1>
+            <h2>Add New Aircraft</h2>
             <form action="adminAirplanes.jsp" method="post">
-                <h2>Add New Aircraft</h2>
+                Aircraft Type:
+                <select name="planeNameSelect" id="select_plane_name" ">
+                    <% for(String name: aircraft_type_names){ %>
+                    <option value="<%=name%>"><%=name%> </option>
+                    <% } %>
+                </select> 
+                <input type="submit" value="Update Form"><br>
+            </form>
+                <% if(planeName != null){ %>
+            <form action="adminAirplanes.jsp" method="post">
+                Aircraft Type:
+                <input name="planeName" value="<%=planeName%>"> <br>
                 Airplane Number:
                 <input type="text" name="airplaneNum" required><br>
-                Name of Aircraft:
-                <input type="text" name="planeName" required><br>
                 Down time between flights (hrs):
-                <input type="number" name="downTime" required><br>
+                <input type="number" id="downTime" name="downTime" value="<%= downTime%>" required><br>
                 Total Capacity:
-                <input type="number" name="capacityTotal" required><br>
+                <input type="number" id="capacityTotal" name="capacityTotal" value="<%=capacityTotal %>" required><br>
                 First Class Capacity:
-                <input type="number" name="capacityFirstClass" required><br>
+                <input type="number" id="capacityFirstClass" name="capacityFirstClass" value="<%=capacityFirstClass %>" required><br>
                 Economy Capacity:
-                <input type="number" name="capacityEconomy" required><br>
+                <input type="number" id="capacityEconomy" name="capacityEconomy" value="<%=capacityEconomy %>"required><br>
                 Seats Per Row:
-                <input type="number" name="seatsPerRow" required><br>
+                <input type="number" id="seatsPerRow" name="seatsPerRow" value="<%=seatsPerRow %>"required><br>
                 <input type="submit" value="Add Aircraft"><br>
                 <a href="modifyAircraft.jsp">Modify Aircraft</a><br>
             </form>
-        </div>
         
+            
+            <% } else { %>
+            
+            <form action="adminAirplanes.jsp" method="post">
+                Aircraft Type:
+                <input name="planeName" value="">
+                Airplane Number:
+                <input type="text" name="airplaneNum" required><br>
+                Down time between flights (hrs):
+                <input type="number" id="downTime" name="downTime" required><br>
+                Total Capacity:
+                <input type="number" id="capacityTotal" name="capacityTotal" required><br>
+                First Class Capacity:
+                <input type="number" id="capacityFirstClass" name="capacityFirstClass" required><br>
+                Economy Capacity:
+                <input type="number" id="capacityEconomy" name="capacityEconomy" required><br>
+                Seats Per Row:
+                <input type="number" id="seatsPerRow" name="seatsPerRow" required><br>
+                <input type="submit" value="Add Aircraft"><br>
+                <a href="modifyAircraft.jsp">Modify Aircraft</a><br>
+            </form>
+            
+            <% } %>
+            
+            
+        </div>
         <div class="employee-table">
 
                 <h2>Current Aircrafts</h2>
