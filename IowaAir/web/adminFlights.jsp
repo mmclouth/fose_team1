@@ -10,7 +10,8 @@
 <%
     Database db = new Database();
     ArrayList<String> airports = db.getAllAirportCodes();
-    ArrayList<String> airplaneIDs = db.getAllAirplaneIDs();
+    ArrayList<String> airplaneIDs;
+    ArrayList<String> aircraftTypes = db.selectArrayList("plane_name", "aircraft_type");
     String flightNumber = null;
     int airplaneID = 0;
     String originCode = null;
@@ -24,7 +25,19 @@
     double priceFirstClass = 0.0;
     int firstClassSeatsRemaining = 0;
     int economySeatsRemaining = 0;
+    String aircraftType = null;
     
+    
+    if (request.getParameter("aircraft_type") != null) {
+        aircraftType = request.getParameter("aircraft_type");
+        String aircraft_type_id = db.selectString("id", "aircraft_type", "plane_name", aircraftType);
+        airplaneIDs = db.selectArrayList("id", "airplane", "aircraft_type_id", aircraft_type_id);
+        
+        firstClassSeatsRemaining = Integer.parseInt(db.selectString("capacity_first_class", "aircraft_type", "plane_name", aircraftType));
+        economySeatsRemaining = Integer.parseInt(db.selectString("capacity_economy", "aircraft_type", "plane_name", aircraftType));
+    } else {
+        airplaneIDs = db.getAllAirplaneIDs();
+    }
     
     //Retrieve parameters from request if they have been sent from previous page
     if (request.getParameter("flightNumber") != null) {
@@ -189,10 +202,19 @@
 
         <div class="middle">
             
-            <h1>Admin Flights Page</h1>
-            
+            <h1>Admin Flights Page</h1><br>
+            <h2>Add New Flight</h2><br>
+            <form action="adminFlights.jsp" method="post">
+                <label for="airplaneID">Aircraft Type:</label>
+                <select name="aircraft_type">
+                    <% for(String type : aircraftTypes){ %>
+                    <option value="<%=type%>"><%=type%></option>
+                    <% } %>
+                </select>    
+                <input type="submit" value="Update Form"> <br>
+            </form>
             <form action="adminFlights.jsp" method="post"><br>
-                <h2>Add New Flight</h2><br>
+                
                 <label for="flightNumber">Flight Number:</label> 
             <input type="text" name="flightNumber" required><br>
             <label for="airplaneID">Airplane ID:</label>
@@ -243,9 +265,9 @@
             First Class Price:
             <input type="number" step="0.01" name="priceFirstClass" required><br>
             First Class Seats Remaining:
-            <input type="number" name="firstClassSeatsRemaining" required><br>
+            <input type="number" name="firstClassSeatsRemaining" value=<%=firstClassSeatsRemaining%> required><br>
             Economy Seats Remaining:
-            <input type="number" name="economySeatsRemaining" required><br>
+            <input type="number" name="economySeatsRemaining" value=<%=economySeatsRemaining%> required><br>
             
             <input type="submit" value="Add Flight"><br>
             <a href="modifyFlight.jsp">Modify Flight</a><br>
