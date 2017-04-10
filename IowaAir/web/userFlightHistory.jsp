@@ -4,12 +4,17 @@
     Author     : kenziemclouth
 --%>
 
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="dbResources.Database"%>
 <%
     Database db = new Database();
     //get flight data and display
-    
-    
+    Integer userID = null;
+    if(session.getAttribute("userID") != null) {
+        userID = (Integer)session.getAttribute("userID");
+    }
+    ArrayList<HashMap<String,String>> boardingPasses = db.getBoardingPassesForUser(Integer.toString(userID));
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -65,6 +70,11 @@
                 <h2>Flight Successfully Booked!</h2>
                 <% session.removeAttribute("booked");       
             } %>
+            
+            <% for(HashMap<String, String> maps : boardingPasses) { %>
+            <h3><%= maps %></h3><br>
+            
+            <% } %>
             
             
         </div>

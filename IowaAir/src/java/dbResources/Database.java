@@ -927,6 +927,30 @@ public class Database {
         }
     }
     
+    public ArrayList<HashMap<String, String>> getBoardingPassesForUser(String userID) {
+        ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String,String>>();
+        String[] fields = {"flight_id", "userr_id", "seat_num", "luggage_count", "clas"};
+        String query = "SELECT * FROM boarding_pass WHERE id=" + userID + ";";
+        
+        try {
+            PreparedStatement sql = conn.prepareStatement(query);
+            ResultSet results = sql.executeQuery();
+            while(results.next()){
+                HashMap<String, String> map = new HashMap<String,String>();
+                for(String field : fields){
+                    map.put(field, results.getString(field));
+                    
+                }
+                list.add(map);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return list;
+    }
+    
     public String generateRandomSeat(int flightID, String flightClass) {
         HashMap<String, String> flight = this.getHashMapForFLight(Integer.toString(flightID));
         String[] fields = {"id","num","airplane_id","origin_code","destination_code","departure_date", 
@@ -942,7 +966,7 @@ public class Database {
         String digits = "123456789";
         char letter = alphabet.charAt(ThreadLocalRandom.current().nextInt(0, alphabet.length()));
         char num = digits.charAt(ThreadLocalRandom.current().nextInt(1, digits.length()));
-        return Character.toString(letter) + Character.toString(num);
+        return Character.toString(num) + Character.toString(letter);
     }
     
     public int findAircraftTypeID(String planeName)
