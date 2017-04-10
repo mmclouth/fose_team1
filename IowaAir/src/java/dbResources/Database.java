@@ -200,7 +200,7 @@ public class Database {
             query.append("='");
             query.append(constraintValue2);
             query.append("';");
-        } else if(!constraintValue2.equals("")){
+        } else if(!constraintValue1.equals("")){
             query.append("SELECT ");
             query.append(field);
             query.append(" FROM ");
