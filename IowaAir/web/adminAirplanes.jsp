@@ -4,7 +4,6 @@
     Author     : kenziemclouth
 --%>
 
-<%@page import="org.json.JSONObject"%>
 <%@page import="java.util.Map"%>
 <%@page import="javax.script.ScriptEngine"%>
 <%@page import="javax.script.ScriptEngineManager"%>
