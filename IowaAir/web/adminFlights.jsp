@@ -97,108 +97,27 @@
     {
         db.addFlightToDatabase(flightNumber,airplaneID,originCode,destinationCode,departureDate,arrivalDate,departureTime,arrivalTime,duration,priceEconomy,priceFirstClass,firstClassSeatsRemaining,economySeatsRemaining);
     }
-    String flightNumberTable = null;
-    int airplaneIDTable = 0;
-    String originCodeTable = null;
-    String destinationCodeTable = null;
-    String departureDateTable = null;
-    String arrivalDateTable = null;
-    String departureTimeTable = null;
-    String arrivalTimeTable = null;
-    int durationTable = 0;
-    double priceEconomyTable = 0;
-    double priceFirstClassTable = 0;
-    int firstClassSeatsTable = 0;
-    int economySeatsTable = 0;
-    
-    
-    if (request.getParameter("flightNumberTable") != null) {
-        flightNumberTable = request.getParameter("flightNumberTable");
-    }
-    if (request.getParameter("airplaneIDTable") != null) {
-        airplaneIDTable = Integer.valueOf(request.getParameter("airplaneIDTable"));
-    }
-    if (request.getParameter("originCodeTable") != null) {
-        originCodeTable = request.getParameter("originCodeTable");
-    }
-    if (request.getParameter("destinationCodeTable") != null) {
-        destinationCodeTable = request.getParameter("destinationCodeTable");
-    }
-    if (request.getParameter("departureDateTable") != null) {
-        departureDateTable = request.getParameter("departureDateTable").toString();
-        
-
-        //If browser does not support HTML's date type, format the date string correctly
-        if (!departureDateTable.matches("^(19|20)\\d\\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$")) {
-
-            String[] departureDateTableSplit = departureDateTable.split("/");
-            String month = departureDateTableSplit[0];
-            String day = departureDateTableSplit[1];
-            String year = departureDateTableSplit[2];
-
-            departureDateTable = year + "-" + month + "-" + day;
-        }
-    }
-    if (request.getParameter("arrivalDateTable") != null) {
-        arrivalDateTable = request.getParameter("arrivalDateTable").toString();
-        
-
-        //If browser does not support HTML's date type, format the date string correctly
-        if (!arrivalDateTable.matches("^(19|20)\\d\\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$")) {
-
-            String[] arrivalDateTableSplit = arrivalDateTable.split("/");
-            String month = arrivalDateTableSplit[0];
-            String day = arrivalDateTableSplit[1];
-            String year = arrivalDateTableSplit[2];
-
-            arrivalDateTable = year + "-" + month + "-" + day;
-        }
-    }
-    if (request.getParameter("departureTimeTable") != null) {
-        departureTimeTable = request.getParameter("departureTimeTable").toString();
-    }
-    if (request.getParameter("arrivalTimeTable") != null) {
-        arrivalTimeTable = request.getParameter("arrivalTimeTable").toString();
-    }
-    if (request.getParameter("durationTable") != null) {
-        durationTable = Integer.valueOf(request.getParameter("durationTable"));
-    }
-    if (request.getParameter("priceEconomyTable") != null) {
-        priceEconomyTable = Double.valueOf(request.getParameter("priceEconomyTable"));
-    }
-    if (request.getParameter("priceFirstClassTable") != null) {
-        priceFirstClassTable = Double.valueOf(request.getParameter("priceFirstClassTable"));
-    }
-    if (request.getParameter("firstClassSeatsTable") != null) {
-        firstClassSeatsTable = Integer.valueOf(request.getParameter("firstClassSeatsTable"));
-    }
-    if (request.getParameter("economySeatsTable") != null) {
-        economySeatsTable = Integer.valueOf(request.getParameter("economySeatsTable"));
-    }
-    
-    if(flightNumberTable != null && airplaneIDTable != 0 && originCodeTable != null && destinationCodeTable != null && departureDateTable != null && arrivalDateTable != null && departureTimeTable != null 
-            && arrivalTimeTable != null && durationTable != 0 && priceEconomyTable != 0.0 && priceFirstClassTable != 0.0 && firstClassSeatsTable != 0 && economySeatsTable != 0)
-    {
-        
-        db.updateFlight(flightNumberTable,airplaneIDTable,originCodeTable,destinationCodeTable,departureDateTable,arrivalDateTable,departureTimeTable,arrivalTimeTable,durationTable,priceEconomyTable,priceFirstClassTable,firstClassSeatsTable,economySeatsTable);
-    }
     ArrayList<HashMap<String, String>> flightData = db.getAllFlightData();
+    if(request.getParameter("flight") != null)
+    {
+        session.setAttribute("flightNum",request.getParameter("flight"));
+        response.sendRedirect("/IowaAir/modifyFlight.jsp");
+    }
     
     //close database connection
     db.closeConnection();
 %>
-<script type="text/javascript">   
-    function autoPopulateFirstClassCapacity()
-    {
-        var airplaneID = document.getElementById('aircraftID').value;
-        
-        var departureDate = document.getElementById('departureDateID').value;
-        console.log(departureDate);
-       
-        //window.location = "http://localhost:8080/IowaAir/adminFlights.jsp";
-                        
-        document.getElementById('aircraftID').value = airplaneID;
-    }
+
+<script>
+function submitter(btn) {
+    var row = btn.parentElement.parentElement;
+    var flightNumber = row.querySelector("#flightNum").value;
+    var myForm = document.forms["myForm"];
+    myForm.elements["rowID"].value = flightNumber;
+    console.log(flightNumber);
+    
+    myForm.submit();
+}
 </script>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -328,6 +247,9 @@
 
                 <h2>Current Flights</h2>
 
+                <form id="myForm" action="adminFlights.jsp" method="post">
+                <input type="hidden" name="flight" id="rowID" >
+                </form>
                 <table>
                     <tr>
                         <th>Number</th>
@@ -343,14 +265,14 @@
                         <th>Price First Class</th>
                         <th>First Class Seats Remaining</th>
                         <th>Economy Seats Remaining</th>
-                        <th></th>
+                        <th>Update</th>
                     </tr>
 
                     <!- Loop through each employee record and output each field in correct able column ->
                     <% for (HashMap<String, String> record : flightData) {%>
                     <tr>
                         
-                        <td><%= record.get("num")%></td>
+                        <td><input type="hidden" id="flightNum" value="<%=record.get("num")%>" ><%=record.get("num")%></td>
                         <td><%= record.get("airplane_id")%></td>
                         <td><%= record.get("origin_code")%></td>
                         <td><%= record.get("destination_code")%></td>
@@ -363,7 +285,7 @@
                         <td><%= record.get("price_first_class")%></td>
                         <td><%= record.get("first_class_remaining")%></td>
                         <td><%= record.get("economy_remaining")%></td>
-                        <td><input type="submit" value="Update" onclick="<%session.setAttribute("flightNumber", record.get("num"));response.sendRedirect("IowaAir/modifyFlight");%>"></td>
+                        <td><input type="submit" value="Update" onclick="submitter(this);" ></td>
                            
                     </tr>
                     </form>

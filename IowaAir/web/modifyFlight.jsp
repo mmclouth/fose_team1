@@ -7,25 +7,27 @@
 <%
     
     Database db = new Database();
-    int flightID = Integer.valueOf((String)session.getAttribute("flightID"));
-    String flightNumberOrig = (String)session.getAttribute("flightNumber");
-    int airplaneIDOrig = Integer.valueOf((String)(session.getAttribute("airplaneID")));
-    String originCodeOrig = (String)session.getAttribute("originCode");
-    String destinationCodeOrig = (String)session.getAttribute("destinationCode");
-    String flightDateOrig = (String)session.getAttribute("flightDate");
-    String departureTimeOrig = (String)session.getAttribute("departureTime");
-    String arrivalTimeOrig = (String)session.getAttribute("arrivalTime");
-    int durationOrig = Integer.valueOf((String)(session.getAttribute("duration")));
-    double priceEconomyOrig = Double.valueOf((String)session.getAttribute("priceEconomy"));
-    double priceFirstClassOrig = Double.valueOf((String)session.getAttribute("priceFirstClass"));
-    int firstClassSeatsRemainingOrig = Integer.valueOf((String)session.getAttribute("firstClassSeatsRemaining"));
-    int economySeatsRemainingOrig = Integer.valueOf((String)session.getAttribute("economySeatsRemaining"));
+    String flightNumberOrig = (String)session.getAttribute("flightNum");
+    int flightID = db.findFlightID(flightNumberOrig);
+    int airplaneIDOrig = db.getAirplaneID(flightID);
+    String originCodeOrig = db.getOriginCode(flightID);
+    String destinationCodeOrig = db.getDestinationCode(flightID);
+    String flightDepartureDateOrig = db.getDepartureDate(flightID);
+    String flightArrivalDateOrig = db.getArrivalDate(flightID);
+    String departureTimeOrig = db.getDepartureTime(flightID);
+    String arrivalTimeOrig = db.getArrivalTime(flightID);
+    int durationOrig = db.getDuration(flightID);
+    double priceEconomyOrig = db.getPriceEconomy(flightID);
+    double priceFirstClassOrig = db.getPriceFirstClass(flightID);
+    int firstClassSeatsRemainingOrig = db.getFirstClassSeatsRemaining(flightID);
+    int economySeatsRemainingOrig = db.getEconomySeatsRemaining(flightID);
  
     String flightNumber = null;
     int airplaneID = 0;
     String originCode = null;
     String destinationCode = null;
-    String flightDate = null;
+    String flightDepartureDate = null;
+    String flightArrivalDate = null;
     String departureTime = null;
     String arrivalTime = null;
     int duration = 0;
@@ -48,19 +50,34 @@
     if (request.getParameter("destinationCode") != null) {
         destinationCode = request.getParameter("destinationCode");
     }
-    if (request.getParameter("flightDate") != null) {
-        flightDate = request.getParameter("flightDate").toString();
+    if (request.getParameter("flightDepartureDate") != null) {
+        flightDepartureDate = request.getParameter("flightDepartureDate").toString();
         
 
         //If browser does not support HTML's date type, format the date string correctly
-        if (!flightDate.matches("^(19|20)\\d\\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$")) {
+        if (!flightDepartureDate.matches("^(19|20)\\d\\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$")) {
 
-            String[] flightSplit = flightDate.split("/");
+            String[] flightSplit = flightDepartureDate.split("/");
             String month = flightSplit[0];
             String day = flightSplit[1];
             String year = flightSplit[2];
 
-            flightDate = year + "-" + month + "-" + day;
+            flightDepartureDate = year + "-" + month + "-" + day;
+        }
+    }
+    if (request.getParameter("flightArrivalDate") != null) {
+        flightArrivalDate = request.getParameter("flightArrivalDate").toString();
+        
+
+        //If browser does not support HTML's date type, format the date string correctly
+        if (!flightArrivalDate.matches("^(19|20)\\d\\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$")) {
+
+            String[] flightSplit = flightArrivalDate.split("/");
+            String month = flightSplit[0];
+            String day = flightSplit[1];
+            String year = flightSplit[2];
+
+            flightArrivalDate = year + "-" + month + "-" + day;
         }
     }
     if (request.getParameter("departureTime") != null) {
@@ -84,66 +101,101 @@
     if (request.getParameter("economySeatsRemaining") != null) {
         economySeatsRemaining = Integer.valueOf(request.getParameter("economySeatsRemaining"));
     }
-    
-    if(flightNumber != null && airplaneID != 0 && originCode != null && destinationCode != null && flightDate != null && departureTime != null 
-            && arrivalTime != null && duration != 0 && priceEconomy != 0.0 && priceFirstClass != 0.0 && firstClassSeatsRemaining != 0 && economySeatsRemaining != 0)
+    if(request.getParameter("update")!=null && request.getParameter("newFlightNumber") != null && request.getParameter("newAirplaneID") != null && request.getParameter("newOriginCode") != null
+            && request.getParameter("newDestinationCode")!= null && request.getParameter("newFlightDepartureDate") != null && request.getParameter("newFlightArrivalDate") != null && request.getParameter("newDepartureTime") != null 
+            && request.getParameter("newArrivalTime") != null && request.getParameter("newDuration") != null && request.getParameter("newPriceEconomy") != null && request.getParameter("newPriceFirstClass") != null 
+            && request.getParameter("newFirstClassSeatsRemaining") != null && request.getParameter("newEconomySeatsRemaining") != null )
     {
-        if(!(flightNumberOrig.equals(request.getParameter("flightNumber"))))
-        {
-            db.updateFlightNum(request.getParameter("flightNumber"),flightID);
-        }
-        if(airplaneIDOrig != (Integer.parseInt(request.getParameter("airplaneID"))))
-        {
-            db.updateFlightAirplaneID(Integer.parseInt(request.getParameter("airplaneID")),flightID);
-        }
-        if(!(originCodeOrig.equals(request.getParameter("originCode"))))
-        {
-            db.updateFlightOriginCode(request.getParameter("originCode"),flightID);
-        }
-        if(!(destinationCodeOrig.equals(request.getParameter("destinationCode"))))
-        {
-            db.updateFlightDestinationCode(request.getParameter("destinationCode"),flightID);
-        }
-        if(!(flightDateOrig.equals(request.getParameter("flightDate"))))
-        {
-            db.updateFlightDate(request.getParameter("flightDate"),flightID);
-        }
-        if(!(departureTimeOrig.equals(request.getParameter("departureTime"))))
-        {
-            db.updateFlightDepartureTime(request.getParameter("departureTime"),flightID);
-        }
-        if(!(arrivalTimeOrig.equals(request.getParameter("arrivalTime"))))
-        {
-            db.updateFlightArrivalTime(request.getParameter("arrivalTime"),flightID);
-        }
-        if(durationOrig != (Integer.parseInt(request.getParameter("duration"))))
-        {
-            db.updateFlightDuration(Integer.parseInt(request.getParameter("duration")),flightID);
-        }
-        if(priceEconomyOrig != (Double.valueOf(request.getParameter("priceEconomy"))))
-        {
-            db.updateFlightPriceEconomy(Double.valueOf(request.getParameter("priceEconomy")),flightID);
-        }
-        if(priceFirstClassOrig != (Double.valueOf(request.getParameter("priceFirstClass"))))
-        {
-            db.updateFlightPriceFirstClass(Double.valueOf(request.getParameter("priceFirstClass")),flightID);
-        }
-        if(firstClassSeatsRemainingOrig != (Integer.valueOf(request.getParameter("firstClassSeatsRemaining"))))
-        {
-            db.updateFlightFirstClassSeatsRemaining(Integer.valueOf(request.getParameter("firstClassSeatsRemaining")),flightID);
-        }
-        if(economySeatsRemainingOrig != (Integer.valueOf(request.getParameter("economySeatsRemaining"))))
-        {
-            db.updateFlightEconomySeatsRemaining(Integer.valueOf(request.getParameter("economySeatsRemaining")),flightID);
-        }
+        db.updateFlight(request.getParameter("newFlightNumber"),Integer.valueOf(request.getParameter("newAirplaneID")),request.getParameter("newOriginCode"),request.getParameter("newDestinationCode"),
+                request.getParameter("newFlightDepartureDate"),request.getParameter("newFlightArrivalDate"),request.getParameter("newDepartureTime"),request.getParameter("newArrivalTime"),
+                Integer.valueOf(request.getParameter("newDuration")),Double.valueOf(request.getParameter("newPriceEconomy")),Double.valueOf(request.getParameter("newPriceFirstClass")),
+                Integer.valueOf(request.getParameter("newFirstClassSeatsRemaining")),Integer.valueOf(request.getParameter("newEconomySeatsRemaining")));
         response.sendRedirect("/IowaAir/adminFlights.jsp");
     }
-    
+    /*if(flightNumber != null && airplaneID != 0 && originCode != null && destinationCode != null && flightDepartureDate != null && flightArrivalDate != null && departureTime != null 
+            && arrivalTime != null && duration != 0 && priceEconomy != 0.0 && priceFirstClass != 0.0 && firstClassSeatsRemaining != 0 && economySeatsRemaining != 0)
+    {
+        if (airplaneID != airplaneIDOrig || originCode != originCodeOrig || destinationCode != destinationCodeOrig)
+        {
+            db.updateFlight(flightNumber,airplaneID,originCode,destinationCode,flightDepartureDate,flightArrivalDate,departureTime,arrivalTime,duration,priceEconomy,priceFirstClass,firstClassSeatsRemaining,economySeatsRemaining);
+            response.sendRedirect("/IowaAir/adminFlights.jsp");
+        }
+    }*/
     //close database connection
     db.closeConnection();
     
 %>
 
+<script>
+function updateFunction() {  
+    
+    document.getElementById("newFlightNumberID").value = document.getElementById("flightNumberID").value;
+    
+    var test = document.getElementById("newFlightNumberID").value;
+    console.log(test);
+    
+    document.getElementById("newAirplaneIDID").value = document.getElementById("airplaneIDID").value;
+    
+    var test = document.getElementById("newAirplaneIDID").value;
+    console.log(test);
+    
+    document.getElementById("newOriginCodeID").value = document.getElementById("originCodeID").value;
+    
+    var test = document.getElementById("newOriginCodeID").value;
+    console.log(test);
+    
+    document.getElementById("newDestinationCodeID").value = document.getElementById("destinationCodeID").value;
+    
+    var test = document.getElementById("newDestinationCodeID").value;
+    console.log(test);
+    
+    document.getElementById("newFlightDepartureDateID").value = document.getElementById("flightDepartureDateID").value;
+    
+    var test = document.getElementById("newFlightDepartureDateID").value;
+    console.log(test);
+    
+    document.getElementById("newFlightArrivalDateID").value = document.getElementById("flightArrivalDateID").value;
+    
+    var test = document.getElementById("newFlightArrivalDateID").value;
+    console.log(test);
+    
+    document.getElementById("newDepartureTimeID").value = document.getElementById("departureTimeID").value;
+    
+    var test = document.getElementById("newDepartureTimeID").value;
+    console.log(test);
+    
+    document.getElementById("newArrivalTimeID").value = document.getElementById("arrivalTimeID").value;
+    
+    var test = document.getElementById("newArrivalTimeID").value;
+    console.log(test);
+    
+    document.getElementById("newDurationID").value = document.getElementById("durationID").value;
+    
+    var test = document.getElementById("newDurationID").value;
+    console.log(test);
+    
+    document.getElementById("newPriceEconomyID").value = document.getElementById("priceEconomyID").value;
+    
+    var test = document.getElementById("newPriceEconomyID").value;
+    console.log(test);
+    
+    document.getElementById("newPriceFirstClassID").value = document.getElementById("priceFirstClassID").value;
+    
+    var test = document.getElementById("newPriceFirstClassID").value;
+    console.log(test);
+    
+    document.getElementById("newEconomySeatsRemainingID").value = document.getElementById("economySeatsRemainingID").value;
+    
+    var test =  document.getElementById("newEconomySeatsRemainingID").value;
+    console.log(test);
+    
+    document.getElementById("newFirstClassSeatsRemainingID").value = document.getElementById("firstClassSeatsRemainingID").value;
+    
+    var test = document.getElementById("newFirstClassSeatsRemainingID").value;
+    console.log(test);
+    
+}
+</script>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -189,34 +241,49 @@
             
             <h1>Modify Flight Page</h1>
 
-            <form action="modifyFlight.jsp" method="post"><br>
+            <form id="modifyForm" action="modifyFlight.jsp" method="post"><br>
+            <input type="hidden" name="update" id="updateID" >
             Flight Number: 
-            <input type="text" name="flightNumber" value="<%=session.getAttribute("flightNumber")%>" required><br>
+            <input type="text" name="flightNumber" id="flightNumberID" value="<%=flightNumberOrig%>" required><br>
+            <input type="hidden" name="newFlightNumber" id="newFlightNumberID" >
             Airplane ID:
-            <input type="number" name="airplaneID" value="<%=session.getAttribute("airplaneID")%>" required><br>
+            <input type="number" name="airplaneID" id="airplaneIDID" value="<%=airplaneIDOrig%>" required><br>
+            <input type="hidden" name="newAirplaneID" id="newAirplaneIDID" >
             Origin Code:
-            <input type="text" name="originCode" value="<%=session.getAttribute("originCode")%>" required><br>
+            <input type="text" name="originCode" id="originCodeID" value="<%=originCodeOrig%>" required><br>
+            <input type="hidden" name="newOriginCode" id="newOriginCodeID" >
             Destination Code:
-            <input type="text" name="destinationCode" value="<%=session.getAttribute("destinationCode")%>" required><br>
-            Flight Date(mm/dd/yyyy):
-            <input type="date" name="flightDate" value="2017-<%=session.getAttribute("flightDate")%>-28" required><br>
+            <input type="text" name="destinationCode" id="destinationCodeID" value="<%=destinationCodeOrig%>" required><br>
+            <input type="hidden" name="newDestinationCode" id="newDestinationCodeID" >
+            Departure Date(mm/dd/yyyy):
+            <input type="date" name="flightDepartureDate" id="flightDepartureDateID" value="<%=flightDepartureDateOrig%>" required><br>
+            <input type="hidden" name="newFlightDepartureDate" id="newFlightDepartureDateID" >
+            Arrival Date(mm/dd/yyyy):
+            <input type="date" name="flightArrivalDate" id="flightArrivalDateID" value="<%=flightArrivalDateOrig%>" required><br>
+            <input type="hidden" name="newFlightArrivalDate" id="newFlightArrivalDateID" >
             Departure Time:
-            <input type="time" name="departureTime" value="<%=session.getAttribute("departureTime")%>" required><br>
+            <input type="time" name="departureTime" id="departureTimeID" value="<%=departureTimeOrig%>" required><br>
+            <input type="hidden" name="newDepartureTime" id="newDepartureTimeID" >
             Arrival Time:
-            <input type="time" name="arrivalTime" value="<%=session.getAttribute("arrivalTime")%>" required><br>
+            <input type="time" name="arrivalTime" id="arrivalTimeID" value="<%=arrivalTimeOrig%>" required><br>
+            <input type="hidden" name="newArrivalTime" id="newArrivalTimeID" >
             Duration(mins):
-            <input type="number" name="duration" value="<%=session.getAttribute("duration")%>" required><br>
+            <input type="number" name="duration" id="durationID" value="<%=durationOrig%>" required><br>
+            <input type="hidden" name="newDuration" id="newDurationID" >
             Economy Price:
-            <input type="number" step="0.01" name="priceEconomy" value="<%=session.getAttribute("priceEconomy")%>" required><br>
+            <input type="number" step="0.01" name="priceEconomy" id="priceEconomyID" value="<%=priceEconomyOrig%>" required><br>
+            <input type="hidden" name="newPriceEconomy" id="newPriceEconomyID" >
             First Class Price:
-            <input type="number" step="0.01" name="priceFirstClass" value="<%=session.getAttribute("priceFirstClass")%>" required><br>
+            <input type="number" step="0.01" name="priceFirstClass" id="priceFirstClassID" value="<%=priceFirstClassOrig%>" required><br>
+            <input type="hidden" name="newPriceFirstClass" id="newPriceFirstClassID" >
             First Class Seats Remaining:
-            <input type="number" name="firstClassSeatsRemaining" value="<%=session.getAttribute("firstClassSeatsRemaining")%>" required><br>
+            <input type="number" name="firstClassSeatsRemaining" id="firstClassSeatsRemainingID" value="<%=firstClassSeatsRemainingOrig%>" required><br>
+            <input type="hidden" name="newFirstClassSeatsRemaining" id="newFirstClassSeatsRemainingID" >
             Economy Seats Remaining:
-            <input type="number" name="economySeatsRemaining" value="<%=session.getAttribute("economySeatsRemaining")%>" required><br>
+            <input type="number" name="economySeatsRemaining" id="economySeatsRemainingID" value="<%=economySeatsRemainingOrig%>" required><br>
+            <input type="hidden" name="newEconomySeatsRemaining" id="newEconomySeatsRemainingID" >
             
-            <input type="submit" value="Modify Flight"><br>
-            <a href="deleteFlight.jsp">Delete Flight</a><br>
+            <input type="submit" value="Modify Flight" onclick="updateFunction();" ><br>
             </form>
 
             </div>
