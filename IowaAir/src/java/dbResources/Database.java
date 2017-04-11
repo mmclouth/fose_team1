@@ -1732,7 +1732,30 @@ public class Database {
         }
         return airplaneNum;
     }
-    
+    public void updateFlightFirstClassSeatsRemaining(int firstClassSeatsRemaining, int id)
+    {
+        StringBuilder query = new StringBuilder();
+        query.append("UPDATE flight SET first_class_remaining= '" + firstClassSeatsRemaining + "'WHERE id = '" + id + "'");
+        try {
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            sql.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void updateFlightEconomySeatsRemaining(int economySeatsRemaining, int id)
+    {
+        StringBuilder query = new StringBuilder();
+        query.append("UPDATE flight SET economy_remaining= '" + economySeatsRemaining + "'WHERE id = '" + id + "'");
+        try {
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            sql.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     public void updateAircraftType(int aircraftTypeID,String planeName,int downTime, int capacityTotal, int capacityFirstClass,int capacityEconomy,int seatsPerRow)
     {
 
