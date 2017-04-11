@@ -187,6 +187,11 @@
                 <p align="right"><input type="submit" value="Book First Class: $<%= firstClassPrice * numTickets %>0" ></p>
                 <input type="hidden" name="price" value="<%= firstClassPrice * numTickets %>">
                 <input type="hidden" name="type_of_tickets" value="first_class">
+                
+                <% for(HashMap<String, String> maps : flightsData) { %>
+                <input type="hidden" name="numSeats" value="<%= Integer.parseInt(maps.get("first_class_remaining")) - numTickets %>">
+                <% } %>
+                
                 <% for(String flight_id : flight_IDs) { %>
                 <input type="hidden" name="flight_ids" value="<%= flight_id %>">
                 <% }%>
