@@ -15,6 +15,12 @@
         userID = (Integer)session.getAttribute("userID");
     }
     ArrayList<HashMap<String,String>> boardingPasses = db.getBoardingPassesForUser(Integer.toString(userID));
+    
+    ArrayList<HashMap<String, String>> flightInfo = new ArrayList<HashMap<String, String>>();
+    for(HashMap<String, String> map : boardingPasses) {
+        String flightID = map.get("flight_id");
+        flightInfo.add(db.getHashMapForFLight(flightID));
+    }
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -71,15 +77,29 @@
                 <% session.removeAttribute("booked");       
             } %>
             
-            <% if(boardingPasses.isEmpty()) { %>
-            <h3>THIS IS EMPTY</h3>
-            <% } %>
-            
-            <% for(HashMap<String, String> maps : boardingPasses) { 
-                for(String s : maps.keySet()) { %>
-                <h3><%= s %></h3>
-            <%    } %>
-            <br><br>
+            <% for(HashMap<String, String> maps : flightInfo) { %>
+            <h3>
+                Flight Number: <%= maps.get("num") %><br>
+            </h3>
+            <h4>
+                    <table id="confirmBooking">
+                        <tr>
+                            <td>Departure Date: <%= maps.get("departure_date") %></td>
+                            <td>Departure Time: <%= maps.get("departure_time") %></td>
+                            <td>Departure City: <%= maps.get("origin_code") %></td>
+                        </tr>
+                        <tr>
+                            <td>Arrival Date: <%= maps.get("arrival_date") %></td>
+                            <td>Arrival Time: <%= maps.get("arrival_time") %></td>
+                            <td>Arrival City: <%= maps.get("origin_code") %></td>
+                        </tr>
+                        <tr>
+                            <td>Duration: <%= maps.get("duration") %> minutes</td>
+                            <td>Price First Class: $<%= maps.get("price_first_class") %></td>
+                            <td>Price Economy: $<%= maps.get("price_economy") %></td>
+                        </tr>    
+                    </table><br>
+            </h4>   
             <% } %>
             
             
