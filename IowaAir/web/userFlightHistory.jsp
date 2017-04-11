@@ -71,9 +71,15 @@
                 <% session.removeAttribute("booked");       
             } %>
             
-            <% for(HashMap<String, String> maps : boardingPasses) { %>
-            <h3><%= maps %></h3><br>
+            <% if(boardingPasses.isEmpty()) { %>
+            <h3>THIS IS EMPTY</h3>
+            <% } %>
             
+            <% for(HashMap<String, String> maps : boardingPasses) { 
+                for(String s : maps.keySet()) { %>
+                <h3><%= s %></h3>
+            <%    } %>
+            <br><br>
             <% } %>
             
             

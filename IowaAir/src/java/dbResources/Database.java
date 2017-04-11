@@ -930,7 +930,7 @@ public class Database {
     public ArrayList<HashMap<String, String>> getBoardingPassesForUser(String userID) {
         ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String,String>>();
         String[] fields = {"flight_id", "userr_id", "seat_num", "luggage_count", "clas"};
-        String query = "SELECT * FROM boarding_pass WHERE id=" + userID + ";";
+        String query = "SELECT * FROM boarding_pass WHERE userr_id='" + userID + "';";
         
         try {
             PreparedStatement sql = conn.prepareStatement(query);
@@ -950,6 +950,7 @@ public class Database {
         
         return list;
     }
+    
     
     public String generateRandomSeat(int flightID, String flightClass) {
         HashMap<String, String> flight = this.getHashMapForFLight(Integer.toString(flightID));
