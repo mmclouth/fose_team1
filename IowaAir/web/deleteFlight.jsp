@@ -3,18 +3,18 @@
     Created on : Mar 27, 2017, 2:32:19 PM
     Author     : Nickolas
 --%>
-
+<%@page import="java.util.ArrayList"%>
 <%@page import="dbResources.Database"%>
 <%
     
     Database db = new Database();
-    
+    ArrayList<String> flightNumbers = db.getAllFlightNumbers();
     String flightNumber = null;
     
     
     //Retrieve parameters from request if they have been sent from previous page
-    if (request.getParameter("flightNumber") != null) {
-        flightNumber = request.getParameter("flightNumber");
+    if (request.getParameter("flightNum") != null) {
+        flightNumber = request.getParameter("flightNum");
     }
     
     if(flightNumber != null)
@@ -75,8 +75,17 @@
 
             <form action="deleteFlight.jsp" method="post"><br>
                 Enter the flight number of the flight that you would like to delete.<br> 
-            Flight Number: 
-            <input type="text" name="flightNumber" required><br>
+            <label for="flightNum">Flight Number:</label>
+                <select name="flightNum" id="flightNumID" required>
+                    <option value="null">-----</option>
+                    <%
+                        for(String num : flightNumbers){      
+                    %>
+                    <option value="<%=num%>"><%=num%></option>     
+                    
+                    <% } %>                  
+                </select>    
+                <br>
             
             <input type="submit" value="Delete Flight"><br>
             <a href="modifyFlight.jsp">Go back to Modify Flight</a><br>

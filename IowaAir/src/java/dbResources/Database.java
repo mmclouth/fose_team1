@@ -1653,5 +1653,24 @@ public class Database {
 
         return strings;
     }
-    
+    public ArrayList<String> getAllFlightNumbers(){
+        
+        ArrayList<String> strings = new ArrayList<>();
+        String query = "SELECT num FROM flight;";
+        
+        try{
+            PreparedStatement sql = conn.prepareStatement(query);
+            ResultSet results = sql.executeQuery();
+            
+            while(results.next()){
+                strings.add(results.getString("num"));
+            }
+            
+            
+        } catch (SQLException e){
+            e.printStackTrace();
+        }    
+
+        return strings;
+    }
 }
