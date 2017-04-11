@@ -22,7 +22,7 @@
     {
        db.updateAircraftType(aircraftTypeID,request.getParameter("newPlaneName"),Integer.valueOf(request.getParameter("newDownTime")),Integer.valueOf(request.getParameter("newCapacityTotal")),
                 Integer.valueOf(request.getParameter("newCapacityFirstClass")),Integer.valueOf(request.getParameter("newCapacityEconomy")),Integer.valueOf(request.getParameter("newSeatsPerRow")));
-       db.updateAirplane(aircraftTypeID,request.getParameter("newAiplaneNum"));
+       db.updateAirplane(aircraftTypeID,request.getParameter("newAirplaneNum"));
        response.sendRedirect("/IowaAir/adminAirplanes.jsp");
     }
     

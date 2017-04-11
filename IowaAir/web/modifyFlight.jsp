@@ -124,7 +124,7 @@ function updateFunction() {
             
             <label for="airplaneID">Airplane ID:</label>
             <select name="airplaneID" id="airplaneIDID" required>
-                    <option value="null"><%=airplaneIDOrig%></option>
+                    <option value="<%=airplaneIDOrig%>"><%=airplaneIDOrig%></option>
                     <%
                         for(String ids : airplaneIDs){      
                     %>
@@ -136,7 +136,7 @@ function updateFunction() {
             <input type="hidden" name="newAirplaneID" id="newAirplaneIDID" >
             <label for="originCode">Origin:</label>
                 <select name="originCode" id="originCodeID" required>
-                    <option value="null"><%=originCodeOrig%></option>
+                    <option value="<%=originCodeOrig%>"><%=originCodeOrig%></option>
                     <%
                         for(String airport : airports){      
                     %>
@@ -148,7 +148,7 @@ function updateFunction() {
             <input type="hidden" name="newOriginCode" id="newOriginCodeID" >
             <label for="destinationCode">Destination:</label>
             <select name="destinationCode" id="destinationCodeID" required>
-                    <option value="null"><%=destinationCodeOrig%></option>
+                    <option value="<%=destinationCodeOrig%>"><%=destinationCodeOrig%></option>
                     <%
                         for(String airport : airports){      
                     %>
