@@ -13,8 +13,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -142,6 +144,10 @@ public class Database {
     }
 
     
+    public ArrayList<String> selectArrayList(String field, String table) {
+        return selectArrayList(field,table,"", "", "", "", "", "");
+    }
+    
     public ArrayList<String> selectArrayList(String field, String table, String constraintField1, String constraintValue1) {
         return selectArrayList(field,table,constraintField1, constraintValue1, "", "", "", "");
     }
@@ -196,7 +202,7 @@ public class Database {
             query.append("='");
             query.append(constraintValue2);
             query.append("';");
-        } else {
+        } else if(!constraintValue1.equals("")){
             query.append("SELECT ");
             query.append(field);
             query.append(" FROM ");
@@ -206,6 +212,12 @@ public class Database {
             query.append("='");
             query.append(constraintValue1);
             query.append("';");
+        } else {
+            query.append("SELECT ");
+            query.append(field);
+            query.append(" FROM ");
+            query.append(table);
+            query.append(";");
         }
         
         try{
@@ -1143,6 +1155,31 @@ public class Database {
         }
     }
     
+    public ArrayList<HashMap<String, String>> getBoardingPassesForUser(String userID) {
+        ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String,String>>();
+        String[] fields = {"flight_id", "userr_id", "seat_num", "luggage_count", "clas"};
+        String query = "SELECT * FROM boarding_pass WHERE userr_id='" + userID + "';";
+        
+        try {
+            PreparedStatement sql = conn.prepareStatement(query);
+            ResultSet results = sql.executeQuery();
+            while(results.next()){
+                HashMap<String, String> map = new HashMap<String,String>();
+                for(String field : fields){
+                    map.put(field, results.getString(field));
+                    
+                }
+                list.add(map);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return list;
+    }
+    
+    
     public String generateRandomSeat(int flightID, String flightClass) {
         HashMap<String, String> flight = this.getHashMapForFLight(Integer.toString(flightID));
         String[] fields = {"id","num","airplane_id","origin_code","destination_code","departure_date", 
@@ -1158,7 +1195,7 @@ public class Database {
         String digits = "123456789";
         char letter = alphabet.charAt(ThreadLocalRandom.current().nextInt(0, alphabet.length()));
         char num = digits.charAt(ThreadLocalRandom.current().nextInt(1, digits.length()));
-        return Character.toString(letter) + Character.toString(num);
+        return Character.toString(num) + Character.toString(letter);
     }
     
     public int findAircraftTypeID(String planeName)
@@ -1432,7 +1469,144 @@ public class Database {
         return flightData;
         
     }
+   
     
+    public HashMap<String,String> getHashMapForAircraftType(String name){
+        HashMap<String,String> aircraftData = new HashMap<String,String>();
+
+        String query = "SELECT * FROM aircraft_type WHERE plane_name ='" + name + "';";
+        
+        try{
+            PreparedStatement sql = conn.prepareStatement(query);
+            ResultSet results = sql.executeQuery();
+            
+            while(results.next()){
+                
+                aircraftData.put("id", results.getString("id"));
+                aircraftData.put("plane_name", results.getString("plane_name"));
+                aircraftData.put("down_time", results.getString("down_time"));
+                aircraftData.put("capacity_total", results.getString("capacity_total"));
+                aircraftData.put("capacity_first_class", results.getString("capacity_first_class"));
+                aircraftData.put("capacity_economy", results.getString("capacity_economy"));
+                aircraftData.put("seats_per_row", results.getString("seats_per_row"));
+                
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        
+        return aircraftData;
+    }
+    
+    public String getUserEMail(String userID) {
+        String query = "SELECT * FROM userr WHERE id ='" + userID + "';";
+        String email = null;
+        try{
+            PreparedStatement sql = conn.prepareStatement(query);
+            ResultSet results = sql.executeQuery();
+            
+            while(results.next()) {
+                email = results.getString("email");
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        if(email == null) return "This didn't work!";
+        return email;
+    }
+    
+    
+    
+    public void addRecurringFlight(String frequency, int airplaneID, String start, String end, String origin, String destination, String departureTime, String arrivalTime, int duration, double priceEconomy, double priceFirstClass, int seatsEconomy, int seatsFirstClass){
+        
+        try{
+            Date startDate=new SimpleDateFormat("yyyy-MM-dd").parse(start);
+            Date endDate=new SimpleDateFormat("yyyy-MM-dd").parse(end);
+            
+            addRecurringFlight(frequency, airplaneID, startDate, endDate, origin, destination, departureTime, arrivalTime, duration, priceEconomy, priceFirstClass, seatsEconomy, seatsFirstClass);
+            
+        } catch (ParseException e){
+            e.printStackTrace();
+        }
+        
+    }
+    
+    public void addRecurringFlight(String frequency, int airplaneID, Date start, Date end, String origin, String destination, String departureTime, String arrivalTime, int duration, double priceEconomy, double priceFirstClass, int seatsEconomy, int seatsFirstClass) {
+
+        Calendar c = Calendar.getInstance();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedStart = sdf.format(start);
+        String formattedEnd = sdf.format(end);
+        SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm");
+        boolean arrivalOnNextDay = false;
+
+        int flightNum = this.getMaxFlightNum() + 1;
+
+        try {
+
+            Date time1 = timeFormatter.parse(departureTime);
+            Date time2 = timeFormatter.parse(arrivalTime);
+            String dt = formattedStart;
+
+            if (time2.before(time1)) {
+                arrivalOnNextDay = true;
+            }
+
+            while (sdf.parse(dt).before(end)) {
+
+                String dt2 = dt;
+
+                if (arrivalOnNextDay) {
+                    c.setTime(sdf.parse(dt));
+                    c.add(Calendar.DATE, 1);  // number of days to add
+                    dt2 = sdf.format(c.getTime());
+                }
+
+                String fullNum = "AA" + Integer.toString(flightNum);
+
+                this.addFlightToDatabase(fullNum, airplaneID, origin, destination, dt, dt2, departureTime, arrivalTime, duration, priceEconomy, priceFirstClass, seatsEconomy, seatsFirstClass);
+
+                c.setTime(sdf.parse(dt));
+
+                if(frequency.equals("Daily")) {
+                    c.add(Calendar.DATE, 1);  // number of days to add
+                } else if (frequency.equals("Weekly")) {
+                    c.add(Calendar.DATE, 7);  // number of days to add
+                } else if (frequency.equals("Monthly")) {
+                    c.add(Calendar.MONTH, 1);  // number of days to add
+                }
+
+                dt = sdf.format(c.getTime());  // dt is now the new date
+                flightNum++;
+
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    
+    private int getMaxFlightNum(){
+        
+        String query = "SELECT num FROM flight ORDER BY num DESC LIMIT 1;";
+        
+        try{
+            PreparedStatement ps = conn.prepareStatement(query);
+            ResultSet results = ps.executeQuery();
+            
+            while(results.next()){
+                return Integer.parseInt(results.getString("num").substring(2));
+    
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        
+        
+        return -1;
+    }
     public String getPlaneName(int aircraftTypeID)
     {
         String planeName = null;
@@ -1674,3 +1848,5 @@ public class Database {
         return strings;
     }
 }
+
+

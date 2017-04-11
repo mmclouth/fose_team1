@@ -1,7 +1,7 @@
 <%-- 
-    Document   : confirmBooking
-    Created on : Mar 29, 2017, 8:45:10 AM
-    Author     : Kyle Anderson
+    Document   : confirmBookingMultiFlight
+    Created on : Apr 7, 2017, 12:04:15 PM
+    Author     : kenziemclouth
 --%>
 
 <%@page import="java.util.Collections"%>
@@ -43,20 +43,28 @@
     
     
 
-    ArrayList<String> depart_flight = new ArrayList<String>();
-    ArrayList<String> return_flight = new ArrayList<String>();
+    ArrayList<String> flight1 = new ArrayList<String>();
+    ArrayList<String> flight2 = new ArrayList<String>();
+    ArrayList<String> flight3 = new ArrayList<String>();
+    ArrayList<String> flight4 = new ArrayList<String>();
 
-    if(session.getAttribute("depart_flight") != null){
-        depart_flight = (ArrayList<String>) session.getAttribute("depart_flight");
-        System.out.println("Departing flights");
+    if(session.getAttribute("flight0") != null){
+        flight1 = (ArrayList<String>) session.getAttribute("flight0");
     }
-    if(session.getAttribute("return_flight") != null){
-        return_flight = (ArrayList<String>) session.getAttribute("return_flight");
-        System.out.println("Return flights");
+    if(session.getAttribute("flight1") != null){
+        flight2 = (ArrayList<String>) session.getAttribute("flight1");
+    }
+    if(session.getAttribute("flight2") != null){
+        flight3 = (ArrayList<String>) session.getAttribute("flight2");
+    }
+    if(session.getAttribute("flight3") != null){
+        flight4 = (ArrayList<String>) session.getAttribute("flight3");
     }
     
-    flight_IDs = depart_flight;
-    flight_IDs.addAll(return_flight);
+    flight_IDs = flight1;
+    flight_IDs.addAll(flight2);
+    flight_IDs.addAll(flight3);
+    flight_IDs.addAll(flight4);
     
 
     //get all flight data for each flight from database based on flight_ids

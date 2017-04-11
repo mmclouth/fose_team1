@@ -15,7 +15,7 @@
     int capacityFirstClassOrig =  db.getCapacityFirstClass(aircraftTypeID);
     int capacityEconomyOrig =  db.getCapacityEconomy(aircraftTypeID);
     int seatsPerRowOrig =  db.getSeatsPerRow(aircraftTypeID);
-    String airplaneNumOrig =  db.getAirplaneNum(aircraftTypeID);
+    String airplaneNumOrig =  (String)session.getAttribute("airplaneNumber");
     
     if(request.getParameter("newAirplaneNum") != null && request.getParameter("newPlaneName") != null && request.getParameter("newDownTime") != null
             && request.getParameter("newCapacityTotal")!= null && request.getParameter("newCapacityFirstClass") != null && request.getParameter("newCapacityEconomy") != null && request.getParameter("newSeatsPerRow") != null)
