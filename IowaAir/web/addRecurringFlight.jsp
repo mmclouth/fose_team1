@@ -108,17 +108,13 @@
         
         db.addRecurringFlight(frequency, Integer.parseInt(airplaneID), start, end, origin, destination, departureTime, arrivalTime, Integer.parseInt(duration), Double.parseDouble(priceEconomy), Double.parseDouble(priceFirst), Integer.parseInt(seatsEconomy), Integer.parseInt(seatsFirst));
 
+        db.closeConnection();
+        
         response.sendRedirect("/IowaAir/adminFlights.jsp");
         return;
         
     }
-    
-    
-    
-    
-    
-    
-    
+
     db.closeConnection();
 %>    
 
