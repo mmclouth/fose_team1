@@ -1270,6 +1270,25 @@ public class Database {
         return aircraftData;
     }
     
+    public String getUserEMail(String userID) {
+        String query = "SELECT * FROM userr WHERE id ='" + userID + "';";
+        String email = null;
+        try{
+            PreparedStatement sql = conn.prepareStatement(query);
+            ResultSet results = sql.executeQuery();
+            
+            while(results.next()) {
+                email = results.getString("email");
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        if(email == null) return "This didn't work!";
+        return email;
+    }
+    
+    
+    
 }
 
 

@@ -3,11 +3,17 @@
     Created on : Apr 2, 2017, 5:54:46 PM
     Author     : Kyle Anderson
 --%>
+<%@page import="javax.mail.MessagingException"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Enumeration"%>
+<%@page import="dbResources.SendMail"%>
 <%@page import="dbResources.Payment"%>
 <%@page import="dbResources.Database"%>
 <%@page import="java.util.Map"%>
 <%  Map<String,String[]> parameters = request.getParameterMap();
-    //String[] price = parameters.get("price");
+    
+    Enumeration<String> attributes = session.getAttributeNames();
     String errorMessage = null;
     
     String cardNum = null, cvv = null, price = null, ticketType = null;
@@ -45,8 +51,9 @@
     }
     
     Database db = new Database();
-    
+    String email = null;
     if (price != null && cardNum != null && cvv != null && userID != null) {
+        email = db.getUserEMail(Integer.toString(userID));
 
         boolean allFieldsValid = true;
         errorMessage = "";
@@ -62,7 +69,6 @@
         
         if(allFieldsValid) {
             errorMessage = null;
-            //entity should be triangle, process should be circular
             for(int i = 0; i < flightIDs.length; ++i ) {
                 
                 //update economy flight seats
@@ -79,13 +85,29 @@
                     db.updateFlightEconomySeatsRemaining(seats, flight);
                 }
             }
+            ArrayList<String> flightNums = new ArrayList<String>();
+            for(int i = 0; i < flightIDs.length; ++i) {
+                HashMap<String, String> mapToAdd = db.getHashMapForFLight(flightIDs[i]);
+                String flightNumber = mapToAdd.get("num");
+                flightNums.add(flightNumber);
+            }
             
             for(int i = 0; i < flightIDs.length; ++i)
             db.addBoardingPass(Integer.parseInt(flightIDs[i]), userID, ticketType);
             
             
+            try { 
+            SendMail mailer = new SendMail(email);
+            if(mailer == null) response.sendRedirect("/IowaAir/home.jsp");
+            mailer.sendConfirmation(price, flightNums);
+            
             session.setAttribute("booked", true);
             response.sendRedirect("/IowaAir/userFlightHistory.jsp");
+            } catch (MessagingException me) {
+                response.sendRedirect("/IowaAir/home.jsp");
+            }
+            
+                
             
         }
         
@@ -200,6 +222,8 @@
                 <input type="text" name="cvv" required><br>
                 <input type="submit" value="Finalize purchase"><br>
             </form>
+                
+                <h3><%= email %></h3>
         </div>
         <% } %>
     </body>
