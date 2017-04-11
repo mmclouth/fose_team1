@@ -6,6 +6,7 @@
 package dbResources;
 
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.Properties;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -96,5 +97,51 @@ public class SendMail {
             sb.append( num.charAt( rnd.nextInt(num.length()) ) );
         }
         return sb.toString();
+    }
+    
+    public String sendConfirmation(String price, ArrayList<String> flightNums) throws MessagingException {
+
+        // Get system properties object
+        Properties properties = System.getProperties();
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.host", host);
+        properties.put("mail.smtp.user", from);
+        properties.put("mail.smtp.password", password);
+        properties.put("mail.smtp.port", 587);
+        properties.put("mail.smtp.auth", "true");
+
+        // Get the default Session object.
+        Session mailSession = Session.getDefaultInstance(properties, null);
+        String code;
+
+        // Create a default MimeMessage object.
+        MimeMessage message = new MimeMessage(mailSession);
+        // Set From: header field of the header.
+        message.setFrom(new InternetAddress(from));
+        // Set To: header field of the header.
+        message.addRecipient(MimeMessage.RecipientType.TO,
+                                 new InternetAddress(to));
+        // Set Subject: header field
+        message.setSubject("Booking Confirmed!");
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append('\n');
+        for(String s : flightNums) {
+            sb.append(s);
+            sb.append('\n');
+        }
+        
+            code = SendMail.generateVerificationCode();
+            message.setText("Congratulations! You have successfully booked"
+                    + "the following flight(s):" + sb.toString() + "for a total "
+                            + "price of $" + price + "0. Thank you for flying with "
+                                    + "Iowa Air.");
+        //placement = "after setText";
+        // Send message
+        Transport transport = mailSession.getTransport("smtp");
+        transport.connect(host, from, password);
+        transport.sendMessage(message, message.getAllRecipients());
+        transport.close();
+        return code;
     }
 }

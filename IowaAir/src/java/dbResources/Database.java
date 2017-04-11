@@ -1272,6 +1272,24 @@ public class Database {
         return aircraftData;
     }
     
+    public String getUserEMail(String userID) {
+        String query = "SELECT * FROM userr WHERE id ='" + userID + "';";
+        String email = null;
+        try{
+            PreparedStatement sql = conn.prepareStatement(query);
+            ResultSet results = sql.executeQuery();
+            
+            while(results.next()) {
+                email = results.getString("email");
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        if(email == null) return "This didn't work!";
+        return email;
+    }
+    
+    
     
     public void addRecurringFlight(String frequency, int airplaneID, String start, String end, String origin, String destination, String departureTime, String arrivalTime, int duration, double priceEconomy, double priceFirstClass, int seatsEconomy, int seatsFirstClass){
         
