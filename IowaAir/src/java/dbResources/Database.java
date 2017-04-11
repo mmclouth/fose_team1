@@ -670,10 +670,33 @@ public class Database {
 
         StringBuilder query = new StringBuilder();
 
-        query.append("UPDATE flight SET airplane_id ='"+airplaneID+"',origin_code ='" +originCode+ "',destination_code ='"+destinationCode+"',departure_date ='"+departureDate
-                +"'arrival_date ='"+arrivalDate+"',departure_time ='"+departureTime+"',arrival_time ='"+arrivalTime+"',duration ='"+duration+"',price_economy ='"+priceEconomy+"',price_first_class ='"+priceFirstClass+"',first_class_remaining ='"+firstClassSeatsRemaining
-                +"',economy_remaining ='"+economySeatsRemaining+"'WHERE num ='"+num+"';");
-
+        query.append("UPDATE flight SET airplane_id = '");
+        query.append(airplaneID);
+        query.append("', origin_code = '");
+        query.append(originCode);
+        query.append("', destination_code= '");
+        query.append(destinationCode);
+        query.append("',departure_date= '");
+        query.append(departureDate);
+        query.append("',arrival_date= '");
+        query.append(arrivalDate);
+        query.append("',departure_time= '");
+        query.append(departureTime);
+        query.append("',arrival_time= '");
+        query.append(arrivalTime);
+        query.append("',duration= '");  
+        query.append(duration);
+        query.append("',price_economy= '");
+        query.append(priceEconomy);
+        query.append("',price_first_class= '");
+        query.append(priceFirstClass);
+        query.append("', first_class_remaining='");
+        query.append(firstClassSeatsRemaining);
+        query.append("',economy_remaining= '");
+        query.append(economySeatsRemaining);
+        query.append("' WHERE num = '");
+        query.append(num);
+        query.append("';");
         try {
             PreparedStatement sql = conn.prepareStatement(query.toString());
             sql.executeUpdate();
@@ -1383,5 +1406,178 @@ public class Database {
         
     }
     
+    public String getPlaneName(int aircraftTypeID)
+    {
+        String planeName = null;
+        try 
+        {
+            PreparedStatement query = conn.prepareStatement("SELECT plane_name FROM aircraft_type WHERE id = '" + aircraftTypeID + "'");
+            ResultSet results = query.executeQuery();
+            
+            if (results.next())
+            {
+                planeName = results.getString("plane_name");
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return planeName;
+    }
+    public int getDownTime(int aircraftTypeID)
+    {
+        int downTime = 0;
+        try 
+        {
+            PreparedStatement query = conn.prepareStatement("SELECT down_time FROM aircraft_type WHERE id = '" + aircraftTypeID + "'");
+            ResultSet results = query.executeQuery();
+            
+            if (results.next())
+            {
+                downTime = results.getInt("down_time");
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return downTime;
+    }
+    public int getCapacityTotal(int aircraftTypeID)
+    {
+        int capacityTotal = 0;
+        try 
+        {
+            PreparedStatement query = conn.prepareStatement("SELECT capacity_total FROM aircraft_type WHERE id = '" + aircraftTypeID + "'");
+            ResultSet results = query.executeQuery();
+            
+            if (results.next())
+            {
+                capacityTotal = results.getInt("capacity_total");
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return capacityTotal;
+    }
+    public int getCapacityFirstClass(int aircraftTypeID)
+    {
+        int firstClassCapacity = 0;
+        try 
+        {
+            PreparedStatement query = conn.prepareStatement("SELECT capacity_first_class FROM aircraft_type WHERE id = '" + aircraftTypeID + "'");
+            ResultSet results = query.executeQuery();
+            
+            if (results.next())
+            {
+                firstClassCapacity = results.getInt("capacity_first_class");
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return firstClassCapacity;
+    }
+    public int getCapacityEconomy(int aircraftTypeID)
+    {
+        int economyCapacity = 0;
+        try 
+        {
+            PreparedStatement query = conn.prepareStatement("SELECT capacity_economy FROM aircraft_type WHERE id = '" + aircraftTypeID + "'");
+            ResultSet results = query.executeQuery();
+            
+            if (results.next())
+            {
+                economyCapacity = results.getInt("capacity_economy");
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return economyCapacity;
+    }
+    public int getSeatsPerRow(int aircraftTypeID)
+    {
+        int seatsPerRow = 0;
+        try 
+        {
+            PreparedStatement query = conn.prepareStatement("SELECT seats_per_row FROM aircraft_type WHERE id = '" + aircraftTypeID + "'");
+            ResultSet results = query.executeQuery();
+            
+            if (results.next())
+            {
+                seatsPerRow = results.getInt("seats_per_row");
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return seatsPerRow;
+    }
+    public String getAirplaneNum(int aircraftTypeID)
+    {
+        String airplaneNum = null;
+        try 
+        {
+            PreparedStatement query = conn.prepareStatement("SELECT num FROM airplane WHERE aircraft_type_id = '" + aircraftTypeID + "'");
+            ResultSet results = query.executeQuery();
+            
+            if (results.next())
+            {
+                airplaneNum = results.getString("num");
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return airplaneNum;
+    }
+    
+    public void updateAircraftType(int aircraftTypeID,String planeName,int downTime, int capacityTotal, int capacityFirstClass,int capacityEconomy,int seatsPerRow)
+    {
+
+        StringBuilder query = new StringBuilder();
+
+        query.append("UPDATE aircraft_type SET plane_name = '");
+        query.append(planeName);
+        query.append("', down_time = '");
+        query.append(downTime);
+        query.append("', capacity_total= '");
+        query.append(capacityTotal);
+        query.append("',capacity_first_class= '");
+        query.append(capacityFirstClass);
+        query.append("',capacity_economy= '");
+        query.append(capacityEconomy);
+        query.append("',seats_per_row= '");
+        query.append(seatsPerRow);
+        query.append("' WHERE id = '");
+        query.append(aircraftTypeID);
+        query.append("';");
+        try {
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            sql.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void updateAirplane(int aircraftTypeID,String airplaneNum)
+    {
+
+        StringBuilder query = new StringBuilder();
+
+        query.append("UPDATE airplane SET num = '");
+        query.append(airplaneNum);
+        query.append("' WHERE aircraft_type_id = '");
+        query.append(aircraftTypeID);
+        query.append("';");
+        try {
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            sql.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     
 }

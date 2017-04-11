@@ -50,15 +50,11 @@
         
     }
     
-    int aircraftTypeID = db.findAircraftTypeID("ERJ-140");
-    int airplaneID = db.findAirplaneID("PL50001");
-    session.setAttribute("planeName",db.selectString("plane_name","aircraft_type","id",Integer.toString(aircraftTypeID)));
-    session.setAttribute("downTime",db.selectString("down_time","aircraft_type","id",Integer.toString(aircraftTypeID)));
-    session.setAttribute("capacityTotal",db.selectString("capacity_total","aircraft_type","id",Integer.toString(aircraftTypeID)));
-    session.setAttribute("capacityFirstClass",db.selectString("capacity_first_class","aircraft_type","id",Integer.toString(aircraftTypeID)));
-    session.setAttribute("capacityEconomy",db.selectString("capacity_economy","aircraft_type","id",Integer.toString(aircraftTypeID)));
-    session.setAttribute("seatsPerRow",db.selectString("seats_per_row","aircraft_type","id",Integer.toString(aircraftTypeID)));
-    session.setAttribute("airplaneNum", db.selectString("num","airplane","id",Integer.toString(airplaneID)));
+    if(request.getParameter("aircraft") != null)
+    {
+        session.setAttribute("aircraftTypeID",request.getParameter("aircraft"));
+        response.sendRedirect("/IowaAir/modifyAircraft.jsp");
+    }
     
     
     ArrayList<HashMap<String, String>> aircraftData = db.getAllAircraftData();
@@ -67,6 +63,18 @@
     //close database connection
     db.closeConnection();
 %>
+
+<script>
+function submitter(btn) {
+    var row = btn.parentElement.parentElement;
+    var aircraftTypeID = row.querySelector("#aircraftTypeID").value;
+    var myForm = document.forms["myForm"];
+    myForm.elements["rowID"].value = aircraftTypeID;
+    
+    myForm.submit();
+}
+</script>
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -137,7 +145,7 @@
                 Seats Per Row:
                 <input type="number" name="seatsPerRow" required><br>
                 <input type="submit" value="Add Aircraft"><br>
-                <a href="modifyAircraft.jsp">Modify Aircraft</a><br>
+                <a href="deleteAircraft.jsp">Delete Aircraft</a><br>
             </form>
         </div>
         
@@ -145,6 +153,11 @@
 
                 <h2>Current Aircrafts</h2>
 
+                
+                <form id="myForm" action="adminAirplanes.jsp" method="post">
+                <input type="hidden" name="aircraft" id="rowID" >
+                </form>
+                
                 <table>
                     <tr>
                         <th>Plane Name</th>
@@ -155,21 +168,21 @@
                         <th>Seats Per Row</th>
                         <th>Aircraft Type ID</th>
                         <th>Aircraft Number</th>
-                        <th></th>
+                        <th>Update</th>
                     </tr>
 
                     <!- Loop through each employee record and output each field in correct able column ->
                     <% for (HashMap<String, String> record : aircraftData) {%>
                     <tr>
-                        <td><input type="text" value="<%= record.get("plane_name")%>"></td>
-                        <td><input type="text" value="<%= record.get("down_time")%>"></td>
-                        <td><input type="text" value="<%= record.get("capacity_total")%>"></td>
-                        <td><input type="text" value="<%= record.get("capacity_first_class")%>"></td>
-                        <td><input type="text" value="<%= record.get("capacity_economy")%>"></td>
-                        <td><input type="text" value="<%= record.get("seats_per_row")%>"></td>
-                        <td><input type="text" value="<%= record.get("aircraft_type_id")%>"></td>
-                        <td><input type="text" value="<%= record.get("num")%>"></td>
-                        <td><input type="button" value="Update"></td>
+                        <td><%= record.get("plane_name")%></td>
+                        <td><%= record.get("down_time")%></td>
+                        <td><%= record.get("capacity_total")%></td>
+                        <td><%= record.get("capacity_first_class")%></td>
+                        <td><%= record.get("capacity_economy")%></td>
+                        <td><%= record.get("seats_per_row")%></td>
+                        <td><input type="hidden" id="aircraftTypeID" value="<%=record.get("aircraft_type_id")%>" > <%= record.get("aircraft_type_id")%></td>
+                        <td><%= record.get("num")%></td>
+                        <td><input type="submit" value="Update" onclick="submitter(this);" ></td>
                     </tr>
 
                     <% }%>

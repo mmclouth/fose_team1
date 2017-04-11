@@ -8,80 +8,22 @@
 <%
     
     Database db = new Database();
-    int aircraftTypeID = db.findAircraftTypeID("ERJ-140");
-    int airplaneID = db.findAirplaneID("PL50001");
-    String planeNameOrig = (String)session.getAttribute("planeName");
-    int downTimeOrig = Integer.valueOf((String)session.getAttribute("downTime"));
-    int capacityTotalOrig = Integer.valueOf((String)session.getAttribute("capacityTotal"));
-    int capacityFirstClassOrig = Integer.valueOf((String)session.getAttribute("capacityFirstClass"));
-    int capacityEconomyOrig = Integer.valueOf((String)session.getAttribute("capacityEconomy"));
-    int seatsPerRowOrig = Integer.valueOf((String)session.getAttribute("seatsPerRow"));
-    String airplaneNumOrig = (String)session.getAttribute("airplaneNum");
+    int aircraftTypeID = Integer.valueOf((String)session.getAttribute("aircraftTypeID"));
+    String planeNameOrig = db.getPlaneName(aircraftTypeID);
+    int downTimeOrig =  db.getDownTime(aircraftTypeID);
+    int capacityTotalOrig =  db.getCapacityTotal(aircraftTypeID);
+    int capacityFirstClassOrig =  db.getCapacityFirstClass(aircraftTypeID);
+    int capacityEconomyOrig =  db.getCapacityEconomy(aircraftTypeID);
+    int seatsPerRowOrig =  db.getSeatsPerRow(aircraftTypeID);
+    String airplaneNumOrig =  db.getAirplaneNum(aircraftTypeID);
     
-    String planeName = null;
-    int downTime = 0;
-    int capacityTotal = 0;
-    int capacityFirstClass = 0;
-    int capacityEconomy = 0;
-    int seatsPerRow = 0;
-    String airplaneNum = null;
-    
-    
-    //Retrieve parameters from request if they have been sent from previous page
-    if (request.getParameter("planeName") != null) {
-        planeName = request.getParameter("planeName");
-    }
-    if (request.getParameter("downTime") != null) {
-        downTime = Integer.valueOf(request.getParameter("downTime"));
-    }
-    if (request.getParameter("capacityTotal") != null) {
-        capacityTotal = Integer.valueOf(request.getParameter("capacityTotal"));
-    }
-    if (request.getParameter("capacityFirstClass") != null) {
-        capacityFirstClass = Integer.valueOf(request.getParameter("capacityFirstClass"));
-    }
-    if (request.getParameter("capacityEconomy") != null) {
-        capacityEconomy = Integer.valueOf(request.getParameter("capacityEconomy"));
-    }
-    if (request.getParameter("seatsPerRow") != null) {
-        seatsPerRow = Integer.valueOf(request.getParameter("seatsPerRow"));
-    }
-    if (request.getParameter("airplaneNum") != null) {
-        airplaneNum = request.getParameter("airplaneNum").toString();
-    }
-    
-    if(planeName != null && downTime != 0 && capacityTotal != 0 && capacityFirstClass != 0 && capacityEconomy != 0 && seatsPerRow != 0 
-            && airplaneNum != null)
+    if(request.getParameter("newAirplaneNum") != null && request.getParameter("newPlaneName") != null && request.getParameter("newDownTime") != null
+            && request.getParameter("newCapacityTotal")!= null && request.getParameter("newCapacityFirstClass") != null && request.getParameter("newCapacityEconomy") != null && request.getParameter("newSeatsPerRow") != null)
     {
-        if(!(planeNameOrig.equals(request.getParameter("planeName"))))
-        {
-            db.updateAircraftTypePlaneName(request.getParameter("planeName"),aircraftTypeID);
-        }
-        if(downTimeOrig != (Integer.parseInt(request.getParameter("downTime"))))
-        {
-            db.updateAircraftTypeDownTime(Integer.parseInt(request.getParameter("downTime")),aircraftTypeID);
-        }
-        if(capacityTotalOrig != (Integer.parseInt(request.getParameter("capacityTotal"))))
-        {
-            db.updateAircraftTypeCapacityTotal(Integer.parseInt(request.getParameter("capacityTotal")),aircraftTypeID);
-        }
-        if(capacityFirstClassOrig != (Integer.parseInt(request.getParameter("capacityFirstClass"))))
-        {
-            db.updateAircraftTypeCapacityFirstClass(Integer.parseInt(request.getParameter("capacityFirstClass")),aircraftTypeID);
-        }
-        if(capacityEconomyOrig != (Integer.parseInt(request.getParameter("capacityEconomy"))))
-        {
-            db.updateAircraftTypeCapacityEconomy(Integer.parseInt(request.getParameter("capacityEconomy")),aircraftTypeID);
-        }
-        if(seatsPerRowOrig != (Integer.parseInt(request.getParameter("seatsPerRow"))))
-        {
-            db.updateAircraftTypeSeatsPerRow(Integer.parseInt(request.getParameter("seatsPerRow")),aircraftTypeID);
-        }
-        if(!(airplaneNumOrig.equals(request.getParameter("airplaneNum"))))
-        {
-            db.updateAirplaneNum(request.getParameter("airplaneNum"),aircraftTypeID);
-        }
-        response.sendRedirect("/IowaAir/adminAirplanes.jsp");
+       db.updateAircraftType(aircraftTypeID,request.getParameter("newPlaneName"),Integer.valueOf(request.getParameter("newDownTime")),Integer.valueOf(request.getParameter("newCapacityTotal")),
+                Integer.valueOf(request.getParameter("newCapacityFirstClass")),Integer.valueOf(request.getParameter("newCapacityEconomy")),Integer.valueOf(request.getParameter("newSeatsPerRow")));
+       db.updateAirplane(aircraftTypeID,request.getParameter("newAiplaneNum"));
+       response.sendRedirect("/IowaAir/adminAirplanes.jsp");
     }
     
 
@@ -90,6 +32,45 @@
     
 %>
 
+<script>
+function updateFunction() {  
+    
+    document.getElementById("newAirplaneNumID").value = document.getElementById("airplaneNumID").value;
+    
+    var test = document.getElementById("newAirplaneNumID").value;
+    console.log(test);
+    
+    document.getElementById("newPlaneNameID").value = document.getElementById("planeNameID").value;
+    
+    var test = document.getElementById("newPlaneNameID").value;
+    console.log(test);
+    
+    document.getElementById("newDownTimeID").value = document.getElementById("downTimeID").value;
+    
+    var test = document.getElementById("newDownTimeID").value;
+    console.log(test);
+    
+    document.getElementById("newCapacityTotalID").value = document.getElementById("capacityTotalID").value;
+    
+    var test = document.getElementById("newCapacityTotalID").value;
+    console.log(test);
+    
+    document.getElementById("newCapacityFirstClassID").value = document.getElementById("capacityFirstClassID").value;
+    
+    var test = document.getElementById("newCapacityFirstClassID").value;
+    console.log(test);
+    
+    document.getElementById("newCapacityEconomyID").value = document.getElementById("capacityEconomyID").value;
+    
+    var test = document.getElementById("newCapacityEconomyID").value;
+    console.log(test);
+    
+    document.getElementById("newSeatsPerRowID").value = document.getElementById("seatsPerRowID").value;
+    
+    var test = document.getElementById("newSeatsPerRowID").value;
+    console.log(test);
+}
+</script>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -137,22 +118,29 @@
 
             <form action="modifyAircraft.jsp" method="post" ><br>
             Airplane Number:
-            <input type="text" name="airplaneNum" value="<%=session.getAttribute("airplaneNum")%>" required><br>
+            <input type="text" name="airplaneNum" id="airplaneNumID" value="<%=airplaneNumOrig%>" required><br>
+            <input type="hidden" name="newAirplaneNum" id="newAirplaneNumID" >
             Name of Aircraft:
-            <input type="text" name="planeName" value="<%=session.getAttribute("planeName")%>" required><br>
-            Down time between flights (hrs):
-            <input type="number" name="downTime" value="<%=session.getAttribute("downTime")%>" required><br>
+            <input type="text" name="planeName" id="planeNameID" value="<%=planeNameOrig%>" required><br>
+            <input type="hidden" name="newPlaneName" id="newPlaneNameID" >
+            Down time between flights (mins):
+            <input type="number" name="downTime" id="downTimeID" value="<%=downTimeOrig%>" required><br>
+            <input type="hidden" name="newDownTime" id="newDownTimeID" >
             Total Capacity:
-            <input type="number" name="capacityTotal" value="<%=session.getAttribute("capacityTotal")%>" required><br>
+            <input type="number" name="capacityTotal" id="capacityTotalID" value="<%=capacityTotalOrig%>" required><br>
+            <input type="hidden" name="newCapacityTotal" id="newCapacityTotalID" >
             First Class Capacity:
-            <input type="number" name="capacityFirstClass" value="<%=session.getAttribute("capacityFirstClass")%>" required><br>
+            <input type="number" name="capacityFirstClass" id="capacityFirstClassID" value="<%=capacityFirstClassOrig%>" required><br>
+            <input type="hidden" name="newCapacityFirstClass" id="newCapacityFirstClassID" >
             Economy Capacity:
-            <input type="number" name="capacityEconomy" value="<%=session.getAttribute("capacityEconomy")%>" required><br>
+            <input type="number" name="capacityEconomy" id="capacityEconomyID" value="<%=capacityEconomyOrig%>" required><br>
+            <input type="hidden" name="newCapacityEconomy" id="newCapacityEconomyID" >
             Seats Per Row:
-            <input type="number" name="seatsPerRow" value="<%=session.getAttribute("seatsPerRow")%>" required><br>
+            <input type="number" name="seatsPerRow" id="seatsPerRowID" value="<%=seatsPerRowOrig%>" required><br>
+            <input type="hidden" name="newSeatsPerRow" id="newSeatsPerRowID" >
             
-            <input type="submit" value="Modify Aircraft"><br>
-            <a href="deleteAircraft.jsp">Delete Aircraft</a><br>
+            <input type="submit" value="Modify Aircraft" onclick="updateFunction()" ><br>
+            <a href="adminAirplanes.jsp">Go Back</a><br>
             </form>
 
             </div>

@@ -114,8 +114,6 @@ function submitter(btn) {
     var flightNumber = row.querySelector("#flightNum").value;
     var myForm = document.forms["myForm"];
     myForm.elements["rowID"].value = flightNumber;
-    console.log(flightNumber);
-    
     myForm.submit();
 }
 </script>

@@ -74,12 +74,12 @@
             <h1>Delete Aircraft Page</h1>
 
             <form action="deleteAircraft.jsp" method="post"><br>
-                Enter the flight number of the flight that you would like to delete.<br> 
+                Enter the aircraft type id of the aircraft that you would like to delete.<br> 
             Aircraft Type ID: 
             <input type="number" name="aircraftTypeID" required><br>
             
             <input type="submit" value="Delete Aircraft"><br>
-            <a href="modifyAircraft.jsp">Go back to Modify Aircraft</a><br>
+            <a href="adminAirplanes.jsp">Go Back</a><br>
             </form>
 
             </div>
