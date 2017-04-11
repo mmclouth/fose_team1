@@ -186,7 +186,7 @@ function submitter(btn) {
                     <% } %>                  
                 </select>    
                 <br> 
-            <label for="origin">Origin:</label>
+            <label for="originCode">Origin:</label>
                 <select name="originCode">
                     <option value="null">------</option>
                     <%

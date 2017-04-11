@@ -9,6 +9,31 @@
 <%@page import="java.util.HashMap"%>
 <%
     Database db = new Database();
+    
+    String code = null, city = null, state = null, country = null, timeZone = null;
+
+    //Retrieve parameters from request if they have been sent from previous page
+    if (request.getParameter("airportCode") != null) {
+        code = request.getParameter("airportCode");
+    }
+    if (request.getParameter("city") != null) {
+        city = request.getParameter("city");
+    }
+    if (request.getParameter("state") != null) {
+        state = request.getParameter("state");
+    }
+    if (request.getParameter("country") != null) {
+        country = request.getParameter("country");
+    }
+    if (request.getParameter("timeZone") != null) {
+        timeZone = request.getParameter("timeZone");
+    }
+
+    if (code != null && city != null && state != null && country != null && timeZone != null) {
+
+        db.addAirportToDatabase(code,city,state,country,10,timeZone);
+    }
+    
     ArrayList<HashMap<String, String>> airportData = db.getAllAirportData();
 
     //close database connection
@@ -74,7 +99,12 @@
                 <input type="text" name="city" required><br>
                 State:
                 <input type="text" name="state" required><br>
+                Country
+                <input type="text" name="country" required><br>
+                TimeZone
+                <input type="text" name="timeZone" required><br>
                 <input type="submit" value="Add Airport"><br>
+                <a href="deleteAirport.jsp">Delete Airport</a><br>
             </form>
         </div>
         

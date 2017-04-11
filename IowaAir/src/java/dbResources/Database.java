@@ -1068,6 +1068,33 @@ public class Database {
             e.printStackTrace();
         }
     }
+    public void addAirportToDatabase(String code, String city, String state, String country, int nodeNum, String timeZone)
+    {
+        StringBuilder query = new StringBuilder();
+
+        query.append("INSERT INTO airport (code, city, sstate, country,node_num, timezone) VALUES ('");
+        query.append(code);
+        query.append("', '");
+        query.append(city);
+        query.append("', '");
+        query.append(state);
+        query.append("', '");
+        query.append(country);
+        query.append("', '");
+        query.append(nodeNum);
+        query.append("', '");
+        query.append(timeZone);
+
+        query.append("') ;");
+
+        try {
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            sql.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     
     public void addAirplane(int aircraftTypeID, String num)
     {
@@ -1578,6 +1605,53 @@ public class Database {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+     public void deleteAirport(String airportCode)
+    {
+        StringBuilder query = new StringBuilder();
+        query.append("DELETE FROM airport WHERE code = '" + airportCode + "'");
+        try {
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            sql.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void deleteEmployee(int id)
+    {
+        StringBuilder query = new StringBuilder();
+        query.append("DELETE FROM userr WHERE id = '");
+        query.append(id);
+        query.append("'");
+        try {
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            sql.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+      
+    public ArrayList<String> getAllEmployeesEmails(){
+        
+        ArrayList<String> strings = new ArrayList<>();
+        String query = "SELECT email FROM userr WHERE user_type='employee';";
+        
+        try{
+            PreparedStatement sql = conn.prepareStatement(query);
+            ResultSet results = sql.executeQuery();
+            
+            while(results.next()){
+                strings.add(results.getString("email"));
+            }
+            
+            
+        } catch (SQLException e){
+            e.printStackTrace();
+        }    
+
+        return strings;
     }
     
 }

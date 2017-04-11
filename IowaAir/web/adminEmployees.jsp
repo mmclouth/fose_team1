@@ -163,6 +163,7 @@
                     <input type="date" name ="birthday"> <br> 
 
                     <input type="submit" value="Add Employee"> <br>
+                    <a href="deleteEmployee.jsp">Delete Employee</a><br>
                 </form> 
             </div>
 

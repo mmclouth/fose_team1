@@ -37,38 +37,17 @@ function updateFunction() {
     
     document.getElementById("newAirplaneNumID").value = document.getElementById("airplaneNumID").value;
     
-    var test = document.getElementById("newAirplaneNumID").value;
-    console.log(test);
-    
     document.getElementById("newPlaneNameID").value = document.getElementById("planeNameID").value;
-    
-    var test = document.getElementById("newPlaneNameID").value;
-    console.log(test);
     
     document.getElementById("newDownTimeID").value = document.getElementById("downTimeID").value;
     
-    var test = document.getElementById("newDownTimeID").value;
-    console.log(test);
-    
     document.getElementById("newCapacityTotalID").value = document.getElementById("capacityTotalID").value;
-    
-    var test = document.getElementById("newCapacityTotalID").value;
-    console.log(test);
     
     document.getElementById("newCapacityFirstClassID").value = document.getElementById("capacityFirstClassID").value;
     
-    var test = document.getElementById("newCapacityFirstClassID").value;
-    console.log(test);
-    
     document.getElementById("newCapacityEconomyID").value = document.getElementById("capacityEconomyID").value;
     
-    var test = document.getElementById("newCapacityEconomyID").value;
-    console.log(test);
-    
     document.getElementById("newSeatsPerRowID").value = document.getElementById("seatsPerRowID").value;
-    
-    var test = document.getElementById("newSeatsPerRowID").value;
-    console.log(test);
 }
 </script>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

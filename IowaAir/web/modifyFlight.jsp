@@ -134,7 +134,7 @@ function updateFunction() {
                 </select>    
                 <br> 
             <input type="hidden" name="newAirplaneID" id="newAirplaneIDID" >
-            <label for="origin">Origin:</label>
+            <label for="originCode">Origin:</label>
                 <select name="originCode" id="originCodeID" required>
                     <option value="null"><%=originCodeOrig%></option>
                     <%
