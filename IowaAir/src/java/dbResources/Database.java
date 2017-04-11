@@ -1513,9 +1513,7 @@ public class Database {
         }
         if(email == null) return "This didn't work!";
         return email;
-    }
-    
-    
+    } 
     
     public void addRecurringFlight(String frequency, int airplaneID, String start, String end, String origin, String destination, String departureTime, String arrivalTime, int duration, double priceEconomy, double priceFirstClass, int seatsEconomy, int seatsFirstClass){
         
@@ -1607,6 +1605,7 @@ public class Database {
         
         return -1;
     }
+
     public String getPlaneName(int aircraftTypeID)
     {
         String planeName = null;

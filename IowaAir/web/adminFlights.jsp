@@ -259,6 +259,12 @@ function submitter(btn) {
                 </div>
             </form>
             
+            <form action="addRecurringFlight.jsp" method="post">
+                <div class="search-button">
+                    <button type="submit" value="Submit">Add Recurring Flight</button>
+                </div>
+            </form>
+            
         </div>
         
         <div class="employee-table">
