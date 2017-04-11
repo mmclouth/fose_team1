@@ -273,6 +273,12 @@
             <a href="modifyFlight.jsp">Modify Flight</a><br>
             </form>
             
+            <form action="addRecurringFlight.jsp" method="post">
+                <div class="search-button">
+                    <button type="submit" value="Submit">Add Recurring Flight</button>
+                </div>
+            </form>
+            
         </div>
         
         <div class="employee-table">
