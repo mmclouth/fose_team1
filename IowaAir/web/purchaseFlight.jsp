@@ -223,7 +223,6 @@
                 <input type="submit" value="Finalize purchase"><br>
             </form>
                 
-                <h3><%= email %></h3>
         </div>
         <% } %>
     </body>
