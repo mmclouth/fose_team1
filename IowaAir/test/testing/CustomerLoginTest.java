@@ -18,7 +18,7 @@ public class CustomerLoginTest
     private static WebDriver driver = null;
     public static void main(String[] args) 
     {
-        System.setProperty("webdriver.chrome.driver","C:\\Users\\Nickolas\\Downloads\\chromedriver_win32\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver","C:\\IowaAir\\ChromeDriver\\chromedriver.exe");
         // TODO code application logic here
          // Initialize driver      
         driver = new ChromeDriver();  

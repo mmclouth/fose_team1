@@ -19,7 +19,7 @@ public class OneWaySearchTest
     private static WebDriver driver = null;
     public static void main(String[] args) 
     {
-        System.setProperty("webdriver.chrome.driver","C:\\Users\\Nickolas\\Downloads\\chromedriver_win32\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver","C:\\IowaAir\\ChromeDriver\\chromedriver.exe");
         // TODO code application logic here
          // Initialize driver      
         driver = new ChromeDriver();  
@@ -42,7 +42,7 @@ public class OneWaySearchTest
             Select destination = new Select(driver.findElement(By.xpath("//*[@id=\"form1\"]/select[2]")));
             destination.selectByVisibleText("ORD");
             driver.findElement(By.xpath("//*[@id=\"form1\"]/input[1]")).sendKeys("04/05/2017");
-            //driver.findElement(By.xpath("//*[@id=\"form1\"]/input[3]")).sendKeys("2");
+           // driver.findElement(By.xpath("//*[@id=\"form1\"]/input[3]")).sendKeys("2");
             driver.findElement(By.xpath("//*[@id=\"form1\"]/div/button")).click();
             
             url = driver.getCurrentUrl();
