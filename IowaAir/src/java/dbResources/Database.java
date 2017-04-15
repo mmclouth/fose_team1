@@ -1934,6 +1934,37 @@ public class Database {
         return -1;
     }
     
+    public ArrayList<HashMap<String,String>> getBookingSearchResults(String searchCriteria){
+        ArrayList<HashMap<String,String>> searchResults = new ArrayList<>();
+        HashMap<String,String> booking;
+        
+        StringBuilder query = new StringBuilder();
+        
+        query.append("SELECT * FROM booking WHERE id LIKE '%");
+        query.append(searchCriteria);
+        query.append("%';");
+        
+        try{
+            PreparedStatement ps = conn.prepareStatement(query.toString());
+            ResultSet results = ps.executeQuery();
+            
+            while(results.next()){
+                booking = new HashMap<>();
+                
+                booking.put("id", results.getString("id"));
+                booking.put("booked_on", results.getString("booked_on"));
+                booking.put("passengers", results.getString("passengers"));
+                
+                searchResults.add(booking);
+            }
+            
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+        
+        return searchResults;
+    }
+    
 }   
 
 
