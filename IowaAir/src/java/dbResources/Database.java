@@ -1869,6 +1869,71 @@ public class Database {
 
         return strings;
     }
-}
+    
+    
+    public void createBooking(ArrayList<String> boardingPassIDs, int numberOfPassengers){
+        
+        int idNum = this.getLastBookingIDNum() + 1;
+        StringBuilder query = new StringBuilder();
+        query.append("INSERT INTO booking (id, booked_on, passengers) VALUES ('IAB");
+        query.append(idNum);
+        query.append("', CURRENT_DATE, ");
+        query.append(numberOfPassengers);
+        query.append(");");
+
+        try{
+            PreparedStatement ps = conn.prepareStatement(query.toString());
+            ps.executeUpdate();
+            
+            
+            query = new StringBuilder();
+            query.append("INSERT INTO booking_has_boarding_pass (booking_id, boarding_pass_id) VALUES ");
+
+            for(int i=0 ; i<boardingPassIDs.size() ; i++){
+                query.append("('IAB");
+                query.append(idNum);
+                query.append("', ");
+                query.append(boardingPassIDs.get(i));
+                query.append(")");
+                
+                if(i!=boardingPassIDs.size()-1){
+                    query.append(",");
+                }
+            }
+            
+            query.append(";");
+            
+            ps = conn.prepareStatement(query.toString());
+            ps.executeUpdate();
+            
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        
+        
+    }
+    
+    
+    private int getLastBookingIDNum(){
+        
+        String query = "SELECT id FROM booking ORDER BY id DESC LIMIT 1;";
+        
+        try{
+            PreparedStatement ps = conn.prepareStatement(query);
+            ResultSet results = ps.executeQuery();
+            
+            while(results.next()){
+                String string = results.getString("id");
+                return Integer.parseInt(string.substring(3));
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        
+        
+        return -1;
+    }
+    
+}   
 
 
