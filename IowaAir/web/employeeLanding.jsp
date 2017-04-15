@@ -49,6 +49,15 @@
         </div>
         
         <% } %>
+        
+        <form action="bookingResults.jsp" method="post" >
+            <div class="search-for-booking">
+                <h1>Enter Booking Number:</h1>
+
+                <input type="text" id="file" name="booking_id" > 
+                <input type="submit" value="SEARCH">
+            </div>
+        </form>
 
     </body>
 </html>
