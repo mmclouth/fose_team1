@@ -4,7 +4,8 @@
  * Created: Jan 31, 2017
  */
 
-
+DROP TABLE booking_has_boarding_pass;
+DROP TABLE booking;
 DROP TABLE boarding_pass;
 DROP TABLE userr;
 DROP TABLE flight;
@@ -111,3 +112,25 @@ CREATE TABLE boarding_pass
 );
 
 
+CREATE TABLE booking
+(
+    id VARCHAR(20) NOT NULL,
+    booked_on DATE,
+    passengers INT,
+        PRIMARY KEY (id),
+        CONSTRAINT id_unique UNIQUE (id)
+);
+
+
+CREATE TABLE booking_has_boarding_pass
+(
+    id INT NOT NULL AUTO_INCREMENT,
+    booking_id VARCHAR(20) NOT NULL,
+    boarding_pass_id INT NOT NULL,
+        PRIMARY KEY (id),
+        FOREIGN KEY (booking_id)
+        REFERENCES booking (id),
+        FOREIGN KEY (boarding_pass_id)
+        REFERENCES boarding_pass (id)
+
+);
