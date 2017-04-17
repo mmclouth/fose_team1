@@ -148,7 +148,7 @@ VALUES
     (1, 6, '2A', 1, 'first_class'),
     (1, 7, '3A', 3, 'first_class'),
     (1, 1, '4A', 2, 'first_class'),
-    (1, 2, '1B', 2, 'first_class'),
+    (1, 1, '1B', 2, 'first_class'),
     (1, 3, '2B', 1, 'first_class'),
     (1, 8, '3B', 1, 'first_class'),
     (1, 9, '3C', 1, 'first_class'),
@@ -157,4 +157,19 @@ VALUES
     (1, 12, '10C', 1, 'economy'),
     (1, 13, '14C', 1, 'economy'),
     (1, 14, '15C', 1, 'economy'),
-    (1, 4, '2C', 1, 'first_class');
+    (1, 4, '2C', 1, 'first_class'),
+    (31, 1, '1A', 2, 'first_class'),
+    (31, 1, '2A', 1, 'first_class'),
+    (32, 1, '1A', 2, 'first_class'),
+    (32, 1, '2A', 2, 'first_class');
+
+INSERT INTO fundsofteng.booking (id, booked_on, passengers) 
+	VALUES ('IAB1', CURRENT_DATE, 2);
+
+INSERT INTO 
+    fundsofteng.booking_has_boarding_pass (booking_id, boarding_pass_id) 
+VALUES 
+    ('IAB1', 15),
+    ('IAB1', 16),
+    ('IAB1', 17),
+    ('IAB1', 18);

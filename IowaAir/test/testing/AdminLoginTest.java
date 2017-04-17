@@ -18,11 +18,13 @@ public class AdminLoginTest
     private static WebDriver driver = null;
     public static void main(String[] args) 
     {
+
+
         System.setProperty("webdriver.chrome.driver","C:\\IowaAir\\ChromeDriver\\chromedriver.exe");
         // TODO code application logic here
          // Initialize driver      
         driver = new ChromeDriver();  
-          
+
         //Go to URL      
         driver.get("http://localhost:8080/IowaAir/logIn.jsp"); 
         driver.manage().window().maximize();

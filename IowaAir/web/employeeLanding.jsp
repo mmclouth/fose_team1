@@ -36,6 +36,14 @@
         
         <% } %>
         
+        
+        <div class="admin-toolbar">
+            <ul>
+                <li><a class="active" href="employeeLanding.jsp">Search for Booking</a></li>
+                <li><a href="employeeFlightSearch.jsp">Search for Flight</a></li>
+            </ul>  
+        </div>
+        
         <% if(session.getAttribute("user_type") == null || !session.getAttribute("user_type").equals("employee")){ %>
         
         <div class="middle">
@@ -49,6 +57,15 @@
         </div>
         
         <% } %>
+        
+        <form action="bookingResults.jsp" method="get" >
+            <div class="search-for-booking">
+                <h1>Enter Booking Number:</h1>
+
+                <input type="text" id="file" name="booking_id" > 
+                <input type="submit" value="SEARCH">
+            </div>
+        </form>
 
     </body>
 </html>

@@ -471,3 +471,46 @@ table#confirmBooking {
 }
 
 
+/**************************
+
+    EMPLOYEE LANDING PAGE
+
+***************************/
+.search-for-booking {
+    width:70%;
+    margin-left: 15%;
+    float: left;
+    height: 40%;
+    margin-top:10%;
+}
+
+.search-for-booking h1{
+    font-size: 40px;
+    width: 100%;
+    color: midnightblue;
+}    
+.search-for-booking input[type="text"]{
+    width: 70%;
+    color: midnightblue;
+    font-size:70px;  
+    border-radius: 5px;
+    float: left;
+    
+}    
+.search-for-booking input[type="submit"]{
+    float: right;
+    width: 20%;
+    height:90px;
+    margin-top: 0;
+    background-color: midnightblue;
+    border-radius: 5px;
+    color: white;
+    font-family: 'Catamaran', sans-serif;
+    font-size: 25px;
+}
+.search-for-booking input[type="submit"]:hover{
+    background-color: royalblue;
+    color:white;
+    cursor: pointer;
+}
+

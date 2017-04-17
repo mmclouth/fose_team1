@@ -86,6 +86,9 @@
                 }
             }
             ArrayList<String> flightNums = new ArrayList<String>();
+            ArrayList<String> boardingPassIDs = new ArrayList<String>();
+            
+            
             for(int i = 0; i < flightIDs.length; ++i) {
                 HashMap<String, String> mapToAdd = db.getHashMapForFLight(flightIDs[i]);
                 String flightNumber = mapToAdd.get("num");
@@ -96,6 +99,10 @@
             db.addBoardingPass(Integer.parseInt(flightIDs[i]), userID, ticketType);
             
             
+            for(int i = 0; i < flightIDs.length; ++i)
+                boardingPassIDs.addAll(db.selectArrayList("id", "boarding_pass", "flight_id", flightIDs[i], "userr_id", Integer.toString(userID), "clas", ticketType));
+                
+            db.createBooking(boardingPassIDs, (Integer) session.getAttribute("num_of_passengers"));
             try { 
             SendMail mailer = new SendMail(email);
             if(mailer == null) response.sendRedirect("/IowaAir/home.jsp");
