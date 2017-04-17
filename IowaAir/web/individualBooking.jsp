@@ -1,8 +1,18 @@
 <%-- 
-    Document   : employeeLanding
-    Created on : Feb 16, 2017, 9:07:13 PM
+    Document   : individualBooking
+    Created on : Apr 17, 2017, 5:00:51 PM
     Author     : kenziemclouth
 --%>
+<%
+
+    String booking_id = null;
+    
+    if(request.getParameter("booking_id") != null){
+        booking_id = request.getParameter("booking_id");
+    }
+
+%>
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -39,7 +49,7 @@
         
         <div class="admin-toolbar">
             <ul>
-                <li><a class="active" href="employeeLanding.jsp">Search for Booking</a></li>
+                <li><a href="employeeLanding.jsp">Search for Booking</a></li>
                 <li><a href="employeeFlightSearch.jsp">Search for Flight</a></li>
             </ul>  
         </div>
@@ -58,14 +68,7 @@
         
         <% } %>
         
-        <form action="bookingResults.jsp" method="get" >
-            <div class="search-for-booking">
-                <h1>Enter Booking Number:</h1>
-
-                <input type="text" id="file" name="booking_id" > 
-                <input type="submit" value="SEARCH">
-            </div>
-        </form>
+        <h1><%=booking_id%></h1>
 
     </body>
 </html>

@@ -74,7 +74,7 @@
             
             <% for(int i=0 ; i<searchResults.size() ; i++) { %>
             <tr>
-                <td><%=searchResults.get(i).get("id") %></td>
+                <td><a href="individualBooking.jsp?booking_id=<%=searchResults.get(i).get("id")%>" ><%=searchResults.get(i).get("id") %> </a></td>
                 <td><%=searchResults.get(i).get("passengers") %></td>
                 <td><%=searchResults.get(i).get("booked_on") %></td>
             </tr>
