@@ -100,6 +100,8 @@ CREATE TABLE boarding_pass
     id INT NOT NULL AUTO_INCREMENT,
     flight_id INT NOT NULL,
     userr_id INT NOT NULL,
+    passenger_name VARCHAR(255),
+    checked_in BOOLEAN DEFAULT false,
     clas ENUM('first_class', 'economy'),
     seat_num VARCHAR(10),
     luggage_count INT,

@@ -129,7 +129,6 @@ VALUES
     ("John", "Doe", "johndoe@iowaair.net", "5f4dcc3b5aa765d61d8327deb882cf99", "employee", 'male',1),
     ("Jane", "Doe", "janedoe@iowaair.net", "5f4dcc3b5aa765d61d8327deb882cf99", "customer", 'female',1),
     ("Joe", "Schmoe", "joeschmoe@iowaair.net", "5f4dcc3b5aa765d61d8327deb882cf99", "customer", 'male',1),
-    ("Scott", "Endsley", "scoot@iowaair.net", "5f4dcc3b5aa765d61d8327deb882cf99", "customer", 'male',1),
     ("Micahel", "Scott", "littlekidlover@iowaair.net", "5f4dcc3b5aa765d61d8327deb882cf99", "customer", 'male',1),
     ("Dwight", "Schrute", "contactus@schrutefarms.com", "5f4dcc3b5aa765d61d8327deb882cf99", "customer", 'male',1),
     ("Jessica", "Day", "polkadots@iowaair.net", "5f4dcc3b5aa765d61d8327deb882cf99", "customer", 'female',1),
@@ -142,26 +141,26 @@ VALUES
 
 
 INSERT INTO 
-    boarding_pass (flight_id, userr_id, seat_num, luggage_count, clas)
+    boarding_pass (flight_id, userr_id, seat_num, luggage_count, clas, passenger_name)
 VALUES
-    (1, 5, '1A', 1, 'first_class'),
-    (1, 6, '2A', 1, 'first_class'),
-    (1, 7, '3A', 3, 'first_class'),
-    (1, 1, '4A', 2, 'first_class'),
-    (1, 1, '1B', 2, 'first_class'),
-    (1, 3, '2B', 1, 'first_class'),
-    (1, 8, '3B', 1, 'first_class'),
-    (1, 9, '3C', 1, 'first_class'),
-    (1, 10, '10A', 1, 'economy'),
-    (1, 11, '10B', 1, 'economy'),
-    (1, 12, '10C', 1, 'economy'),
-    (1, 13, '14C', 1, 'economy'),
-    (1, 14, '15C', 1, 'economy'),
-    (1, 4, '2C', 1, 'first_class'),
-    (31, 1, '1A', 2, 'first_class'),
-    (31, 1, '2A', 1, 'first_class'),
-    (32, 1, '1A', 2, 'first_class'),
-    (32, 1, '2A', 2, 'first_class');
+    (1, 5, '1A', 1, 'first_class', 'Jane Doe'),
+    (1, 6, '2A', 1, 'first_class', 'Joe Schmoe'),
+    (1, 7, '3A', 3, 'first_class', 'Michael Scott'),
+    (1, 1, '4A', 2, 'first_class', 'MacKenzie McLouth'),
+    (1, 1, '1B', 2, 'first_class', 'Jessica Backer'),
+    (1, 3, '2B', 1, 'first_class', 'Kyle Anderson'),
+    (1, 8, '3B', 1, 'first_class', 'Dwight Schrute'),
+    (1, 9, '3C', 1, 'first_class', 'Jessica Day'),
+    (1, 10, '10A', 1, 'economy', 'Nick Miller'),
+    (1, 11, '10B', 1, 'economy', 'Noname Schmitt'),
+    (1, 12, '10C', 1, 'economy', 'Leslie Knope'),
+    (1, 13, '14C', 1, 'economy', 'April Ludgate'),
+    (1, 14, '15C', 1, 'economy', 'Andy Dwyer'),
+    (1, 4, '2C', 1, 'first_class', 'John Doe'),
+    (31, 1, '1A', 2, 'first_class', 'MacKenzie McLouth'),
+    (31, 1, '2A', 1, 'first_class', 'Jessica Backer'),
+    (32, 1, '1A', 2, 'first_class', 'MacKenzie McLouth'),
+    (32, 1, '2A', 2, 'first_class', 'Jessica Backer');
 
 INSERT INTO fundsofteng.booking (id, booked_on, passengers) 
 	VALUES ('IAB1', CURRENT_DATE, 2);
