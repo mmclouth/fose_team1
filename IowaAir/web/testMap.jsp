@@ -32,14 +32,14 @@
     <script>
       var map;
       function initMap() {
-        var wakefield = {lat: 39.2157, lng: -97.0142};  
+        var central = {lat: 35.2157, lng: -97.0142};  
         var chicago = {lat: 41.8781, lng: -87.6298}
         var sanFrancisco = {lat: 37.7749, lng: -122.4194};
         var iowaCity = {lat: 41.6611, lng: -91.5302};
         var orlando = {lat: 28.5383, lng:-81.3792};
         var newYork = {lat: 40.7128, lng: -74.0059};
         map = new google.maps.Map(document.getElementById('map'), {
-          center: wakefield, //lat +N,-S lng +E,-W
+          center: central, //lat +N,-S lng +E,-W
           zoom: 5
         });
         var marker = new google.maps.Marker({
@@ -66,6 +66,17 @@
           position: newYork,
           map: map
         });
+        
+        var line = new google.maps.Polyline({
+        path: [
+            chicago, 
+            orlando
+        ],
+        strokeColor: "#FF0000",
+        strokeOpacity: 1.0,
+        strokeWeight: 5,
+        map: map
+});
       }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXyzB1ur8efWWkwuQVTlSbmZirV3ioOl4&callback=initMap"
