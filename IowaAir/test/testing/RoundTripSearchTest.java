@@ -74,7 +74,7 @@ public class RoundTripSearchTest
                             driver.findElement(By.xpath("/html/body/div[2]/form/input[10]")).sendKeys("123");
                             driver.findElement(By.xpath("/html/body/div[2]/form/input[11]")).click();
                             url = driver.getCurrentUrl();
-                            if(url.equals("http://localhost:8080/IowaAir/home.jsp"))
+                            if(url.equals("http://localhost:8080/IowaAir/userFlightHistory.jsp"))
                             {
                                 System.out.println("Purchase successful");
                             }
