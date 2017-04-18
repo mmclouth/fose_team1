@@ -70,13 +70,16 @@
         var line = new google.maps.Polyline({
         path: [
             chicago, 
-            orlando
+            orlando,
+            newYork,
         ],
         strokeColor: "#FF0000",
         strokeOpacity: 1.0,
         strokeWeight: 5,
+        geodesic: true, //flight path
         map: map
-});
+        });
+        
       }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXyzB1ur8efWWkwuQVTlSbmZirV3ioOl4&callback=initMap"
