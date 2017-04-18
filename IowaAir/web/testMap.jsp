@@ -32,14 +32,44 @@
     <script>
       var map;
       function initMap() {
+        var wakefield = {lat: 39.2157, lng: -97.0142};  
+        var chicago = {lat: 41.8781, lng: -87.6298}
+        var sanFrancisco = {lat: 37.7749, lng: -122.4194};
+        var iowaCity = {lat: 41.6611, lng: -91.5302};
+        var orlando = {lat: 28.5383, lng:-81.3792};
+        var newYork = {lat: 40.7128, lng: -74.0059};
         map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 35.0000, lng: -95.0000}, //these are coordinates for whole states on zoom 5
+          center: wakefield, //lat +N,-S lng +E,-W
           zoom: 5
+        });
+        var marker = new google.maps.Marker({
+          position: chicago,
+          map: map
+        });
+        
+        marker = new google.maps.Marker({
+          position: sanFrancisco,
+          map: map
+        });
+        
+        marker = new google.maps.Marker({
+          position: iowaCity,
+          map: map
+        });
+        
+        marker = new google.maps.Marker({
+          position: orlando,
+          map: map
+        });
+        
+        marker = new google.maps.Marker({
+          position: newYork,
+          map: map
         });
       }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXyzB1ur8efWWkwuQVTlSbmZirV3ioOl4&callback=initMap"
     async defer></script>
-    <h2>This is some smaller stuff after the map</h2>
+    <h2>Test Text</h2>
   </body>
 </html>
