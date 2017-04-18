@@ -1,0 +1,42 @@
+<%-- 
+    Document   : testMap
+    Created on : Apr 17, 2017, 6:00:03 PM
+    Author     : Kyle Anderson
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Map!!!!</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css?family=Catamaran" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <!--API KEY: AIzaSyBXyzB1ur8efWWkwuQVTlSbmZirV3ioOl4 -->
+        <h1>This is some stuff before the map</h1>
+            <div id="map">
+            <script>
+                function initMap() {
+                    var uluru = {lat: -25.363, lng: 131.044};
+                    var map = new google.maps.Map(document.getElementById('map'), {
+                      zoom: 3,
+                      center: uluru
+                    });
+                    var marker = new google.maps.Marker({
+                      position: uluru,
+                      map: map
+                    });
+                  }
+            </script>
+            
+            <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXyzB1ur8efWWkwuQVTlSbmZirV3ioOl4&callback=initMap">
+            </script>
+        </div>
+        
+        <h2>This is some smaller stuff after the map </h2>
+    </body>
+</html>
