@@ -1965,6 +1965,32 @@ public class Database {
         return searchResults;
     }
     
+    
+    public void updateField(String fieldName, String table, String newValue, String constraintField, String constraintValue){
+        
+        StringBuilder query = new StringBuilder();
+        
+        query.append("UPDATE ");
+        query.append(table);
+        query.append(" SET ");
+        query.append(fieldName);
+        query.append(" = '");
+        query.append(newValue);
+        query.append("' WHERE ");
+        query.append(constraintField);
+        query.append(" = '");
+        query.append(constraintValue);
+        query.append("';");
+        
+        try{
+            PreparedStatement ps = conn.prepareStatement(query.toString());
+            ps.executeUpdate();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        
+    }
+    
 }   
 
 
