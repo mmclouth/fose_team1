@@ -20,7 +20,7 @@ public class AdminLoginTest
     {
 
 
-        System.setProperty("webdriver.chrome.driver","C:\\IowaAir\\ChromeDriver\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver","web/WEB-INF/chromedriver.exe");
         // TODO code application logic here
          // Initialize driver      
         driver = new ChromeDriver();  
