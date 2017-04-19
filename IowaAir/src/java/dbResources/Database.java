@@ -1991,6 +1991,93 @@ public class Database {
         
     }
     
+    public void deleteBoardingPass(String boardingPassID){
+        
+        StringBuilder query = new StringBuilder();
+        String bookingID = this.getBookingID(boardingPassID);
+        
+        query.append("DELETE FROM booking_has_boarding_pass WHERE boarding_pass_id ='");
+        query.append(boardingPassID);
+        query.append("';");
+        
+        try{
+            PreparedStatement ps = conn.prepareStatement(query.toString());
+            ps.executeUpdate();
+            
+            query = new StringBuilder();
+            
+            query.append("DELETE FROM boarding_pass WHERE id = '");
+            query.append(boardingPassID);
+            query.append("';");
+            
+            ps = conn.prepareStatement(query.toString());
+            ps.executeUpdate();
+            
+            if(this.getNumberOfBoardingPassesInBooking(bookingID) == 0){
+                this.deleteBooking(bookingID);
+            }
+            
+            
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+    }
+    
+    private int getNumberOfBoardingPassesInBooking(String bookingID){
+            
+        int boardingPasses = 0;
+            
+        String query = "SELECT * FROM booking_has_boarding_pass WHERE booking_id ='" + bookingID + "';";
+        
+        try{
+            PreparedStatement ps = conn.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()){
+                boardingPasses++;
+            }
+            
+            return boardingPasses;
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        
+        return boardingPasses;
+            
+    }
+    
+    public String getBookingID(String boardingPassID){
+        
+        String query = "SELECT booking_id FROM booking_has_boarding_pass WHERE boarding_pass_id ='" + boardingPassID + "';";
+        
+        try{
+            PreparedStatement ps = conn.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()){
+                return rs.getString("booking_id");
+            }
+            
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        
+        return null;
+    }
+    
+    private void deleteBooking(String bookingID){
+        String query = "DELETE FROM booking WHERE id ='" + bookingID + "';";
+        
+        try{
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.executeUpdate();
+            
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+    
 }   
 
 
