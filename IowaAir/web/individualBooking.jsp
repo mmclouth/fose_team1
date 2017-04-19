@@ -10,16 +10,24 @@
     Database db = new Database();
     
     
-    String booking_id = null, boardingPassID = null;
+    String booking_id = null, boardingPassID = null, cancelBoardingPassID=null;
     
     if(request.getParameter("booking_id") != null){
         session.setAttribute("booking_id", request.getParameter("booking_id"));
+        
+        
     }
     
     if(request.getParameter("checkInPassenger") != null){
         boardingPassID = request.getParameter("checkInPassenger");
         
         db.updateField("checked_in", "boarding_pass", "1", "id", boardingPassID);
+    }
+    
+    if(request.getParameter("cancelBoardingPass") != null){
+        cancelBoardingPassID = request.getParameter("cancelBoardingPass");
+        
+        db.deleteBoardingPass(cancelBoardingPass);
     }
     
     booking_id = (String) session.getAttribute("booking_id");
@@ -131,6 +139,7 @@
                 <th>Seat Num</th>
                 <th>Checked in?</th>
                 <th> </th>
+                <th> </th>
             </tr>
             
             <% for(int i=0 ; i<boardingPassData.size() ; i++){ %>
@@ -154,7 +163,10 @@
                 </td>
                 <% } else { %>
                 
-                <td> </td>
+                <td><form action="individualBooking.jsp" method="POST">
+                    <input type="hidden" name="cancelBoardingPass" value="<%=boardingPassData.get(i).get("id")%>">
+                    <input type="submit" value="Cancel Booking"></form>
+                </td>
                 
                 <% } %>
             
