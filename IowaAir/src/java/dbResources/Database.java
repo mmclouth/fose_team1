@@ -1991,6 +1991,34 @@ public class Database {
         
     }
     
+    public void deleteBoardingPass(String boardingPassID){
+        
+        StringBuilder query = new StringBuilder();
+        
+        query.append("DELETE FROM booking_has_boarding_pass WHERE boarding_pass_id ='");
+        query.append(boardingPassID);
+        query.append("';");
+        
+        try{
+            PreparedStatement ps = conn.prepareStatement(query.toString());
+            ps.executeUpdate();
+            
+            query = new StringBuilder();
+            
+            query.append("DELETE FROM boarding_pass WHERE id = '");
+            query.append(boardingPassID);
+            query.append("';");
+            
+            ps = conn.prepareStatement(query.toString());
+            ps.executeUpdate();
+            
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        
+        
+    }
+    
 }   
 
 
