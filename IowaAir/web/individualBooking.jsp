@@ -27,7 +27,7 @@
     if(request.getParameter("cancelBoardingPass") != null){
         cancelBoardingPassID = request.getParameter("cancelBoardingPass");
         
-        db.deleteBoardingPass(cancelBoardingPass);
+        db.deleteBoardingPass(cancelBoardingPassID);
     }
     
     booking_id = (String) session.getAttribute("booking_id");
