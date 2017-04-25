@@ -62,7 +62,7 @@ public class OneWaySearchTest
                         driver.findElement(By.xpath("/html/body/div[2]/form/input[1]")).sendKeys("Nick");
                         driver.findElement(By.xpath("/html/body/div[2]/form/input[2]")).sendKeys("Kutsch");
                         Select seatNum = new Select(driver.findElement(By.xpath("/html/body/div[2]/form/select")));
-                        seatNum.selectByVisibleText("3A");
+                        seatNum.selectByIndex(2);
                         driver.findElement(By.xpath("/html/body/div[2]/form/input[3]")).sendKeys("1");
                         driver.findElement(By.xpath("/html/body/div[2]/form/input[5]")).click();
                         url = driver.getCurrentUrl();
