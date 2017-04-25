@@ -1155,6 +1155,36 @@ public class Database {
         }
     }
     
+    public void addBoardingPass(int flight_id, int user_id, String flightClass, String passenger_name, String seat_num, int luggage_count) {
+        StringBuilder query = new StringBuilder();
+        
+        query.append("INSERT INTO boarding_pass (flight_id, userr_id, clas, seat_num, passenger_name, luggage_count) VALUES ('");
+        query.append(flight_id);
+        query.append("', '");
+        query.append(user_id);
+        query.append("', '");
+        if(flightClass.equals("economy")) {
+            query.append("economy");
+        } else {
+            query.append("first_class");
+        }
+        query.append("', '");
+        query.append(seat_num);
+        query.append("', '");
+        query.append(passenger_name);
+        query.append("', '");
+        query.append(luggage_count);
+        query.append("') ;");
+        
+        try {
+            PreparedStatement sql = conn.prepareStatement(query.toString());
+            sql.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }    
+    
     public ArrayList<HashMap<String, String>> getBoardingPassesForUser(String userID) {
         ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String,String>>();
         String[] fields = {"flight_id", "userr_id", "seat_num", "luggage_count", "clas"};
