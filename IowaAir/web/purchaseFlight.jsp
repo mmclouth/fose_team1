@@ -21,24 +21,26 @@
     
     String[] flightIDs = null, seatsAvailable = null;
     
-    if(parameters.get("numSeats") != null) {
-        seatsAvailable = parameters.get("numSeats");
+    if(session.getAttribute("numSeats") != null) {
+        seatsAvailable = (String[]) session.getAttribute("numSeats");
     }
     
     if(session.getAttribute("userID") != null) {
         userID = (Integer)session.getAttribute("userID");
     }
     
-    if(parameters.get("type_of_tickets") != null) {
-        ticketType = request.getParameter("type_of_tickets");
+    if(session.getAttribute("type_of_tickets") != null) {
+        String[] types = (String[]) session.getAttribute("type_of_tickets");
+        ticketType = types[0];
     }
     
-    if(parameters.get("flight_ids") != null) {
-        flightIDs = parameters.get("flight_ids");
+    if(session.getAttribute("flight_ids") != null) {
+        flightIDs = (String[]) session.getAttribute("flight_ids");
     }
     //Retrieve parameters from request if they have been sent from previous page
-    if (request.getParameter("price") != null) {
-        price = request.getParameter("price");
+    if (session.getAttribute("price") != null) {
+        String[] prices = (String[]) session.getAttribute("price");
+        price = prices[0];
         //errorMessage = "Price is" + price + " <br>";
     }
     if (request.getParameter("cardNumber") != null) {
@@ -88,6 +90,11 @@
             ArrayList<String> flightNums = new ArrayList<String>();
             ArrayList<String> boardingPassIDs = new ArrayList<String>();
             
+            ArrayList<String> firstNames = (ArrayList)session.getAttribute("firstNames");
+            ArrayList<String> lastNames = (ArrayList)session.getAttribute("lastNames");
+            ArrayList<String> seatNums = (ArrayList)session.getAttribute("seatNums");
+            ArrayList<String> luggageCounts = (ArrayList)session.getAttribute("luggageCounts");
+            
             
             for(int i = 0; i < flightIDs.length; ++i) {
                 HashMap<String, String> mapToAdd = db.getHashMapForFLight(flightIDs[i]);
@@ -95,8 +102,15 @@
                 flightNums.add(flightNumber);
             }
             
-            for(int i = 0; i < flightIDs.length; ++i)
-            db.addBoardingPass(Integer.parseInt(flightIDs[i]), userID, ticketType);
+            for(int i = 0; i < flightIDs.length; ++i){
+                
+                for(int j=0 ; j<firstNames.size() ; j++){
+                    String passengerName = firstNames.get(j) + " " + lastNames.get(j);
+                
+                    db.addBoardingPass(Integer.parseInt(flightIDs[i]), userID, ticketType, passengerName, seatNums.get(j), Integer.parseInt(luggageCounts.get(j)));     //db.addBoardingPass(Integer.parseInt(flightIDs[i]), userID, ticketType);
+                }        
+            }
+            
             
             
             for(int i = 0; i < flightIDs.length; ++i)

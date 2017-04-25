@@ -162,13 +162,13 @@
                     <input type="submit" value="Check in Passenger"></form>
                 </td>
                 <% } else { %>
+                <td>      </td>
                 
+                <% } %>
                 <td><form action="individualBooking.jsp" method="POST">
                     <input type="hidden" name="cancelBoardingPass" value="<%=boardingPassData.get(i).get("id")%>">
                     <input type="submit" value="Cancel Booking"></form>
                 </td>
-                
-                <% } %>
             
             </tr>
             <% } %>
