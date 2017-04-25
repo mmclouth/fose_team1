@@ -2108,6 +2108,61 @@ public class Database {
         }
     }
     
+    public ArrayList<String> getAvailableSeatNums(String flightID){
+        
+        String airplaneID = this.selectString("airplane_id", "flight", "id", flightID);
+        String aircraft_type = this.selectString("aircraft_type_id", "airplane",  "id", airplaneID);
+        
+        ArrayList<String> possibleSeatNums = this.getAllSeatNumsForAircraftType(aircraft_type);
+        
+        ArrayList<String> unavailable = this.selectArrayList("seat_num", "boarding_pass", "flight_id", flightID);
+        
+        for(int i=0 ; i<unavailable.size() ; i++){
+            if(possibleSeatNums.contains(unavailable.get(i))){
+                possibleSeatNums.remove(unavailable.get(i));
+            }
+        }
+        
+        return possibleSeatNums;
+    }
+    
+    private ArrayList<String> getAllSeatNumsForAircraftType(String aircraft_type_id){
+        ArrayList<String> seatNums= new ArrayList<>();
+        
+        int seatsPerRow = 5;
+        String seatsPerRowString = this.selectString("seats_per_row","aircraft_type",  "id", aircraft_type_id);
+        
+        if(seatsPerRowString != null){
+            seatsPerRow = Integer.parseInt(seatsPerRowString);
+        }
+        
+        int capacity = Integer.parseInt(this.selectString("capacity_total", "aircraft_type",  "id", aircraft_type_id));
+
+        char seat = 'A';
+        int row = 1;
+        int numSeats = 0;
+        
+        while(numSeats < capacity){
+            
+            seat = 'A';
+            int j=1;
+            while(j<=seatsPerRow && numSeats < capacity){
+                
+                seatNums.add(Integer.toString(row) + seat);
+                int ascii = ((int) seat) + 1;
+                seat = (char) ascii;
+                
+                j++;
+                numSeats++;
+                
+            }
+            
+            row++;
+        }
+        
+        return seatNums;
+    }
+    
 }   
 
 
