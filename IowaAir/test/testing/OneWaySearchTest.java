@@ -56,30 +56,47 @@ public class OneWaySearchTest
                     System.out.println("Selection successful");
                     driver.findElement(By.xpath("/html/body/div[2]/b/form[2]/p/input")).click();
                     url = driver.getCurrentUrl();
-                    if(url.equals("http://localhost:8080/IowaAir/purchaseFlight.jsp"))
+                    if (url.equals("http://localhost:8080/IowaAir/passengerInfo.jsp"))
                     {
                         System.out.println("Confirmed booking successful");
-                        driver.findElement(By.xpath("/html/body/div[2]/form/input[5]")).sendKeys("0123456789");
-                        Select month = new Select(driver.findElement(By.xpath("/html/body/div[2]/form/select[1]")));
-                        month.selectByVisibleText("11");
-                        Select year = new Select(driver.findElement(By.xpath("/html/body/div[2]/form/select[2]")));
-                        year.selectByVisibleText("20");
-                        driver.findElement(By.xpath("/html/body/div[2]/form/input[6]")).sendKeys("123");
-                        driver.findElement(By.xpath("/html/body/div[2]/form/input[7]")).click();
+                        driver.findElement(By.xpath("/html/body/div[2]/form/input[1]")).sendKeys("Nick");
+                        driver.findElement(By.xpath("/html/body/div[2]/form/input[2]")).sendKeys("Kutsch");
+                        Select seatNum = new Select(driver.findElement(By.xpath("/html/body/div[2]/form/select")));
+                        seatNum.selectByVisibleText("3A");
+                        driver.findElement(By.xpath("/html/body/div[2]/form/input[3]")).sendKeys("1");
+                        driver.findElement(By.xpath("/html/body/div[2]/form/input[5]")).click();
                         url = driver.getCurrentUrl();
-                        if(url.equals("http://localhost:8080/IowaAir/userFlightHistory.jsp"))
+                        
+                        if(url.equals("http://localhost:8080/IowaAir/purchaseFlight.jsp"))
                         {
-                            System.out.println("Purchase successful");
+                            System.out.println("Passenger Info successful");
+                            driver.findElement(By.xpath("/html/body/div[2]/form/input[5]")).sendKeys("0123456789");
+                            Select month = new Select(driver.findElement(By.xpath("/html/body/div[2]/form/select[1]")));
+                            month.selectByVisibleText("11");
+                            Select year = new Select(driver.findElement(By.xpath("/html/body/div[2]/form/select[2]")));
+                            year.selectByVisibleText("20");
+                            driver.findElement(By.xpath("/html/body/div[2]/form/input[6]")).sendKeys("123");
+                            driver.findElement(By.xpath("/html/body/div[2]/form/input[7]")).click();
+                            url = driver.getCurrentUrl();
+                            if(url.equals("http://localhost:8080/IowaAir/userFlightHistory.jsp"))
+                            {
+                                System.out.println("Purchase successful");
+                            }
+                            else
+                            {
+                                System.out.println("Purchase failed");
+                            }
                         }
                         else
                         {
-                            System.out.println("Purchase failed");
+                            System.out.println("Passenger Info failed");
                         }
                     }
                     else
                     {
                         System.out.println("Confirmed booking failed");
                     }
+                        
                 }
                 else
                 {
