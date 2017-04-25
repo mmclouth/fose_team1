@@ -228,31 +228,35 @@ function submitter(btn) {
                 
                 <table>
                     <tr>
+                        <th>Aircraft Number</th>
                         <th>Plane Name</th>
                         <th>Down Time</th>
                         <th>Total Capacity</th>
                         <th>First Class Capacity</th>
                         <th>Economy Capacity</th>
                         <th>Seats Per Row</th>
-                        <th>Aircraft Type ID</th>
-                        <th>Aircraft Number</th>
-                        <th>Update</th>
+                        
+                        <th>     </th>
                     </tr>
 
                     <!- Loop through each employee record and output each field in correct able column ->
                     <% for (HashMap<String, String> record : aircraftData) {%>
                     <tr>
+                        <td><input type="hidden" id="airplaneNumber" value="<%=record.get("num")%>" > <%= record.get("num")%></td>
                         <td><%= record.get("plane_name")%></td>
                         <td><%= record.get("down_time")%></td>
                         <td><%= record.get("capacity_total")%></td>
                         <td><%= record.get("capacity_first_class")%></td>
                         <td><%= record.get("capacity_economy")%></td>
                         <td><%= record.get("seats_per_row")%></td>
-                        <td><input type="hidden" id="aircraftTypeID" value="<%=record.get("aircraft_type_id")%>" > <%= record.get("aircraft_type_id")%></td>
-                        <td><input type="hidden" id="airplaneNumber" value="<%=record.get("num")%>" > <%= record.get("num")%></td>
-                        <td><input type="submit" value="Update" onclick="submitter(this);" ></td>
+                        
+                        <td>
+                            <div class="update" >
+                                <button type="submit" value="Submit" onclick="submitter(this);">Update</button>
+                            </div>
+                        </td>
                     </tr>
-
+                    <input type="hidden" id="aircraftTypeID" value="<%=record.get("aircraft_type_id")%>" >
                     <% }%>
 
                 </table>

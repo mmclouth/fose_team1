@@ -57,9 +57,7 @@
         </div>
 
         <div class="middle">
-            <h1>Admin Home</h1>
-            <h1>UserID: <%= session.getAttribute("userID") %></h1>
-            <h1>Hi <%= session.getAttribute("userFirstName") %>!</h1>
+            <h4>Hi <%= session.getAttribute("userFirstName") %>!</h4>
             
         </div>
             

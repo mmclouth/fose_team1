@@ -254,26 +254,14 @@ function submitter(btn) {
             </form>
             
             <form action="addRecurringFlight.jsp" method="post">
-                <div class="search-button">
-                    <button type="submit" value="Submit">Add Recurring Flight</button>
-                </div>
-            </form>
-            
-            <form action="addRecurringFlight.jsp" method="post">
-                <div class="search-button">
-                    <button type="submit" value="Submit">Add Recurring Flight</button>
-                </div>
-            </form>
-            
-            <form action="addRecurringFlight.jsp" method="post">
-                <div class="search-button">
+                <div class="recurring-flight">
                     <button type="submit" value="Submit">Add Recurring Flight</button>
                 </div>
             </form>
             
         </div>
         
-        <div class="employee-table">
+        <div class="flight-table">
 
                 <h2>Current Flights</h2>
 
@@ -282,40 +270,62 @@ function submitter(btn) {
                 </form>
                 <table>
                     <tr>
-                        <th>Number</th>
-                        <th>Airplane ID</th>
-                        <th>Origin Code</th>
-                        <th>Destination Code</th>
-                        <th>Departure Date</th>
-                        <th>Arrival Date</th>
-                        <th>Departure Time</th>
-                        <th>Arrival Time</th>
-                        <th>Duration</th>
-                        <th>Price Economy</th>
-                        <th>Price First Class</th>
-                        <th>First Class Seats Remaining</th>
-                        <th>Economy Seats Remaining</th>
-                        <th>Update</th>
+                        <th class="flightNum">  </th>
+                        <th>  </th>
+                        <th>  </th>
+                        <th>  </th>
+                        <th>  </th>
+                        <th>  </th>
+                        <th>  </th>
+                        <th class="small">  </th>
+                        <th colspan="2">Price</th>
+                        <th colspan="2">Seats Left </th>
+                        <th>   </th>
+                        
+                    </tr>
+                    <tr>
+                        <th class="flightNum">Flight</th>
+                        <th>Plane ID</th>
+                        <th>Origin </th>
+                        <th>Dest.</th>
+                        <th>Date</th>
+                        <th class="med">Depart</th>
+                        <th class="med">Arrive</th>
+                        <th class="small">Dur. (min)</th>
+                        <th class="big">First Class</th>
+                        <th class="big">Econ</th>
+                        <th class="med">First Class </th>
+                        <th class="med">Econ</th>
+                        <th>   </th>
                     </tr>
 
                     <!- Loop through each employee record and output each field in correct able column ->
                     <% for (HashMap<String, String> record : flightData) {%>
                     <tr>
                         
-                        <td><input type="hidden" id="flightNum" value="<%=record.get("num")%>" ><%=record.get("num")%></td>
+                        <td class="flightNum"><input type="hidden" id="flightNum" value="<%=record.get("num")%>" ><%=record.get("num")%></td>
                         <td><%= record.get("airplane_id")%></td>
                         <td><%= record.get("origin_code")%></td>
                         <td><%= record.get("destination_code")%></td>
-                        <td><%= record.get("departure_date")%></td>
-                        <td><%=record.get("arrival_date")%></td>
-                        <td><%= record.get("departure_time")%></td>
-                        <td><%= record.get("arrival_time")%></td>
+                        <td><%= record.get("departure_date").substring(5) %></td>
+                        <td><%= record.get("departure_time").substring(0, record.get("departure_time").length() - 3)%></td>
+                        
+                        <% if(!record.get("arrival_date").equals(record.get("departure_date"))){ %>
+                        <td><%= record.get("arrival_time").substring(0, record.get("arrival_time").length() - 3) %> (+1)</td>
+                        <% } else {%>
+                        <td><%= record.get("arrival_time").substring(0, record.get("arrival_time").length() - 3)%></td>
+                        <% } %>
+                        
                         <td><%= record.get("duration")%></td>
-                        <td><%= record.get("price_economy")%></td>
                         <td><%= record.get("price_first_class")%></td>
+                        <td><%= record.get("price_economy")%></td>
                         <td><%= record.get("first_class_remaining")%></td>
                         <td><%= record.get("economy_remaining")%></td>
-                        <td><input type="submit" value="Update" onclick="submitter(this);" ></td>
+                        <td>
+                            <div class="update" >
+                                <button type="submit" value="Submit" onclick="submitter(this);">Update</button>
+                            </div>
+                        </td>
                            
                     </tr>
                     </form>
