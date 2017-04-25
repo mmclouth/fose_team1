@@ -321,7 +321,11 @@ function submitter(btn) {
                         <td><%= record.get("price_economy")%></td>
                         <td><%= record.get("first_class_remaining")%></td>
                         <td><%= record.get("economy_remaining")%></td>
-                        <td><button type="submit" value="Submit" onclick="submitter(this);">Update</button></td>
+                        <td>
+                            <div class="update" >
+                                <button type="submit" value="Submit" onclick="submitter(this);">Update</button>
+                            </div>
+                        </td>
                            
                     </tr>
                     </form>

@@ -431,7 +431,7 @@ body {
     font-size: 20px;
 }
 
-.flight-table button{
+.update button{
     text-align: center;
     text-decoration: none;
     float:left;
@@ -445,7 +445,7 @@ body {
 }
 
 
-.flight-table button:hover{
+.update button:hover{
     cursor: pointer;
     background-color: midnightblue;
     color: white;
