@@ -19,7 +19,15 @@
     String cardNum = null, cvv = null, price = null, ticketType = null;
     Integer userID = null;
     
+    Integer passenger_user_id = null;
+    
     String[] flightIDs = null, seatsAvailable = null;
+    
+    String userType = "customer";
+    
+    if(session.getAttribute("user_type") != null) {
+        userType = (String) session.getAttribute("user_type");
+    }
     
     if(session.getAttribute("numSeats") != null) {
         seatsAvailable = (String[]) session.getAttribute("numSeats");
@@ -27,6 +35,10 @@
     
     if(session.getAttribute("userID") != null) {
         userID = (Integer)session.getAttribute("userID");
+    }
+    
+    if(session.getAttribute("passenger_user_id") != null) {
+        userID = Integer.parseInt((String)session.getAttribute("passenger_user_id"));
     }
     
     if(session.getAttribute("type_of_tickets") != null) {
@@ -123,8 +135,14 @@
             mailer.sendConfirmation(price, flightNums);
             
             session.setAttribute("booked", true);
-            response.sendRedirect("/IowaAir/userFlightHistory.jsp");
+            if(userType.equals("employee")){
+                response.sendRedirect("/IowaAir/employeeLanding.jsp");
+            } else {
+            
+                response.sendRedirect("/IowaAir/userFlightHistory.jsp");
+            }
             } catch (MessagingException me) {
+                me.printStackTrace();
                 response.sendRedirect("/IowaAir/home.jsp");
             }
             

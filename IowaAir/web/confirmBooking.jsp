@@ -16,6 +16,8 @@
     double firstClassPrice = 0;
     Database db = new Database();
     Integer numTickets = (Integer)session.getAttribute("num_of_passengers");
+    String userType = (String) session.getAttribute("user_type");
+    
     
     //get all parameters from request
     Map<String, String[]> parameters = request.getParameterMap();
@@ -162,7 +164,11 @@
             <b>Number of Tickets: <%= numTickets %>
             <% if(numTickets <= leastEconomySeats || numTickets <= leastFirstClassSeats) { %>
             <% if(numTickets <= leastEconomySeats) { %>
+                <% if(userType.equals("employee")){ %>
+            <form action="employeePassengerInfo.jsp" method="post">   
+                <% } else { %>
             <form action="passengerInfo.jsp" method="post">
+                <% } %>
                 <p align="right"><input type="submit" value="Book Economy: $<%= economyPrice * numTickets%>0" ></p>
                 <input type="hidden" name="price" value="<%= economyPrice * numTickets %>">
                 <input type="hidden" name="type_of_tickets" value="economy">
@@ -175,7 +181,11 @@
                 <% }%>
             </form>
             <% } if(numTickets <= leastFirstClassSeats) { %>
+                <% if(userType.equals("employee")){ %>
+            <form action="employeePassengerInfo.jsp" method="post">   
+                <% } else { %>
             <form action="passengerInfo.jsp" method="post">
+                <% } %>
                 <p align="right"><input type="submit" value="Book First Class: $<%= firstClassPrice * numTickets %>0" ></p>
                 <input type="hidden" name="price" value="<%= firstClassPrice * numTickets %>">
                 <input type="hidden" name="type_of_tickets" value="first_class">

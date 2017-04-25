@@ -38,8 +38,9 @@
         
     }
     
+    String[] flight_ids = (String[]) session.getAttribute("flight_ids");
     int numPassengers = (Integer) session.getAttribute("num_of_passengers");
-
+    ArrayList<String> availableSeats = db.getAvailableSeatNums(flight_ids[0]);
 
     ArrayList<String> firstNames = new ArrayList<String>();
     ArrayList<String> lastNames = new ArrayList<String>();
@@ -175,10 +176,9 @@
                 <br>
                 Seat:
                 <select name ="seat<%=i%>">
-                    <option value="1A">1A</option>
-                    <option value="2A">2A</option>
-                    <option value="3A">3A</option>
-                    <option value="1B">1B</option>
+                    <% for(String seatNum : availableSeats){ %>
+                    <option value="<%=seatNum%>"><%=seatNum%></option>
+                    <% } %>
                 </select>
                 <br>
                 Luggage Count:
