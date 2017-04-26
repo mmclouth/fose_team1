@@ -9,9 +9,10 @@
 <!--API KEY: AIzaSyBXyzB1ur8efWWkwuQVTlSbmZirV3ioOl4 -->
 <html>
   <head>
-    <title>Simple Map</title>
-    <meta name="viewport" content="initial-scale=1.0">
-    <meta charset="utf-8">
+        <title>Iowa Air</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -35,8 +36,8 @@
         var central = {lat: 35.2157, lng: -97.0142};  
         var chicago = {lat: 41.8781, lng: -87.6298}
         var sanFrancisco = {lat: 37.7749, lng: -122.4194};
-        var iowaCity = {lat: 41.6611, lng: -91.5302};
-        var orlando = {lat: 28.5383, lng:-81.3792};
+        var cedarRapids = {lat: 41.9779, lng: -91.6656};
+        var atlanta = {lat: 33.7490, lng:-84.3880};
         var newYork = {lat: 40.7128, lng: -74.0059};
         map = new google.maps.Map(document.getElementById('map'), {
           center: central, //lat +N,-S lng +E,-W
@@ -53,12 +54,12 @@
         });
         
         marker = new google.maps.Marker({
-          position: iowaCity,
+          position: cedarRapids,
           map: map
         });
         
         marker = new google.maps.Marker({
-          position: orlando,
+          position: atlanta,
           map: map
         });
         
@@ -70,13 +71,13 @@
         var line = new google.maps.Polyline({
         path: [
             chicago, 
-            orlando,
+            atlanta,
             newYork,
         ],
         strokeColor: "#FF0000",
         strokeOpacity: 1.0,
         strokeWeight: 5,
-        geodesic: true, //flight path
+        geodesic: true, //curved flight path
         map: map
         });
         

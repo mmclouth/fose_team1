@@ -161,6 +161,29 @@
         Search2 search = new Search2((String) session.getAttribute("destination_code"), (String) session.getAttribute("origin_code"), r_date);
         returnResults = search.getSearchResults();
         
+        //Used to store flight information for each map
+                //Example layout is like this
+                //
+                //               ORD
+                //                ^
+                //                |
+                //               SFO                ORD
+                //                ^                  ^
+                //                |                  |
+                //      ORD      ATL       ORD      SFO
+                //       ^        ^         ^        ^
+                //       |        |         |        |
+ //OUTER LIST:          IFC - >  IFC  - >  IFC  - > IFC
+                ArrayList<ArrayList<String>> eachFlightPath = new ArrayList<ArrayList<String>>();
+                int index = 0;
+                for(FlightCombo flightCombo : returnResults.getFlightCombos()) {
+                    eachFlightPath.add(new ArrayList<String>());
+                    for(HashMap<String,String> flight : flightCombo.getFlights()) {
+                        eachFlightPath.get(index).add(flight.get("origin_code"));
+                    }
+                }
+        
+        
         if(session.getAttribute("sortParameter") != null){
             returnResults.sortBy((String) session.getAttribute("sortParameter"), true);
         } else {
@@ -180,7 +203,6 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        
         <% if(session.getAttribute("userID") == null){ %>
         
         <div class="title-top">
@@ -264,6 +286,38 @@
                 } else {
                     searchResults.sortBy("departure_time", true);
                 }
+                
+                //Used to store flight information for each map
+                //Example layout is like this
+                //
+                //               ORD
+                //                ^
+                //                |
+                //               SFO                ORD
+                //                ^                  ^
+                //                |                  |
+                //      ORD      ATL       ORD      SFO
+                //       ^        ^         ^        ^
+                //       |        |         |        |
+ //OUTER LIST:          IFC - >  IFC  - >  IFC  - > IFC
+                ArrayList<ArrayList<String>> eachFlightPath = new ArrayList<ArrayList<String>>();
+                String destination = null;
+                int index = 0;
+                for(FlightCombo flightCombo : searchResults.getFlightCombos()) {
+                    eachFlightPath.add(new ArrayList<String>());
+                    for(HashMap<String,String> flight : flightCombo.getFlights()) {
+                        eachFlightPath.get(index).add(flight.get("origin_code"));
+                        destination = flight.get("destination_code");
+                    }
+                    //wait until more than one index
+                    if(index > 0) {
+                        eachFlightPath.get(index - 1).add(destination);
+                    }
+                    ++index;
+                }
+                if(index != 0) {
+                    eachFlightPath.get(index - 1).add(destination); //tack on for last flight
+                }
             
             
             //iterate through each flight combo
@@ -272,9 +326,13 @@
    
             boolean first = true;
             int rowCounter = 1;   %>
+            <% for(ArrayList<String> flightGroup : eachFlightPath) {
+                for(String s : flightGroup) {           %>
+                <h3><%= s %></h3>
+            <%    }
+            }   %>
             
             <table id="inner">
-            
                 <tr>
                     <th> </th>
                     <th> </th>
@@ -283,7 +341,6 @@
                     <th colspan="2"> </th>                  
                     <th> </th>
                     <th> </th>
-                    
                 </tr>
             
             <%
@@ -298,7 +355,7 @@
                 <tr>
         <%      
                 for(String field : fields){ %>
-                    <td><%= flight.get(field) %> </td>
+                <td><%= flight.get(field) %></td>
         <%          }   %>
                     <%   if(first){       %>
                     <td rowspan="<%=numOfFlights%>"><%= flightCombo.getDuration() %></td>

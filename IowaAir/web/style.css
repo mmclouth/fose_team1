@@ -40,6 +40,7 @@ body {
 }
 
 
+
 .title-top {
     width: 100%;
     background-size: cover;
@@ -533,16 +534,6 @@ body {
     font-size: 15px;
     color: midnightblue;
     text-align: center;
-}
-
-/*********************
-   MAP
-*********************/
-
-#map {
-   height: 400px;
-   width: 400px;
-
 }
 
 
