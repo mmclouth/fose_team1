@@ -36,7 +36,6 @@
     if(session.getAttribute("userID") != null) {
         userID = (Integer)session.getAttribute("userID");
     }
-    
     if(session.getAttribute("passenger_user_id") != null) {
         userID = Integer.parseInt((String)session.getAttribute("passenger_user_id"));
     }

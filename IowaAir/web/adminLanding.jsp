@@ -57,8 +57,7 @@
         </div>
 
         <div class="middle">
-            <h4>Hi <%= session.getAttribute("userFirstName") %>!</h4>
-            
+            <h8>Hi <%= session.getAttribute("userFirstName") %>!</h8>
         </div>
             
         <% } %>
