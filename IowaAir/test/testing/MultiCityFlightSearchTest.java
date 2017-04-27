@@ -75,25 +75,40 @@ public class MultiCityFlightSearchTest
                             System.out.println("Third Selection successful");
                             driver.findElement(By.xpath("/html/body/div[2]/b/form[1]/p/input")).click();
                             url = driver.getCurrentUrl();
-                            if(url.equals("http://localhost:8080/IowaAir/purchaseFlight.jsp"))
+                            if(url.equals("http://localhost:8080/IowaAir/passengerInfo.jsp"))
                             {
                                 System.out.println("Booking Confirmed successful");
-                                driver.findElement(By.xpath("/html/body/div[2]/form/input[13]")).sendKeys("0123456789");
-                                Select month = new Select(driver.findElement(By.xpath("/html/body/div[2]/form/select[1]")));
-                                month.selectByVisibleText("05");
-                                Select year = new Select(driver.findElement(By.xpath("/html/body/div[2]/form/select[2]")));
-                                year.selectByVisibleText("20");
-                                driver.findElement(By.xpath("/html/body/div[2]/form/input[14]")).sendKeys("123");
-                                driver.findElement(By.xpath("/html/body/div[2]/form/input[15]")).click();
+                                driver.findElement(By.xpath("/html/body/div[2]/form/input[1]")).sendKeys("Nick");
+                                driver.findElement(By.xpath("/html/body/div[2]/form/input[2]")).sendKeys("Kutsch");
+                                Select seatNum = new Select(driver.findElement(By.xpath("/html/body/div[2]/form/select")));
+                                seatNum.selectByIndex(2);
+                                driver.findElement(By.xpath("/html/body/div[2]/form/input[3]")).sendKeys("1");
+                                driver.findElement(By.xpath("/html/body/div[2]/form/input[5]")).click();
                                 url = driver.getCurrentUrl();
-                                if(url.equals("http://localhost:8080/IowaAir/userFlightHistory.jsp"))
-                                {
-                                    System.out.println("Purchase successful");
-                                    
+                                if(url.equals("http://localhost:8080/IowaAir/purchaseFlight.jsp"))
+                                {                                
+                                    System.out.println("Passenger Info Page successful");
+                                    driver.findElement(By.xpath("/html/body/div[2]/form/input[13]")).sendKeys("0123456789");
+                                    Select month = new Select(driver.findElement(By.xpath("/html/body/div[2]/form/select[1]")));
+                                    month.selectByVisibleText("05");
+                                    Select year = new Select(driver.findElement(By.xpath("/html/body/div[2]/form/select[2]")));
+                                    year.selectByVisibleText("20");
+                                    driver.findElement(By.xpath("/html/body/div[2]/form/input[14]")).sendKeys("123");
+                                    driver.findElement(By.xpath("/html/body/div[2]/form/input[15]")).click();
+                                    url = driver.getCurrentUrl();
+                                    if(url.equals("http://localhost:8080/IowaAir/userFlightHistory.jsp"))
+                                    {
+                                        System.out.println("Purchase successful");
+
+                                    }
+                                    else
+                                    {
+                                        System.out.println("Purchase failed");
+                                    }
                                 }
                                 else
                                 {
-                                    System.out.println("Purchase failed");
+                                    System.out.println("Passenger Info Page Failed");
                                 }
                                 
                             }
