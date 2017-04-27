@@ -110,7 +110,7 @@
                         <tr>
                             <td>Departure Date: <%= maps.get("departure_date") %></td>
                             <td>Departure Time: <%= maps.get("departure_time") %></td>
-                            <td>Departure City: <%= maps.get("origin_code") %></td>
+                            <td>Departure City: <%= maps.get("destination_code") %></td>
                         </tr>
                         <tr>
                             <td>Arrival Date: <%= maps.get("arrival_date") %></td>
