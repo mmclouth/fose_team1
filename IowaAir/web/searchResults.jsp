@@ -161,29 +161,6 @@
         Search2 search = new Search2((String) session.getAttribute("destination_code"), (String) session.getAttribute("origin_code"), r_date);
         returnResults = search.getSearchResults();
         
-        //Used to store flight information for each map
-                //Example layout is like this
-                //
-                //               ORD
-                //                ^
-                //                |
-                //               SFO                ORD
-                //                ^                  ^
-                //                |                  |
-                //      ORD      ATL       ORD      SFO
-                //       ^        ^         ^        ^
-                //       |        |         |        |
- //OUTER LIST:          IFC - >  IFC  - >  IFC  - > IFC
-                ArrayList<ArrayList<String>> eachFlightPath = new ArrayList<ArrayList<String>>();
-                int index = 0;
-                for(FlightCombo flightCombo : returnResults.getFlightCombos()) {
-                    eachFlightPath.add(new ArrayList<String>());
-                    for(HashMap<String,String> flight : flightCombo.getFlights()) {
-                        eachFlightPath.get(index).add(flight.get("origin_code"));
-                    }
-                }
-        
-        
         if(session.getAttribute("sortParameter") != null){
             returnResults.sortBy((String) session.getAttribute("sortParameter"), true);
         } else {
@@ -312,11 +289,13 @@
                     //wait until more than one index
                     if(index > 0) {
                         eachFlightPath.get(index - 1).add(destination);
+                        eachFlightPath.get(index - 1).add("NO MORE"); //signifies end of list
                     }
                     ++index;
                 }
                 if(index != 0) {
                     eachFlightPath.get(index - 1).add(destination); //tack on for last flight
+                    eachFlightPath.get(index - 1).add("NO MORE"); //signifies end of list
                 }
             
             
@@ -326,11 +305,6 @@
    
             boolean first = true;
             int rowCounter = 1;   %>
-            <% for(ArrayList<String> flightGroup : eachFlightPath) {
-                for(String s : flightGroup) {           %>
-                <h3><%= s %></h3>
-            <%    }
-            }   %>
             
             <table id="inner">
                 <tr>
@@ -382,10 +356,26 @@
                 }
 %>
                 </table>
-<%}
-            }
-        %>
-            
+<%} %>
+
+<form action="testMap.jsp">
+    <% int counter = 0;
+       for(ArrayList<String> cluster : eachFlightPath) {
+          int i = 0;
+          while(i < cluster.size()) {
+    %>
+    <input type="hidden" name="flightCluster<%=counter++%>" value="<%=cluster.get(i++)%>">
+    <%
+          }
+
+       }
+    %>
+    <input type="hidden" name="totalCount" value="<%=counter%>">
+    <input type="submit" value="View Map" >
+</form>
+
+          <%  } %>
+        
         </div>
             
         <% }  else if(selectingReturnFlight){      %>    

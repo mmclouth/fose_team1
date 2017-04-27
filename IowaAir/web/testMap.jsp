@@ -7,6 +7,19 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <!--API KEY: AIzaSyBXyzB1ur8efWWkwuQVTlSbmZirV3ioOl4 -->
+
+
+<%
+    int totalCount = Integer.parseInt(request.getParameter("totalCount"));
+    String[] cities = new String[totalCount];
+    for(int i = 0; i < totalCount; ++i) {
+        String temp = "flightCluster" + Integer.toString(i);
+        cities[i] = request.getParameter(temp);
+    }
+    
+    
+    
+%>
 <html>
   <head>
         <title>Iowa Air</title>
@@ -28,7 +41,9 @@
     </style>
   </head>
   <body>
-      <h1>This is some stuff before the map</h1>
+      <% for(String s : cities) { %>
+      <h2><%=s%></h2><br>
+      <% } %>
     <div id="map"></div>
     <script>
       var map;
