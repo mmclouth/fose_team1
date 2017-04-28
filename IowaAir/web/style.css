@@ -12,15 +12,31 @@
 * {
     margin: 0;
     padding: 0;
-    background-color: white;
+
+}
+
+html { 
+  background: url(iowa_farm.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://media02.hongkiat.com/oversized-background-image-design/bg.jpg', sizingMethod='scale')";
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='.http://media02.hongkiat.com/oversized-background-image-design/bg.jpg', sizingMethod='scale');
 }
 
 
 body {
+    margin-top: 5%;
     width: 75%;
-    margin-left: 12.5%;
-    margin-right: 12.5%;
+    padding-left:4%;
+    padding-right: 4%;
+    padding-top:1%;
+    padding-bottom:5%;
+    margin-left: 8.5%;
+    margin-right: 8.5%;
     font-family: 'Catamaran', sans-serif;
+    background: rgba(255,255,255,0.6);
 }
 
 
@@ -28,9 +44,11 @@ body {
     width: 100%;
     background-size: cover;
     background-position: center;
+    background-color: white;
     margin-top: 50px;
     float: left;
     border-bottom: 3px solid midnightblue;
+    background-color : transparent;              /* Good browsers */
 }
 
 .title-top h1{
@@ -86,6 +104,8 @@ body {
     line-height: 80px;
 }
 
+
+
 .middle {
     width: 95%;
     margin-left: 2.5%;
@@ -98,6 +118,8 @@ body {
     font-size: 30px;
     color: royalblue;
 }
+
+
 
 
 /*******************
@@ -241,7 +263,7 @@ body {
     text-align: center;
     color: midnightblue;
     width: 12%;
-    border-right:3px solid white;
+    border-right:3px solid ;
 }
 
 .admin-toolbar li a {

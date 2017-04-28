@@ -29,7 +29,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    
+    <div id="element">
     
     <head>
         
@@ -165,7 +165,11 @@
         <link href="https://fonts.googleapis.com/css?family=Catamaran" rel="stylesheet">
         <link rel="stylesheet" href="style.css">
         
+        
+        
     </head>
+    
+    
     
     <body>
         
@@ -401,6 +405,6 @@
 
     </body>
     
-        
+    </div>
 </html>
 
