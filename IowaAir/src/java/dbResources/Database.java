@@ -17,6 +17,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -1187,7 +1188,7 @@ public class Database {
     
     public ArrayList<HashMap<String, String>> getBoardingPassesForUser(String userID) {
         ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String,String>>();
-        String[] fields = {"flight_id", "userr_id", "seat_num", "luggage_count", "clas"};
+        String[] fields = {"id", "flight_id", "userr_id", "seat_num", "luggage_count", "clas"};
         String query = "SELECT * FROM boarding_pass WHERE userr_id='" + userID + "';";
         
         try {
@@ -1943,10 +1944,12 @@ public class Database {
         
     }
     
-    
+
     private int getLastBookingIDNum(){
         
-        String query = "SELECT id FROM booking ORDER BY id DESC LIMIT 1;";
+        ArrayList<Integer> ids = new ArrayList<>();
+        
+        String query = "SELECT id FROM booking;";
         
         try{
             PreparedStatement ps = conn.prepareStatement(query);
@@ -1954,8 +1957,13 @@ public class Database {
             
             while(results.next()){
                 String string = results.getString("id");
-                return Integer.parseInt(string.substring(3));
+                ids.add(Integer.parseInt(string.substring(3)));
             }
+            
+            Collections.sort(ids);
+            
+            return ids.get(ids.size() - 1);
+            
         } catch (SQLException e){
             e.printStackTrace();
         }
