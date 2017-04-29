@@ -20,6 +20,7 @@
     int first_class_remaining, economy_remaining, total;
     ArrayList<String> flight_ID_parameters = new ArrayList<String>();
     ArrayList<String> flight_IDs = new ArrayList<String>();
+    ArrayList<ArrayList<String>> eachReturnPath = new ArrayList<ArrayList<String>>();
     
     String[] columnHeaders = {"Flight","Origin","Destination","Departure","Arrival"};
     String[] fields = {"num","origin_code","destination_code","departure_date","departure_time","arrival_date","arrival_time"};
@@ -166,6 +167,25 @@
         } else {
             returnResults.sortBy("departure_time", true);
         }
+                String destination = null;
+                int index = 0;
+                for(FlightCombo flightCombo : returnResults.getFlightCombos()) {
+                    eachReturnPath.add(new ArrayList<String>());
+                    for(HashMap<String,String> flight : flightCombo.getFlights()) {
+                        eachReturnPath.get(index).add(flight.get("origin_code"));
+                        destination = flight.get("destination_code");
+                    }
+                    //wait until more than one index
+                    if(index > 0) {
+                        eachReturnPath.get(index - 1).add(destination);
+                        eachReturnPath.get(index - 1).add("NO MORE"); //signifies end of list
+                    }
+                    ++index;
+                }
+                if(index != 0) {
+                    eachReturnPath.get(index - 1).add(destination); //tack on for last flight
+                    eachReturnPath.get(index - 1).add("NO MORE"); //signifies end of list
+                }
     }
     
 %>    
@@ -484,9 +504,23 @@
                 }
 %>
                 </table>
-<%}
-            }
-        %>
+<%} %>
+<form action="testMap.jsp">
+    <% int counter = 0;
+       for(ArrayList<String> cluster : eachReturnPath) {
+          int i = 0;
+          while(i < cluster.size()) {
+    %>
+    <input type="hidden" name="flightCluster<%=counter++%>" value="<%=cluster.get(i++)%>">
+    <%
+          }
+
+       }
+    %>
+    <input type="hidden" name="totalCount" value="<%=counter%>">
+    <input type="submit" value="View Map" >
+</form>
+        <% } %>
             
         </div>
 
