@@ -47,6 +47,7 @@
         <div class="user-toolbar">
             <ul>
                 <li><a href="userFlightHistory.jsp">My Flight History</a></li>
+                <li><a href="userBookingHistory.jsp">My Booking History</a></li>
                 <li><a href="changePassword.jsp">Change My Password</a></li>
             </ul>  
         </div>
