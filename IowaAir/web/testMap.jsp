@@ -140,17 +140,24 @@
               flightPath.push(newYork);
           }
           else {
-                var line = new google.maps.Polyline({
-                path: flightPath,
-                strokeColor: colors[count],
-                strokeOpacity: 1.0,
-                strokeWeight: 5,
-                geodesic: true, //curved flight path
-                map: map,
-                icons: [{
-                    icon: lineSymbol,
-                    offset: '100%'}]
-                });
+                var partialPath = [];
+                for(var j = 0; j < flightPath.length - 1; ++j) {
+                    partialPath.push(flightPath[j]);
+                    partialPath.push(flightPath[j+1]);
+
+                    var line = new google.maps.Polyline({
+                    path: partialPath,
+                    strokeColor: colors[count],
+                    strokeOpacity: 1.0,
+                    strokeWeight: 5,
+                    geodesic: true, //curved flight path
+                    map: map,
+                    icons: [{
+                        icon: lineSymbol,
+                        offset: '100%'}]
+                    });
+                    partialPath.length = 0;
+                }
                 flightPath.length = 0;
                 count++;
                 if(count === colors.length) {
