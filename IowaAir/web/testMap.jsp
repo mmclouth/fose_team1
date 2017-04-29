@@ -4,12 +4,14 @@
     Author     : Kyle Anderson
 --%>
 
+<%@page import="dbResources.JavaToJavascript"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <!--API KEY: AIzaSyBXyzB1ur8efWWkwuQVTlSbmZirV3ioOl4 -->
 
 
 <%
+    JavaToJavascript converter = new JavaToJavascript();
     int totalCount = Integer.parseInt(request.getParameter("totalCount"));
     String[] cities = new String[totalCount];
     for(int i = 0; i < totalCount; ++i) {
@@ -42,12 +44,19 @@
   </head>
   <body>
       <% for(String s : cities) { %>
-      <h2><%=s%></h2><br>
-      <% } %>
+      <h4><%= s %></h4>
+      <%  }
+      %>
     <div id="map"></div>
     <script>
       var map;
+      var myArray = <%= converter.toJavascriptArray(cities) %>;
       function initMap() {
+        var colors = [
+            	"#FF0000",
+                "#0000ff"
+            
+        ]  
         var central = {lat: 35.2157, lng: -97.0142};  
         var chicago = {lat: 41.8781, lng: -87.6298}
         var sanFrancisco = {lat: 37.7749, lng: -122.4194};
@@ -83,23 +92,40 @@
           map: map
         });
         
-        var line = new google.maps.Polyline({
-        path: [
-            chicago, 
-            atlanta,
-            newYork,
-        ],
-        strokeColor: "#FF0000",
-        strokeOpacity: 1.0,
-        strokeWeight: 5,
-        geodesic: true, //curved flight path
-        map: map
-        });
+        var count = 1;
+        var flightPath = [];
+      for (var i = 0; i < myArray.length; ++i) {
+          if(myArray[i] === "IFC") {
+              flightPath.push(cedarRapids);
+          } else if(myArray[i] === "ATL") {
+              flightPath.push(atlanta);
+          } else if(myArray[i] === "SFO") {
+              flightPath.push(sanFrancisco);
+          } else if(myArray[i] === "ORD") {
+              flightPath.push(chicago);
+          } else if(myArray[i] === "JFK") {
+              flightPath.push(newYork);
+          }
+          else {
+                var line = new google.maps.Polyline({
+                path: flightPath,
+                strokeColor: "#FF0000",
+                strokeOpacity: 1.0,
+                strokeWeight: 5,
+                geodesic: true, //curved flight path
+                map: map
+                });
+                flightPath.length = 0;
+          }
+      }
         
       }
+      
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXyzB1ur8efWWkwuQVTlSbmZirV3ioOl4&callback=initMap"
     async defer></script>
+    
     <h2>Test Text</h2>
+    
   </body>
 </html>
