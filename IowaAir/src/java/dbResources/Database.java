@@ -1902,7 +1902,7 @@ public class Database {
     }
     
     
-    public void createBooking(ArrayList<String> boardingPassIDs, int numberOfPassengers){
+    public String createBooking(ArrayList<String> boardingPassIDs, int numberOfPassengers){
         
         int idNum = this.getLastBookingIDNum() + 1;
         StringBuilder query = new StringBuilder();
@@ -1937,11 +1937,13 @@ public class Database {
             ps = conn.prepareStatement(query.toString());
             ps.executeUpdate();
             
+            
+            
         } catch (SQLException e){
             e.printStackTrace();
         }
         
-        
+        return "IAB" + Integer.toString(idNum);
     }
     
 
@@ -2062,6 +2064,7 @@ public class Database {
 
     }
     
+    /**
     private int getNumberOfBoardingPassesInBooking(String bookingID){
             
         int boardingPasses = 0;
@@ -2083,7 +2086,7 @@ public class Database {
         
         return boardingPasses;
             
-    }
+    }**/
     
     public String getBookingID(String boardingPassID){
         
@@ -2169,6 +2172,29 @@ public class Database {
         }
         
         return seatNums;
+    }
+    
+    public int getNumberOfBoardingPassesInBooking(String bookingID){
+        
+        ArrayList<String> boardingPasses = this.selectArrayList("boarding_pass_id", "booking_has_boarding_pass", "booking_id", bookingID);
+        
+        return boardingPasses.size();
+    }
+    
+     public int getNumberOfFlightsInBooking(String bookingID){
+        
+        ArrayList<String> boardingPasses = this.selectArrayList("boarding_pass_id", "booking_has_boarding_pass", "booking_id", bookingID);
+        ArrayList<String> flightIDs = new ArrayList<String>();
+        
+        for(String bp : boardingPasses){
+            String flightID = this.selectString("flight_id", "boarding_pass", "id", bp);
+            
+            if(!flightIDs.contains(flightID)){
+                flightIDs.add(flightID);
+            }
+        }
+        
+        return flightIDs.size();
     }
     
 }   
