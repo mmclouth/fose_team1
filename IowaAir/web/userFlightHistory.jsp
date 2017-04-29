@@ -15,11 +15,16 @@
         userID = (Integer)session.getAttribute("userID");
     }
     ArrayList<HashMap<String,String>> boardingPasses = db.getBoardingPassesForUser(Integer.toString(userID));
+    HashMap<String, String> info;
     
     ArrayList<HashMap<String, String>> flightInfo = new ArrayList<HashMap<String, String>>();
     for(HashMap<String, String> map : boardingPasses) {
         String flightID = map.get("flight_id");
-        flightInfo.add(db.getHashMapForFLight(flightID));
+        
+        info = db.getHashMapForFLight(flightID);
+        info.put("boarding_pass_id", map.get("id"));
+        
+        flightInfo.add(info);
     }
 %>
 
@@ -81,8 +86,13 @@
             <h3>
                 Flight Number: <%= maps.get("num") %><br>
             </h3>
-            <h4>
-                    <table id="confirmBooking">
+                    <div class="confirmBooking">
+                        <form action="/IowaAir/viewBoardingPass.jsp" method="POST">
+                            <input type="hidden" name="boardingPassID" value="<%= maps.get("boarding_pass_id")%>">
+                            <input type="submit" value="View Boarding Pass" id="submit">
+                        </form>
+                    
+                    <table>
                         <tr>
                             <td>Departure Date: <%= maps.get("departure_date") %></td>
                             <td>Departure Time: <%= maps.get("departure_time") %></td>
@@ -98,10 +108,14 @@
                             <td>Price First Class: $<%= maps.get("price_first_class") %></td>
                             <td>Price Economy: $<%= maps.get("price_economy") %></td>
                         </tr>    
-                    </table><br>
-            </h4>   
+                    </table>   
+                        
+                       <br>
+                       
+                    </div>
+                    <div class="clear"></div> 
             <% } %>
-            
+                   
             
         </div>
 
