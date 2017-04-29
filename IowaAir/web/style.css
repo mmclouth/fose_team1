@@ -108,6 +108,7 @@ body {
 
 .middle {
     width: 95%;
+    height: 100%;
     margin-left: 2.5%;
     margin-right: 2.5%;
     padding-top: 15%;
@@ -664,3 +665,90 @@ body {
     cursor: pointer;
 }
 
+
+/**************************
+
+    BOARDING PASS
+
+***************************/
+
+.boardingPass {
+    background: rgba(255,255,255,0.6);
+}
+
+.boardingPass table {
+    width: 90%;
+    height: min-content;
+    float: left;
+    margin-left: 5%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-family: 'Catamaran', sans-serif;
+    background-color: white;
+    padding:5px;
+    padding-left:10px
+}
+
+.boardingPass tr{
+    line-height: 45px;  
+}
+
+.boardingPass tr.bigheader{
+    line-height: 65px;
+}
+
+.boardingPass tr.smallheader{
+    line-height: 30px;
+}
+
+.boardingPass tr.bigheader th{
+    width:25%;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: midnightblue solid 1px;
+}
+
+.boardingPass tr.bigheader th.name{
+    font-size:25pt;
+    
+}
+
+.boardingPass th {
+    text-align: center;
+    color: black;
+    font-size: 35pt;
+    font-weight: 300;
+}
+
+.boardingPass td{
+    width: 25%;
+    text-align: left;
+    color: black;
+    font-size: 30pt;
+    font-weight: 50;
+    padding-left:5px;
+}
+
+
+.boardingPass td.header{
+    width: 33%;
+    text-align: left;
+    vertical-align:bottom;
+    color: royalblue;
+    font-size: 20pt;
+    font-weight: 100;
+    padding-left: 0;
+}
+
+.boardingPass td.bottom{
+    width: 33%;
+    text-align: left;
+    color: royalblue;
+    font-size: 20pt;
+}
+
+.clear
+{
+  clear: both;
+}
