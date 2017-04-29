@@ -86,7 +86,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Boarding Pass</title>
+        <title>Iowa Air: Boarding Pass</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://fonts.googleapis.com/css?family=Catamaran" rel="stylesheet">

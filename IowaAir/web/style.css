@@ -36,7 +36,7 @@ body {
     margin-left: 8.5%;
     margin-right: 8.5%;
     font-family: 'Catamaran', sans-serif;
-    background: rgba(255,255,255,0.65);
+    background: rgba(255,255,255,0.7);
 }
 
 
@@ -273,7 +273,7 @@ body {
     padding: 8px;
 }
 
-/* Change the link color to #111 (black) on hover */
+/* Change the link color to #111 (midnightblue) on hover */
 .admin-toolbar li a:hover {
     background-color: royalblue;
     color: white;
@@ -314,7 +314,7 @@ body {
     color: royalblue;
     text-align: center;
     font-size: 24px;
-    font-weight: 200;
+    font-weight: 400;
 }
 
 .employee-table td {
@@ -423,7 +423,7 @@ body {
     color: royalblue;
     text-align: center;
     font-size: 24px;
-    font-weight: 200;
+    font-weight: 400;
 }
 
 .flight-table td {
@@ -506,7 +506,6 @@ body {
     text-align: center;
     color: midnightblue;
     width: 20%;
-    border-right:3px solid white;
 }
 
 .user-toolbar li a {
@@ -516,7 +515,7 @@ body {
     padding: 8px;
 }
 
-/* Change the link color to #111 (black) on hover */
+/* Change the link color to #111 (midnightblue) on hover */
 .user-toolbar li a:hover {
     background-color: royalblue;
     color: white;
@@ -564,7 +563,7 @@ body {
     float: left;
     padding:1%;
     
-}
+} 
 
 .search-results-table #inner {
 
@@ -593,7 +592,7 @@ body {
     color: royalblue;
     text-align: center;
     font-size: 24px;
-    font-weight: 200;
+    font-weight: 400;
 }
 
 .search-results-table td {
@@ -689,7 +688,8 @@ body {
     font-family: 'Catamaran', sans-serif;
     background-color: white;
     padding:5px;
-    padding-left:10px
+    padding-left:10px;
+    border:1px solid midnightblue;
 }
 
 .boardingPass tr{
@@ -719,7 +719,7 @@ body {
 
 .boardingPass th {
     text-align: center;
-    color: black;
+    color: midnightblue;
     font-size: 35pt;
     font-weight: 300;
 }
@@ -727,7 +727,7 @@ body {
 .boardingPass td{
     width: 25%;
     text-align: left;
-    color: black;
+    color: midnightblue;
     font-size: 30pt;
     font-weight: 50;
     padding-left:5px;
@@ -788,6 +788,28 @@ body {
 
 
 .confirmBooking input#submit:hover {
+    cursor: pointer;
+    background-color: midnightblue;
+    color: white;
+    border:none;
+}
+
+input#view-boarding-pass {
+    text-align: center;
+    text-decoration: none;
+    float:left;
+    background-color: royalblue;
+    border: none;
+    width: 150px;
+    height: 20px;
+    color: white;
+    font-size: 12px;
+    margin: 1%;
+}
+
+
+
+input#view-boarding-pass:hover {
     cursor: pointer;
     background-color: midnightblue;
     color: white;

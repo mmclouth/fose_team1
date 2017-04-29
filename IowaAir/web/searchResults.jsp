@@ -424,8 +424,8 @@
                             <input type="hidden" name="return_flight_id<%=counter%>" value="<%=flightForForm.get("id") %>">
         <%                      counter++;
                             }
-        %>                    
-                            <input type="submit" value="Select" >
+%>                      
+                            <input type="submit" value="Select" >   
                         </form>
                     </td>
                     <% first = false;
@@ -444,5 +444,6 @@
         </div>
 
         <% }    %>  
+        <div class="clear"></div> 
     </body>
 </html>

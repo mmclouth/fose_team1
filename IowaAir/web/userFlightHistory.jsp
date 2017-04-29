@@ -78,7 +78,20 @@
         <div class="middle">
             <h1>User Flight History Page</h1>
             <% if(session.getAttribute("booked") != null) { %>
-                <h2>Flight Successfully Booked!</h2>
+                <h2 >Flight Successfully Booked!</h2>
+                
+                <% String bookingNum = (String) session.getAttribute("bookingNum"); %>
+                
+                
+                        <form action="/IowaAir/viewBoardingPass.jsp" method="POST">
+                            <input type="hidden" name="bookingID" value="<%= bookingNum%>">
+                            <div class="confirmBooking">
+                            <input type="submit" value="View Boarding Passes" id="submit">
+                            </div>
+                        </form>
+                            <br><br><br>
+                
+                
                 <% session.removeAttribute("booked");       
             } %>
             

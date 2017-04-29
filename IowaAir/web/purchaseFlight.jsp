@@ -127,13 +127,15 @@
             for(int i = 0; i < flightIDs.length; ++i)
                 boardingPassIDs.addAll(db.selectArrayList("id", "boarding_pass", "flight_id", flightIDs[i], "userr_id", Integer.toString(userID), "clas", ticketType));
                 
-            db.createBooking(boardingPassIDs, (Integer) session.getAttribute("num_of_passengers"));
+            String bookingNum = db.createBooking(boardingPassIDs, (Integer) session.getAttribute("num_of_passengers"));
+            
             try { 
             SendMail mailer = new SendMail(email);
             if(mailer == null) response.sendRedirect("/IowaAir/home.jsp");
             mailer.sendConfirmation(price, flightNums);
             
             session.setAttribute("booked", true);
+            session.setAttribute("bookingNum", bookingNum);
             if(userType.equals("employee")){
                 response.sendRedirect("/IowaAir/employeeLanding.jsp");
             } else {
