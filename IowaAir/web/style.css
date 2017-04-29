@@ -36,7 +36,7 @@ body {
     margin-left: 8.5%;
     margin-right: 8.5%;
     font-family: 'Catamaran', sans-serif;
-    background: rgba(255,255,255,0.6);
+    background: rgba(255,255,255,0.65);
 }
 
 
@@ -264,7 +264,6 @@ body {
     text-align: center;
     color: midnightblue;
     width: 12%;
-    border-right:3px solid ;
 }
 
 .admin-toolbar li a {
@@ -413,7 +412,11 @@ body {
 
 .flight-table tr {
     height:30px;
-}    
+} 
+
+.flight-table tr.data {
+    height:40px;
+} 
 
 .flight-table th {
     width: 7%;

@@ -215,7 +215,7 @@ function submitter(btn) {
             <% } %>
             
             
-        </div>
+        
         <div class="employee-table">
 
                 <h2>Current Aircrafts</h2>
@@ -265,8 +265,8 @@ function submitter(btn) {
 
 
         <% }%>
-
-
+        </div>
+        <div class="clear"></div> 
 
     </body>
 </html>

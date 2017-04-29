@@ -301,7 +301,7 @@ function submitter(btn) {
 
                     <!- Loop through each employee record and output each field in correct able column ->
                     <% for (HashMap<String, String> record : flightData) {%>
-                    <tr>
+                    <tr class="data">
                         
                         <td class="flightNum"><input type="hidden" id="flightNum" value="<%=record.get("num")%>" ><%=record.get("num")%></td>
                         <td><%= record.get("airplane_id")%></td>
@@ -335,6 +335,7 @@ function submitter(btn) {
                 </table>
 
             </div>
+            <div class="clear"></div> 
         
         <% } %>
 
