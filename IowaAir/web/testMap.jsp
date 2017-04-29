@@ -43,10 +43,6 @@
     </style>
   </head>
   <body>
-      <% for(String s : cities) { %>
-      <h4><%= s %></h4>
-      <%  }
-      %>
     <div id="map"></div>
     <script>
       var map;
@@ -171,8 +167,6 @@
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXyzB1ur8efWWkwuQVTlSbmZirV3ioOl4&callback=initMap"
     async defer></script>
-    
-    <h2>Test Text</h2>
     
   </body>
 </html>
