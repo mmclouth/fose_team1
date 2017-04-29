@@ -124,6 +124,9 @@
         
         var count = 1;
         var flightPath = [];
+        var lineSymbol = {
+            path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+        };
       for (var i = 0; i < myArray.length; ++i) {
           if(myArray[i] === "IFC") {
               flightPath.push(cedarRapids);
@@ -143,7 +146,10 @@
                 strokeOpacity: 1.0,
                 strokeWeight: 5,
                 geodesic: true, //curved flight path
-                map: map
+                map: map,
+                icons: [{
+                    icon: lineSymbol,
+                    offset: '100%'}]
                 });
                 flightPath.length = 0;
                 count++;
