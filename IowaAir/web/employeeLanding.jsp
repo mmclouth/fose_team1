@@ -66,6 +66,7 @@
                 <input type="submit" value="SEARCH">
             </div>
         </form>
+        <div class="clear"></div> 
 
     </body>
 </html>

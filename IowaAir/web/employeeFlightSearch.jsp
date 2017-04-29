@@ -395,6 +395,8 @@
 
         </div>
         
+        <div class="clear"></div> 
+        
         <script language="Javascript">
             
             

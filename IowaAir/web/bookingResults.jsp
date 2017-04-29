@@ -80,6 +80,6 @@
             </tr>
             <% } %>
         </table>
-        
+        <div class="clear"></div> 
     </body>
 </html>
