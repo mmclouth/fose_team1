@@ -51,12 +51,31 @@
     <script>
       var map;
       var myArray = <%= converter.toJavascriptArray(cities) %>;
+      
+      function contains(a, obj) {
+        var i = a.length;
+        while (i--) {
+           if (a[i] === obj) {
+               return true;
+           }
+        }
+        return false;
+      }
+      
       function initMap() {
         var colors = [
-            	"#FF0000",
-                "#0000ff"
-            
-        ]  
+            "#FF0000",
+            "#0000FF",
+            "#00FF00",
+            "#FFFF00",
+            "#00FFFF",
+            "#FF8000",
+            "#8000FF",
+            "#00FFBF",
+            "#FF00BF",
+            "#BFFF00",
+            "#FFBF00"
+        ];  
         var central = {lat: 35.2157, lng: -97.0142};  
         var chicago = {lat: 41.8781, lng: -87.6298}
         var sanFrancisco = {lat: 37.7749, lng: -122.4194};
@@ -67,30 +86,41 @@
           center: central, //lat +N,-S lng +E,-W
           zoom: 5
         });
-        var marker = new google.maps.Marker({
-          position: chicago,
-          map: map
-        });
+        if(contains(myArray, "ORD")) {
+            var marker = new google.maps.Marker({
+              position: chicago,
+              map: map
+
+            });
+        }
         
-        marker = new google.maps.Marker({
-          position: sanFrancisco,
-          map: map
-        });
+        if(contains(myArray, "SFO")) {
+            marker = new google.maps.Marker({
+              position: sanFrancisco,
+              map: map
+            });
+        }
         
-        marker = new google.maps.Marker({
-          position: cedarRapids,
-          map: map
-        });
+        if(contains(myArray, "IFC")) {
+            marker = new google.maps.Marker({
+              position: cedarRapids,
+              map: map
+            });
+        }
         
-        marker = new google.maps.Marker({
-          position: atlanta,
-          map: map
-        });
+        if(contains(myArray, "ATL")) {
+            marker = new google.maps.Marker({
+              position: atlanta,
+              map: map
+            });
+        }
         
-        marker = new google.maps.Marker({
-          position: newYork,
-          map: map
-        });
+        if(contains(myArray, "JFK")) {
+            marker = new google.maps.Marker({
+              position: newYork,
+              map: map
+            });
+        }
         
         var count = 1;
         var flightPath = [];
@@ -109,13 +139,17 @@
           else {
                 var line = new google.maps.Polyline({
                 path: flightPath,
-                strokeColor: "#FF0000",
+                strokeColor: colors[count],
                 strokeOpacity: 1.0,
                 strokeWeight: 5,
                 geodesic: true, //curved flight path
                 map: map
                 });
                 flightPath.length = 0;
+                count++;
+                if(count === colors.length) {
+                    count = 0;
+                }
           }
       }
         
