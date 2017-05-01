@@ -336,9 +336,9 @@ function submitter(btn) {
                 </table>
 
             </div>
-            <div class="clear"></div> 
+            
         
         <% } %>
-
+        <div class="clear"></div> 
     </body>
 </html>

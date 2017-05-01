@@ -835,6 +835,28 @@ input#check-in:hover {
     border:none;
 }
 
+input#update-button {
+    text-align: center;
+    text-decoration: none;
+    float:left;
+    background-color: royalblue;
+    border: none;
+    width: 70px;
+    height: 20px;
+    color: white;
+    font-size: 12px;
+    margin: 1%;
+}
+
+
+
+input#update-button:hover {
+    cursor: pointer;
+    background-color: midnightblue;
+    color: white;
+    border:none;
+}
+
 input#cancel-book {
     text-align: center;
     text-decoration: none;
