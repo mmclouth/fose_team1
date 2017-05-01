@@ -65,7 +65,7 @@ public class AdminFlightTest
                 if (url.equals("http://localhost:8080/IowaAir/adminFlights.jsp"))
                 {
                     System.out.println("Adding of Flight Successful");
-                    driver.findElement(By.xpath("/html/body/div[4]/table/tbody/tr[2]/td[14]/input")).click();
+                    driver.findElement(By.xpath("/html/body/div[4]/table/tbody/tr[3]/td[13]/button")).click();
                     url = driver.getCurrentUrl();
                     if(url.equals("http://localhost:8080/IowaAir/modifyFlight.jsp"))
                     {
