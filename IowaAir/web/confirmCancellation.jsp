@@ -18,18 +18,13 @@
     Database db = new Database();
     boolean success = false;
     
-    String bookingID = null, boardingPassID = null, flightNum;
-    String flightID;
-    boolean singlePass = false;
+    String bookingID = null, boardingPassID = null;
     ArrayList<String> boardingPassIDs = new ArrayList<String>();
-    ArrayList<HashMap<String,String>> boardingPassesInfo = new ArrayList<HashMap<String,String>>();
-    HashMap<String, String> info;
     
     //public ArrayList<HashMap<String, String>> getBoardingPassesForUser(String userID) {
     
     if(request.getParameter("boardingPassID") != null){
         boardingPassID = request.getParameter("boardingPassID");
-        singlePass = true;
     }
     
     if(request.getParameter("bookingID") != null){
@@ -101,7 +96,7 @@
             <% if(success) { %>
             <h4>Your flight has been canceled.</h4>
             <% } else { %>
-            <h4>Not successful.</h4>
+            <h4>Unfortunately, your booking cannot be canceled.</h4>
             <% } %>
             
         </div>
