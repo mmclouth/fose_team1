@@ -42,20 +42,20 @@ public class MultiCityFlightSearchTest
             origin1.selectByVisibleText("ORD");
             Select destination1 = new Select(driver.findElement(By.xpath("//*[@id=\"form2\"]/div[2]/select[2]")));
             destination1.selectByVisibleText("SFO");
-            driver.findElement(By.xpath("//*[@id=\"multiFlightDepart1\"]")).sendKeys("04/05/2017");
+            driver.findElement(By.xpath("//*[@id=\"multiFlightDepart1\"]")).sendKeys("05/05/2017");
             Select origin2 = new Select(driver.findElement(By.xpath("//*[@id=\"form2\"]/div[3]/select[1]")));
             origin2.selectByVisibleText("SFO");
             Select destination2 = new Select(driver.findElement(By.xpath("//*[@id=\"form2\"]/div[3]/select[2]")));
             destination2.selectByVisibleText("ATL");
-            driver.findElement(By.xpath("//*[@id=\"multiFlightDepart2\"]")).sendKeys("04/05/2017");
+            driver.findElement(By.xpath("//*[@id=\"multiFlightDepart2\"]")).sendKeys("05/05/2017");
             Select origin3 = new Select(driver.findElement(By.xpath("//*[@id=\"flight3div\"]/select[1]")));
             origin3.selectByVisibleText("ATL");
             Select destination3 = new Select(driver.findElement(By.xpath("//*[@id=\"flight3div\"]/select[2]")));
             destination3.selectByVisibleText("IFC");
-            driver.findElement(By.xpath("//*[@id=\"multiFlightDepart3\"]")).sendKeys("04/05/2017");
+            driver.findElement(By.xpath("//*[@id=\"multiFlightDepart3\"]")).sendKeys("05/05/2017");
             driver.findElement(By.xpath("//*[@id=\"form2\"]/div[7]/button")).click();
             url = driver.getCurrentUrl();
-            if (url.equals("http://localhost:8080/IowaAir/searchResultsMultiCity.jsp?num_of_passengers=1&multiFlightOrigin1=ORD&multiFlightDestination1=SFO&multiFlightDepart1=2017-04-05&multiFlightOrigin2=SFO&multiFlightDestination2=ATL&multiFlightDepart2=2017-04-05&multiFlightOrigin3=ATL&multiFlightDestination3=IFC&multiFlightDepart3=2017-04-05&multiFlightOrigin4=null&multiFlightDestination4=null&multiFlightDepart4="))
+            if (url.equals("http://localhost:8080/IowaAir/searchResultsMultiCity.jsp?num_of_passengers=1&multiFlightOrigin1=ORD&multiFlightDestination1=SFO&multiFlightDepart1=2017-05-05&multiFlightOrigin2=SFO&multiFlightDestination2=ATL&multiFlightDepart2=2017-05-05&multiFlightOrigin3=ATL&multiFlightDestination3=IFC&multiFlightDepart3=2017-05-05&multiFlightOrigin4=null&multiFlightDestination4=null&multiFlightDepart4="))
             {
                 System.out.println("Multi City Flight search was successful");
                 driver.findElement(By.xpath("//*[@id=\"inner\"]/tbody/tr[2]/td[10]/form/input[3]")).click();

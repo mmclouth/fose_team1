@@ -41,12 +41,11 @@ public class OneWaySearchTest
             origin.selectByVisibleText("IFC");
             Select destination = new Select(driver.findElement(By.xpath("//*[@id=\"form1\"]/select[2]")));
             destination.selectByVisibleText("ORD");
-            driver.findElement(By.xpath("//*[@id=\"form1\"]/input[1]")).sendKeys("04/05/2017");
-           // driver.findElement(By.xpath("//*[@id=\"form1\"]/input[3]")).sendKeys("2");
+            driver.findElement(By.xpath("//*[@id=\"form1\"]/input[1]")).sendKeys("05/05/2017");
             driver.findElement(By.xpath("//*[@id=\"form1\"]/div/button")).click();
             
             url = driver.getCurrentUrl();
-            if(url.equals("http://localhost:8080/IowaAir/searchResults.jsp?origin=IFC&destination=ORD&d_date=2017-04-05&r_date=&num_of_passengers=1"))
+            if(url.equals("http://localhost:8080/IowaAir/searchResults.jsp?origin=IFC&destination=ORD&d_date=2017-05-05&r_date=&num_of_passengers=1"))
             {
                 System.out.println("Search was successful");
                 driver.findElement(By.xpath("//*[@id=\"inner\"]/tbody/tr[2]/td[10]/form/input[2]")).click();
