@@ -94,10 +94,33 @@
                 finalFirstTimeArr[i + 3] = tmpFirstTimeArr3[i];
             }
             
-            for(int i = 0; i < finalCurrArr.length; i++) {
-                if(Integer.parseInt(finalCurrArr[i]) > Integer.parseInt(finalFirstTimeArr[i]) ) {
-                    success = false;
-                }
+            if(Integer.parseInt(finalCurrArr[0]) > Integer.parseInt(finalFirstTimeArr[0])) {
+                success = false;
+            } else if((Integer.parseInt(finalCurrArr[0]) == Integer.parseInt(finalFirstTimeArr[0]) //same year
+                        && (Integer.parseInt(finalCurrArr[1]) > Integer.parseInt(finalFirstTimeArr[1])))) { //later month
+                success = false;
+            } else if((Integer.parseInt(finalCurrArr[0]) == Integer.parseInt(finalFirstTimeArr[0]) //same year
+                        && (Integer.parseInt(finalCurrArr[1]) == Integer.parseInt(finalFirstTimeArr[1])) //same month
+                        && (Integer.parseInt(finalCurrArr[2]) > Integer.parseInt(finalFirstTimeArr[2])))) { //later day
+                success = false;
+            } else if((Integer.parseInt(finalCurrArr[0]) == Integer.parseInt(finalFirstTimeArr[0]) //same year
+                        && (Integer.parseInt(finalCurrArr[1]) == Integer.parseInt(finalFirstTimeArr[1])) //same month
+                        && (Integer.parseInt(finalCurrArr[2]) == Integer.parseInt(finalFirstTimeArr[2])) //same day
+                        && (Integer.parseInt(finalCurrArr[3]) > Integer.parseInt(finalFirstTimeArr[3])))) { //later hour
+                success = false;
+            } else if((Integer.parseInt(finalCurrArr[0]) == Integer.parseInt(finalFirstTimeArr[0]) //same year
+                        && (Integer.parseInt(finalCurrArr[1]) == Integer.parseInt(finalFirstTimeArr[1])) //same month
+                        && (Integer.parseInt(finalCurrArr[2]) == Integer.parseInt(finalFirstTimeArr[2])) //same day
+                        && (Integer.parseInt(finalCurrArr[3]) == Integer.parseInt(finalFirstTimeArr[3])) //same hour
+                        && (Integer.parseInt(finalCurrArr[4]) > Integer.parseInt(finalFirstTimeArr[4])))) { //later minute
+                success = false;
+            } else if((Integer.parseInt(finalCurrArr[0]) == Integer.parseInt(finalFirstTimeArr[0]) //same year
+                        && (Integer.parseInt(finalCurrArr[1]) == Integer.parseInt(finalFirstTimeArr[1])) //same month
+                        && (Integer.parseInt(finalCurrArr[2]) == Integer.parseInt(finalFirstTimeArr[2])) //same day
+                        && (Integer.parseInt(finalCurrArr[3]) == Integer.parseInt(finalFirstTimeArr[3])) //same hour
+                        && (Integer.parseInt(finalCurrArr[4]) == Integer.parseInt(finalFirstTimeArr[4])) //same minute
+                        && (Integer.parseInt(finalCurrArr[5]) > Integer.parseInt(finalFirstTimeArr[5])))) { //later second
+                success = false;
             }
         
         if(success) {    
