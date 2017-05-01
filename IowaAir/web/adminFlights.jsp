@@ -128,7 +128,7 @@ function submitter(btn) {
     var myForm = document.forms["myForm"];
     myForm.elements["rowID"].value = flightNumber;
     myForm.submit();
-}
+};
 </script>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -322,9 +322,10 @@ function submitter(btn) {
                         <td><%= record.get("first_class_remaining")%></td>
                         <td><%= record.get("economy_remaining")%></td>
                         <td>
-                            <div class="update" >
-                                <button type="submit" value="Submit" onclick="submitter(this);">Update</button>
-                            </div>
+                           
+                            <button type="submit" value="Submit" onclick="submitter(this);">Update</button>
+                                
+                            
                         </td>
                            
                     </tr>
