@@ -46,10 +46,10 @@ public class EmployeeSearchFlightTest
                 origin.selectByVisibleText("ORD");
                 Select destination = new Select(driver.findElement(By.xpath("//*[@id=\"form1\"]/select[2]")));
                 destination.selectByVisibleText("SFO");
-                driver.findElement(By.xpath("//*[@id=\"form1\"]/input[1]")).sendKeys("04/05/2017");
+                driver.findElement(By.xpath("//*[@id=\"form1\"]/input[1]")).sendKeys("05/05/2017");
                 driver.findElement(By.xpath("//*[@id=\"form1\"]/div/button")).click();
                 url = driver.getCurrentUrl();
-                if(url.equals("http://localhost:8080/IowaAir/searchResults.jsp?origin=ORD&destination=SFO&d_date=2017-04-05&r_date=&num_of_passengers=1"))
+                if(url.equals("http://localhost:8080/IowaAir/searchResults.jsp?origin=ORD&destination=SFO&d_date=2017-05-05&r_date=&num_of_passengers=1"))
                 {
                     System.out.println("Search successful");
                     driver.findElement(By.xpath("//*[@id=\"inner\"]/tbody/tr[2]/td[10]/form/input[3]")).click();
@@ -59,9 +59,41 @@ public class EmployeeSearchFlightTest
                         System.out.println("Selection successful");
                         driver.findElement(By.xpath("/html/body/div[2]/b/form[1]/p/input")).click();
                         url=driver.getCurrentUrl();
-                        if(url.equals("http://localhost:8080/IowaAir/purchaseFlight.jsp"))
+                        
+                        if(url.equals("http://localhost:8080/IowaAir/employeePassengerInfo.jsp"))
                         {
                             System.out.println("Confirmed successful");
+                            driver.findElement(By.xpath("/html/body/div[2]/form/input[1]")).sendKeys("brady-breitbach@uiowa.edu");
+                            driver.findElement(By.xpath("/html/body/div[2]/form/input[2]")).sendKeys("Brady");
+                            driver.findElement(By.xpath("/html/body/div[2]/form/input[3]")).sendKeys("Breitbach");
+                            Select seat = new Select(driver.findElement(By.xpath("/html/body/div[2]/form/select")));
+                            seat.selectByIndex(2);
+                            driver.findElement(By.xpath("/html/body/div[2]/form/input[4]")).sendKeys("1");
+                            driver.findElement(By.xpath("/html/body/div[2]/form/input[6]")).click();
+                            url = driver.getCurrentUrl();
+                            if (url.equals("http://localhost:8080/IowaAir/purchaseFlight.jsp"))
+                            {
+                                System.out.println("Passenger Info successful");
+                                driver.findElement(By.xpath("/html/body/div[2]/form/input[7]")).sendKeys("0123456789");
+                                Select year = new Select(driver.findElement(By.xpath("/html/body/div[2]/form/select[2]")));
+                                year.selectByVisibleText("20");
+                                driver.findElement(By.xpath("/html/body/div[2]/form/input[8]")).sendKeys("123");
+                                driver.findElement(By.xpath("/html/body/div[2]/form/input[9]")).click();
+                                url = driver.getCurrentUrl();
+                                if(url.equals("http://localhost:8080/IowaAir/employeeLanding.jsp"))
+                                {
+                                    System.out.println("Purchase Successful");
+                                }
+                                else
+                                {
+                                    System.out.println("Purchase failed");
+                                }
+                            }
+                            else
+                            {
+                                System.out.println("Passenger Info failed");
+                            }
+                            
                         }
                         else
                         {
