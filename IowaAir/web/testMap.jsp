@@ -146,7 +146,7 @@
                     strokeColor: colors[count],
                     strokeOpacity: 1.0,
                     strokeWeight: 5,
-                    geodesic: true, //curved flight path
+                    geodesic: false, //curved flight path
                     map: map,
                     icons: [{
                         icon: lineSymbol,

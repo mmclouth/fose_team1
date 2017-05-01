@@ -124,6 +124,14 @@
                             </form>
                         
                         </td>
+                        
+                        <td>
+                            <form action="confirmCancellation.jsp" method="POST">
+                                <input type="hidden" name="bookingID" value="<%= record.get("id")%>">
+                                <input id="cancel-book" type="submit" value="Cancel Booking">
+                            </form>
+                            
+                        </td>
                     </tr>
                     <% }%>
 

@@ -88,7 +88,7 @@
                 <br>
             
             <input type="submit" value="Delete Flight"><br>
-            <a href="modifyFlight.jsp">Go back to Modify Flight</a><br>
+            <a href="adminFlights.jsp">Go back</a><br>
             </form>
 
             </div>

@@ -169,7 +169,7 @@ public class SendMail {
         }
         
             code = SendMail.generateVerificationCode();
-            message.setText("Congratulations! You have successfully booked"
+            message.setText("Congratulations! You have successfully booked "
                     + "the following flight(s):" + sb.toString() + "for a total "
                             + "price of $" + price + "0. Thank you for flying with "
                                     + "Iowa Air.");

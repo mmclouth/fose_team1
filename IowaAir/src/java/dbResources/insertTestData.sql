@@ -142,6 +142,8 @@ VALUES
     ("Andy", "Dwyer", "mouseratrules@iowaair.net", "5f4dcc3b5aa765d61d8327deb882cf99", "customer", 'male',1),
     ("Ben", "yatt", "starwars@iowaair.net", "5f4dcc3b5aa765d61d8327deb882cf99", "customer", 'male',1);
 
+INSERT INTO fundsofteng.userr (first_name, last_name, email, password, user_type, birthday, gender, validation_status, confirmation_code) 
+	VALUES ('Kenzie', 'McLouth', 'kmclooooth1320@gmail.com', '2ac9cb7dc02b3c0083eb70898e549b63', 'employee', '1995-05-15', 'female', true, 'null');
 
 INSERT INTO 
     boarding_pass (flight_id, userr_id, seat_num, luggage_count, clas, passenger_name)
