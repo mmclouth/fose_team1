@@ -121,6 +121,11 @@ body {
     color: royalblue;
 }
 
+.middle h1{
+    font-size: 50px;
+    color: midnightblue;
+}
+
 
 
 
@@ -805,4 +810,121 @@ input#view-boarding-pass:hover {
     background-color: midnightblue;
     color: white;
     border:none;
+}
+
+
+input#check-in {
+    text-align: center;
+    text-decoration: none;
+    float:left;
+    background-color: royalblue;
+    border: none;
+    width: 80px;
+    height: 30px;
+    color: white;
+    font-size: 12px;
+    margin: 1%;
+}
+
+
+
+input#check-in:hover {
+    cursor: pointer;
+    background-color: midnightblue;
+    color: white;
+    border:none;
+}
+
+input#cancel-book {
+    text-align: center;
+    text-decoration: none;
+    float:left;
+    background-color: royalblue;
+    border: none;
+    width: 100px;
+    height: 20px;
+    color: white;
+    font-size: 12px;
+    margin: 1%;
+}
+
+
+
+input#cancel-book:hover {
+    cursor: pointer;
+    background-color: midnightblue;
+    color: white;
+    border:none;
+}
+
+.booking-table {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    
+    float: left;
+    padding:1%;
+}
+
+.booking-table h2 {
+    width: 100%;
+    float: left;
+    font-size: 30px;
+    color: midnightblue;
+    border-bottom: 1px solid midnightblue;
+}
+
+.booking-table table {
+    width: 100%;
+    float: left;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-family: 'Catamaran', sans-serif;
+}
+
+.booking-table tr {
+    height:70px;
+} 
+
+.booking-table tr.data {
+    height:40px;
+} 
+
+.booking-table th {
+    width: 7%;
+    color: royalblue;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 400;
+}
+
+.booking-table td {
+    width: 7%;
+    color: midnightblue;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 100;
+}
+
+
+
+.booking-table th.small{
+    width: 4%;
+}
+
+.booking-table th.med{
+    width: 9%;
+}
+
+.booking-table th.big{
+    width: 11%;
+}
+
+.booking-table th.flightNum{
+    width: 11%;
+}
+
+.booking-table td.flightNum{
+    width:11%;
+    font-size: 20px;
 }

@@ -125,18 +125,18 @@
         
         <% } %>
 
-        
+        <div class="booking-table">
         <table>
             <tr>
                 <th>Boarding Pass ID</th>
-                <th>Passenger Name</th>
-                <th>Flight Num</th>
-                <th>Origin</th>
-                <th>Destination</th>
-                <th>Departure Date</th>
+                <th>Passenger</th>
+                <th>Flight</th>
+                <th class="small">Origin</th>
+                <th class="small">Dest.</th>
+                <th class="small">Date</th>
                 <th>Time</th>
                 <th>Class</th>
-                <th>Seat Num</th>
+                <th>Seat</th>
                 <th>Checked in?</th>
                 <th> </th>
                 <th> </th>
@@ -149,8 +149,8 @@
                 <td><%=boardingPassData.get(i).get("flight_num") %></td>
                 <td><%=boardingPassData.get(i).get("origin_code") %></td>
                 <td><%=boardingPassData.get(i).get("destination_code") %></td>
-                <td><%=boardingPassData.get(i).get("departure_date") %></td>
-                <td><%=boardingPassData.get(i).get("departure_time") %></td>
+                <td><%=boardingPassData.get(i).get("departure_date").substring(5) %></td>
+                <td><%=boardingPassData.get(i).get("departure_time").substring(0, boardingPassData.get(i).get("departure_time").length() - 3) %></td>
                 <td><%=boardingPassData.get(i).get("class") %></td>
                 <td><%=boardingPassData.get(i).get("seat_num") %></td>
                 <td><%=boardingPassData.get(i).get("checked_in") %></td>
@@ -159,7 +159,7 @@
                 <% if(boardingPassData.get(i).get("checked_in").equals("no")){ %>
                 <td><form action="individualBooking.jsp" method="POST">
                     <input type="hidden" name="checkInPassenger" value="<%=boardingPassData.get(i).get("id")%>">
-                    <input type="submit" value="Check in Passenger"></form>
+                    <input id="check-in" type="submit" value="Check In"></form>
                 </td>
                 <% } else { %>
                 <td>      </td>
@@ -167,12 +167,13 @@
                 <% } %>
                 <td><form action="individualBooking.jsp" method="POST">
                     <input type="hidden" name="cancelBoardingPass" value="<%=boardingPassData.get(i).get("id")%>">
-                    <input type="submit" value="Cancel Booking"></form>
+                    <input id="cancel-book" type="submit" value="Cancel Booking"></form>
                 </td>
             
             </tr>
             <% } %>
         </table>
-
+        </div>
+        <div class="clear"></div> 
     </body>
 </html>
