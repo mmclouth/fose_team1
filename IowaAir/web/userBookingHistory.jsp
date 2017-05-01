@@ -128,7 +128,7 @@
                         <td>
                             <form action="confirmCancellation.jsp" method="POST">
                                 <input type="hidden" name="bookingID" value="<%= record.get("id")%>">
-                                <input id="view-boarding-pass" type="submit" value="Cancel Flight">
+                                <input id="cancel-book" type="submit" value="Cancel Booking">
                             </form>
                             
                         </td>
