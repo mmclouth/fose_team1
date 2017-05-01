@@ -146,32 +146,27 @@ VALUES
 INSERT INTO 
     boarding_pass (flight_id, userr_id, seat_num, luggage_count, clas, passenger_name)
 VALUES
-    (1, 5, '1A', 1, 'first_class', 'Jane Doe'),
-    (1, 6, '2A', 1, 'first_class', 'Joe Schmoe'),
-    (1, 7, '3A', 3, 'first_class', 'Michael Scott'),
-    (1, 1, '4A', 2, 'first_class', 'MacKenzie McLouth'),
-    (1, 1, '1B', 2, 'first_class', 'Jessica Backer'),
-    (1, 3, '2B', 1, 'first_class', 'Kyle Anderson'),
-    (1, 8, '3B', 1, 'first_class', 'Dwight Schrute'),
-    (1, 9, '3C', 1, 'first_class', 'Jessica Day'),
-    (1, 10, '10A', 1, 'economy', 'Nick Miller'),
-    (1, 11, '10B', 1, 'economy', 'Noname Schmitt'),
-    (1, 12, '10C', 1, 'economy', 'Leslie Knope'),
-    (1, 13, '14C', 1, 'economy', 'April Ludgate'),
-    (1, 14, '15C', 1, 'economy', 'Andy Dwyer'),
-    (1, 4, '2C', 1, 'first_class', 'John Doe'),
     (31, 1, '1A', 2, 'first_class', 'MacKenzie McLouth'),
     (31, 1, '2A', 1, 'first_class', 'Jessica Backer'),
     (32, 1, '1A', 2, 'first_class', 'MacKenzie McLouth'),
-    (32, 1, '2A', 2, 'first_class', 'Jessica Backer');
+    (32, 1, '2A', 2, 'first_class', 'Jessica Backer'),
+    (31, 10, '10A', 2, 'economy', 'Michael Scott'),
+    (31, 10, '3A', 1, 'first_class', 'Jan Levinston'),
+    (32, 10, '10A', 2, 'economy', 'Michael Scott'),
+    (32, 10, '3A', 2, 'first_class', 'Jan Levinston');
 
 INSERT INTO fundsofteng.booking (id, booked_on, passengers) 
-	VALUES ('IAB1', CURRENT_DATE, 2);
+	VALUES ('IAB1', CURRENT_DATE, 2),
+               ('IAB2', CURRENT_DATE, 2);
 
 INSERT INTO 
     fundsofteng.booking_has_boarding_pass (booking_id, boarding_pass_id) 
 VALUES 
-    ('IAB1', 15),
-    ('IAB1', 16),
-    ('IAB1', 17),
-    ('IAB1', 18);
+    ('IAB1', 1),
+    ('IAB1', 2),
+    ('IAB1', 3),
+    ('IAB1', 4),
+    ('IAB2', 5),
+    ('IAB2', 6),
+    ('IAB2', 7),
+    ('IAB2', 8);
