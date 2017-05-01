@@ -64,7 +64,7 @@
         </div>
         
         <% } %>
-        
+        <div class="flight-table">
         <table>
             <tr>
                 <th>Booking ID</th>
@@ -80,6 +80,7 @@
             </tr>
             <% } %>
         </table>
+        </div>
         <div class="clear"></div> 
     </body>
 </html>
