@@ -250,7 +250,7 @@ function submitter(btn) {
                         <td><%= record.get("seats_per_row")%></td>
                         <td><input type="hidden" id="aircraftTypeID" value="<%=record.get("aircraft_type_id")%>" > <%= record.get("aircraft_type_id")%></td>
                         <td><input type="hidden" id="airplaneNumber" value="<%=record.get("num")%>" > <%= record.get("num")%></td>
-                        <td><input type="submit" value="Update" onclick="submitter(this);" ></td>
+                        <td><input id="update-button" type="submit" value="Update" onclick="submitter(this);" ></td>
                     </tr>
                         
                     <% }%>
