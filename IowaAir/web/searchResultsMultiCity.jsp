@@ -96,6 +96,27 @@
     
     Search2 search = new Search2(origins.get(flightIndex), destinations.get(flightIndex), formatter.parse(dates.get(flightIndex)));
     SearchResults results = search.getSearchResults();
+    
+    String destination = null;
+                int index = 0;
+                ArrayList<ArrayList<String>> eachReturnPath = new ArrayList<ArrayList<String>>();
+                for(FlightCombo flightCombo : results.getFlightCombos()) {
+                    eachReturnPath.add(new ArrayList<String>());
+                    for(HashMap<String,String> flight : flightCombo.getFlights()) {
+                        eachReturnPath.get(index).add(flight.get("origin_code"));
+                        destination = flight.get("destination_code");
+                    }
+                    //wait until more than one index
+                    if(index > 0) {
+                        eachReturnPath.get(index - 1).add(destination);
+                        eachReturnPath.get(index - 1).add("NO MORE"); //signifies end of list
+                    }
+                    ++index;
+                }
+                if(index != 0) {
+                    eachReturnPath.get(index - 1).add(destination); //tack on for last flight
+                    eachReturnPath.get(index - 1).add("NO MORE"); //signifies end of list
+                }
 
 
 
@@ -230,6 +251,22 @@
             }
 %>
                 </table>
+                
+                <form action="testMap.jsp">
+    <% int counter = 0;
+       for(ArrayList<String> cluster : eachReturnPath) {
+          int i = 0;
+          while(i < cluster.size()) {
+    %>
+    <input type="hidden" name="flightCluster<%=counter++%>" value="<%=cluster.get(i++)%>">
+    <%
+          }
+
+       }
+    %>
+    <input type="hidden" name="totalCount" value="<%=counter%>">
+    <input type="submit" value="View Map" >
+</form>
             
         </div>
 
