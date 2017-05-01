@@ -165,6 +165,8 @@
                     <a href="forgotPassword.jsp">Forgot Password</a>
             </div>
         </div>
+            
+        <div class="clear"></div> 
 
     </body>
 </html>
