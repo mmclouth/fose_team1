@@ -252,7 +252,7 @@
 %>
                 </table>
                 
-                <form action="testMap.jsp">
+<form action="testMap.jsp">
     <% int counter = 0;
        for(ArrayList<String> cluster : eachReturnPath) {
           int i = 0;
